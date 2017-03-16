@@ -4,33 +4,21 @@ import java.util.*;
 /**
  * 
  */
-public class TrainElement {
-
-    /**
-     * Default constructor
-     */
-    public TrainElement() {
-    }
-
+public interface TrainElement {
+    
     /**
      * @param color
      */
-    public void empty(String color) {
-        // TODO implement here
-    }
+    public void empty(String color);
 
     /**
      * 
      */
-    public void stop() {
-        // TODO implement here
-    }
+    public void stop();
 
     /**
      * 
      */
-    public void moveNext() {
-        // TODO implement here
-    }
+    public void moveNext();
 
 }
