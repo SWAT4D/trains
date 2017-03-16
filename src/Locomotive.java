@@ -49,4 +49,11 @@ public class Locomotive extends TrainElement {
         // TODO implement here
     }
 
+    /**
+     *
+     */
+    public void moveNext() {
+        // TODO implement here
+    }
+
 }
