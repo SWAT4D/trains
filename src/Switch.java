@@ -15,24 +15,24 @@ public class Switch extends Rail {
 
 
     /**
-     * @param Rail
+     * @param rail
      */
-    public void addNextAlt(void Rail) {
+    public void addNextAlt(Rail rail) {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void switch() {
+    public void switchIt() {
         // TODO implement here
     }
 
     /**
-     * @param Rail 
+     * @param rail 
      * @return
      */
-    public Rail next(void Rail) {
+    public Rail next(Rail rail) {
         // TODO implement here
         return null;
     }

@@ -13,9 +13,9 @@ public class TrainElement {
     }
 
     /**
-     * @param string
+     * @param color
      */
-    public void empty(void string) {
+    public void empty(String color) {
         // TODO implement here
     }
 

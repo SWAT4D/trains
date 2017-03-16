@@ -15,16 +15,16 @@ public class Locomotive extends TrainElement {
 
 
     /**
-     * @param Car
+     * @param car
      */
-    public void addNext(void Car) {
+    public void addNext(Car car) {
         // TODO implement here
     }
 
     /**
-     * @param EntryPoint
+     * @param entryPoint
      */
-    public void setStartPlace(void EntryPoint) {
+    public void setStartPlace(EntryPoint entryPoint) {
         // TODO implement here
     }
 
@@ -36,9 +36,9 @@ public class Locomotive extends TrainElement {
     }
 
     /**
-     * @param string
+     * @param color
      */
-    public void empty(void string) {
+    public void empty(String color) {
         // TODO implement here
     }
 

@@ -13,17 +13,17 @@ public class EndVoid extends Rail {
     }
 
     /**
-     * @param TrainElement
+     * @param trainElement
      */
-    public void occupy(void TrainElement) {
+    public void occupy(TrainElement trainElement) {
         // TODO implement here
     }
 
     /**
-     * @param Rail 
+     * @param rail 
      * @return
      */
-    public Rail next(void Rail) {
+    public Rail next(Rail rail) {
         // TODO implement here
         return null;
     }

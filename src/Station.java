@@ -13,9 +13,9 @@ public class Station extends Rail {
     }
 
     /**
-     * @param TrainElement
+     * @param trainElement
      */
-    public void occupy(void TrainElement) {
+    public void occupy(TrainElement trainElement) {
         // TODO implement here
     }
 

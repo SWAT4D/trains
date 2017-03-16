@@ -17,32 +17,32 @@ public class Rail {
 
 
     /**
-     * @param Rail
+     * @param rail
      */
-    public void addNext(void Rail) {
+    public void addNext(Rail rail) {
         // TODO implement here
     }
 
     /**
-     * @param Rail
+     * @param rail
      */
-    public void addPrev(void Rail) {
+    public void addPrev(Rail rail) {
         // TODO implement here
     }
 
     /**
-     * @param Rail 
+     * @param rail 
      * @return
      */
-    public Rail next(void Rail) {
+    public Rail next(Rail rail) {
         // TODO implement here
         return null;
     }
 
     /**
-     * @param TrainElement
+     * @param trainElement
      */
-    public void occupy(void TrainElement) {
+    public void occupy(TrainElement trainElement) {
         // TODO implement here
     }
 

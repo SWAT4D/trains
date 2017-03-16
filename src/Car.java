@@ -15,16 +15,16 @@ public class Car extends TrainElement {
 
 
     /**
-     * @param Car
+     * @param car
      */
-    public void addNext(void Car) {
+    public void addNext(Car car) {
         // TODO implement here
     }
 
     /**
-     * @param Rail
+     * @param rail
      */
-    public void move(void Rail) {
+    public void move(Rail rail) {
         // TODO implement here
     }
 
@@ -36,9 +36,9 @@ public class Car extends TrainElement {
     }
 
     /**
-     * @param string
+     * @param color
      */
-    public void empty(void string) {
+    public void empty(String color) {
         // TODO implement here
     }
 

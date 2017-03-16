@@ -15,9 +15,9 @@ public class Tunnel extends Rail {
 
 
     /**
-     * @param TunnelPlace
+     * @param tunnelPlace
      */
-    public void activeTunnelPlace(void TunnelPlace) {
+    public void activeTunnelPlace(TunnelPlace tunnelPlace) {
         // TODO implement here
     }
 
@@ -30,9 +30,9 @@ public class Tunnel extends Rail {
     }
 
     /**
-     * @param TunnelPlace
+     * @param tunnelPlace
      */
-    public void inactiveTunnelPlace(void TunnelPlace) {
+    public void inactiveTunnelPlace(TunnelPlace tunnelPlace ) {
         // TODO implement here
     }
 
