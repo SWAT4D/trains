@@ -1,15 +1,21 @@
-
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * 
  */
-public class Locomotive extends TrainElement {
+public class Locomotive implements TrainElement {
+
+    private Car nextCar;
+    private Rail cur;
+    private Rail prev;
 
     /**
-     * Default constructor
+     * Locomotive's previous position is the EndVoid
      */
-    public Locomotive() {
+    public Locomotive(EndVoid ev) {
+        Logger.logStart("Locomotive created");
+        prev = ev;
+        Logger.logEnd();
     }
 
 
@@ -18,42 +24,78 @@ public class Locomotive extends TrainElement {
      * @param car
      */
     public void addNext(Car car) {
-        // TODO implement here
+        Logger.logStart("void addNext(Car car)");
+        nextCar = car;
+        Logger.logEnd();
     }
 
     /**
      * @param entryPoint
      */
     public void setStartPlace(EntryPoint entryPoint) {
-        // TODO implement here
+        Logger.logStart("void setStartPlace(EntryPoint entryPoint)");
+        cur = entryPoint;
+        Logger.logEnd();
     }
 
     /**
      * 
      */
     public void startCounter() {
-        // TODO implement here
+        Logger.logStart("void startCounter()");
     }
 
     /**
+     * Does nothing.
      * @param color
      */
     public void empty(String color) {
-        // TODO implement here
+        Logger.logStart("void empty(String color)");
     }
 
     /**
      * 
      */
-    public void stop() {
-        // TODO implement here
+    public void stop(EndVoid endVoid) {
+        Logger.logStart("void stop(EndVoid endVoid)");
+        moveNext();
+        nextCar.move(endVoid);
+        Logger.logEnd();
     }
 
     /**
      *
      */
     public void moveNext() {
-        // TODO implement here
+        Logger.logStart("void moveNext()");
+        nextCar.move(cur); // TODO: prev or cur? Same as in the Car
+        Logger.logEnd();
+    }
+
+    /**
+     * TODO: Later this should be private or implemented by the start method
+     * Now we can use this to make the locomotve step only one
+     *
+     */
+    public void moveOne(){
+        Logger.logStart("TODO HERE! void moveOne()");
+        Rail railNext = cur.next(prev);
+        if(railNext == null){
+            Logger.logMessage("GAME OVER: Cause: No more rails"); // TODO: Stop the game, not just logStart it.
+            System.exit(1);
+        }
+        cur.leave();
+        prev = cur;
+
+        railNext.occupy(this);
+        cur = railNext;
+        Logger.logEnd();
+
+    }
+
+    @Override
+    public void logPos(ArrayList<Rail> railList) {
+        Logger.logMessage(this.toString() + " " + Integer.toString(railList.indexOf(this.cur)));
     }
 
 }
