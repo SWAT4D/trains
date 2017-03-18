@@ -20,7 +20,7 @@ public class Logger {
      * @param str - A string amit ki kell írnia (tabulátorok nélkül)
      */
     static void write(String str){
-
+        tab++;
         char tabChar='\t'; //A tabulátor ASCII kódja
 
         String newStr ="";
@@ -30,7 +30,7 @@ public class Logger {
         newStr+=str;
 
         System.out.println(newStr);
-
+        tab--;
     }
 
 
@@ -39,20 +39,20 @@ public class Logger {
      * ennek le kell futni a main-ben
      */
     static void initInc(){
-        tab = 0;
+        tab = -1;
     }
 
     /**
      * Növeli a tabulátorok számát
      */
-    static void inc(){
-        tab++;
-    }
+    /*static void inc(){
+
+    }*/
 
     /**
      * Csökkenti a tabulátorok számát
      */
-    static void dec(){
-        tab--;
-    }
+    /*static void dec(){
+
+    }*/
 }
