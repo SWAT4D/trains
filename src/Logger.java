@@ -37,6 +37,19 @@ public class Logger {
         }
     }
 
+    /**
+     * A tabulátorok növelése nélkül kiírja a kapott üzenetet
+     * @param msg a kiírandó üzenet
+     */
+    public static void logMessage(String msg){
+        String newStr ="";
+        for(int i=0;i<tab;i++)
+            newStr += '\t';
+        newStr+=msg;
+
+        System.out.println(msg);
+    }
+
 
     /**
      * A logger osztály használata előtt kell
