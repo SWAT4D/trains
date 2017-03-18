@@ -1,3 +1,5 @@
+package trains;
+
 import java.util.*;
 
 /**
@@ -64,12 +66,14 @@ public class Rail {
     public void occupy(TrainElement trainElement) {
         Logger.logStart("occupy(TrainElement) - Rail");
         
-        Logger.logMessage("Foglalt mar a sin?");
+        Logger.logMessage("Foglalt már a " + this + " sín?");
         Scanner sc = new Scanner(System.in);
-        if (sc.nextBoolean() == true){ 
-            Logger.setGameOver(true);
+        if (sc.nextBoolean() == true){
+            Logger.logMessage("GAME OVER: Ütközés történt, két vonat egy pozíción tartózkodik.");
         }
-        trainElement.moveNext();
+        else {
+            trainElement.moveNext();
+        }
         Logger.logEnd();
     }
 

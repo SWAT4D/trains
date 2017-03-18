@@ -1,5 +1,4 @@
-
-import java.util.*;
+package trains;
 
 /**
  * 
@@ -59,7 +58,7 @@ public class Locomotive implements TrainElement {
         Logger.logStart("step() - Locomotive");
         Rail railNext = cur.next(prev);
         if(railNext == null){
-            Logger.logMessage("GAME OVER: railNext = NULL");
+            Logger.logMessage("GAME OVER: Egy vonat vakvágányra ért, lefutott a sínről.");
         }
         else {
             cur.leave();
@@ -74,7 +73,7 @@ public class Locomotive implements TrainElement {
      * @param color
      */
     public void empty(String color) {
-        Logger.logStart("empty(String color) - Locomotive");
+        Logger.logStart("empty(String) - Locomotive");
         Logger.logEnd();
     }
 
@@ -82,7 +81,10 @@ public class Locomotive implements TrainElement {
      * HELP PLS
      */
     public void stop(EndVoid endVoid) {
-        // TODO implement here
+        Logger.logStart("stop(EndVoid) - Locomotive");
+        moveNext();
+        nextCar.move(endVoid);
+        Logger.logEnd();
     }
 
     /**
