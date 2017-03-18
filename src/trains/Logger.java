@@ -27,7 +27,7 @@ public class Logger {
      */
     public static void logStart(String msg){
         if(!gameover){ //Ha a játéknak vége akkor nem logol tovább
-            tab++; //tabulátorok számának növelése
+
 
             //Tabulátorok hozzáadása a kapott stringhez
             String newStr ="";
@@ -36,6 +36,8 @@ public class Logger {
             newStr+=msg;
 
             System.out.println(newStr);
+
+            tab++; //tabulátorok számának növelése
         }
     }
 
@@ -49,7 +51,7 @@ public class Logger {
             newStr += '\t';
         newStr+=msg;
 
-        System.out.println(msg);
+        System.out.println(newStr);
     }
 
 
