@@ -78,7 +78,9 @@ public class Locomotive implements TrainElement {
     }
 
     /**
-     * HELP PLS
+     * Mozgatja a mögötte lévő kocsikat az endVoidra
+     * Akkor hívódik meg, ha endVoidra kerül a mozdony
+     * @param endVoid ide mozgatja a kocsikat
      */
     public void stop(EndVoid endVoid) {
         Logger.logStart("stop(EndVoid) - Locomotive");
@@ -88,7 +90,7 @@ public class Locomotive implements TrainElement {
     }
 
     /**
-     * A vonat mögötti kocsit lépteti
+     * A mozdony mögötti kocsit lépteti
      */
     public void moveNext() {
         Logger.logStart("moveNext() - Locomotive");

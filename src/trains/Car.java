@@ -86,7 +86,10 @@ public class Car implements TrainElement {
     }
 
     /**
-     * 
+     * Ha nincsenek utasok a kocsin, akkor mozgatja a mögötte lévő kocsikat az endVoidra.
+     * Ha vannak utasok a kocsin, akkor a vége a játéknak.
+     * Akkor hívódik meg, ha endVoidra kerül a kocsi.
+     * @param endVoid ide mozgatja a kocsikat
      */
     public void stop(EndVoid endVoid) {
         Logger.logStart("stop(EndVoid) - Car");
@@ -110,7 +113,7 @@ public class Car implements TrainElement {
 
 
     /**
-     *
+     *  A kocsi mögötti kocsit lépteti
      */
     public void moveNext() {
         Logger.logStart("moveNext() - Car");
