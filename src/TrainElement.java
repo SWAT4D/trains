@@ -14,7 +14,7 @@ public interface TrainElement {
     /**
      * 
      */
-    public void stop();
+    public void stop(EndVoid endVoid);
 
     /**
      * 

@@ -20,7 +20,7 @@ public class EndVoid extends Rail {
     public void occupy(TrainElement trainElement) {
         Logger.logStart("occupy(TrainElement) - EndVoid");
 
-        trainElement.stop();
+        trainElement.stop(this);
 
         Logger.logEnd();
     }
