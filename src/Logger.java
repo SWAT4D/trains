@@ -2,57 +2,47 @@
  * Logger oszály
  *
  * Statikus osztály csak statikus tagjai vannak, ezért könnyen meg lehet
- * hívni a pl: Logger.write() függvényt kiíráshoz.
+ * hívni a pl: Logger.logStart(), Logger.logEnd() függvényt kiíráshoz.
  *
  * A használata:
- *     + A használat előtt az initInc()-nek le kell futni
- *     + A kiíráshoz a write() függvényt lehet használni
- *             (Ami már a beállított tabulátorokkal ír ki)
- *     + Függvényhívások előtt az inc()-et kell meghívni
- *     + Függvényhívások után a dec()-t.
+ *     + Minden függvény a következő képpen kezdődik:
+ *           Logger.logStart("<függvénynév>([<paraméterlista>]) - <tartalmazó osztály>");
+ *     + Minden függvényben a return előtt meg kell hívni a Logger.logEnd()-et
  */
 
 public class Logger {
     static int tab; //Tabulátorok száma.
 
     /**
-     * A kimenetre írja a kapott string-et
-     * @param str - A string amit ki kell írnia (tabulátorok nélkül)
+     * A növeli a tabulátorokat és a kimenetre írja a kapott string-et
+     * @param msg - A string amit ki kell írnia (tabulátorok nélkül)
      */
-    static void write(String str){
-        tab++;
-        char tabChar='\t'; //A tabulátor ASCII kódja
+    static void logStart(String msg){
+        tab++; //tabulátorok számának növelése
 
+        //Tabulátorok hozzáadása a kapott stringhez
         String newStr ="";
-        //Tabulátorok hozzáadása
         for(int i=0;i<tab;i++)
-            newStr += tabChar;
-        newStr+=str;
+            newStr += '\t';
+        newStr+=msg;
 
         System.out.println(newStr);
-        tab--;
     }
 
 
     /**
      * A logger osztály használata előtt kell
-     * ennek le kell futni a main-ben
+     * ennek le kell futnia (pl a Main-ben)
      */
     static void initInc(){
         tab = -1;
     }
 
     /**
-     * Növeli a tabulátorok számát
-     */
-    /*static void inc(){
-
-    }*/
-
-    /**
      * Csökkenti a tabulátorok számát
+     * Ezzel kell végződnie minden függvénynek ami meghívja a logStart-ot
      */
-    /*static void dec(){
-
-    }*/
+    static void logEnd(){
+        tab--;
+    }
 }

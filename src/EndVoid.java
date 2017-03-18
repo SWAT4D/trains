@@ -18,10 +18,11 @@ public class EndVoid extends Rail {
      * @param trainElement Azon vonatelem amely rá akar lépni
      */
     public void occupy(TrainElement trainElement) {
-        Logger.write("occupy(TrainElement) - EndVoid");
-        Logger.inc();
+        Logger.logStart("occupy(TrainElement) - EndVoid");
+
         trainElement.stop();
-        Logger.dec();
+
+        Logger.logEnd();
     }
 
     /**
@@ -30,7 +31,8 @@ public class EndVoid extends Rail {
      * @return Konstans önmagát adja vissza
      */
     public Rail next(Rail rail) {
-        Logger.write("next(Rail) - Endvoid");
+        Logger.logStart("next(Rail) - Endvoid");
+        Logger.logEnd();
         return this;
     }
 
