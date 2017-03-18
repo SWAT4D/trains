@@ -14,7 +14,7 @@ public class Rail {
      * Default constructor
      */
     public Rail() {
-        Logger.logStart("Rail() - Rail");
+        Logger.logStart("Rail created");
         nextR = null;
         prevR = null;
         Logger.logEnd();
@@ -25,7 +25,7 @@ public class Rail {
      * @param next
      */
     public void addNext(Rail next) {
-        Logger.logStart("addNext(Rail) - Rail");
+        Logger.logStart("addNext(Rail) - " + this);
         nextR = next;
         nextR.addPrev(this);
         Logger.logEnd();
@@ -36,7 +36,7 @@ public class Rail {
      * @param rail
      */
     public void addPrev(Rail rail) {
-        Logger.logStart("addPrev(Rail) - Rail");
+        Logger.logStart("addPrev(Rail) - " + this);
         prevR = rail;
         Logger.logEnd();
     }
@@ -47,7 +47,7 @@ public class Rail {
      * @return
      */
     public Rail next(Rail prev) {
-        Logger.logStart("next(Rail) - Rail");
+        Logger.logStart("next(Rail) - " + this);
         
         if (nextR != prev){
             Logger.logEnd();
@@ -64,7 +64,7 @@ public class Rail {
      * @param trainElement
      */
     public void occupy(TrainElement trainElement) {
-        Logger.logStart("occupy(TrainElement) - Rail");
+        Logger.logStart("occupy(TrainElement) - " + this);
         
         Logger.logMessage("Foglalt már a " + this + " sín?");
         Scanner sc = new Scanner(System.in);
@@ -81,7 +81,7 @@ public class Rail {
      * A sín elhagyása egy vonat álltal
      */
     public void leave() {
-        Logger.logStart("leave() - Rail");
+        Logger.logStart("leave() - " + this);
         
         Logger.logEnd();
     }
