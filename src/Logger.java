@@ -21,7 +21,7 @@ public class Logger {
      */
     static void write(String str){
 
-        char tabChar=11; //A tabulátor ASCII kódja
+        char tabChar='\t'; //A tabulátor ASCII kódja
 
         String newStr ="";
         //Tabulátorok hozzáadása
