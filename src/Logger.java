@@ -1,30 +1,48 @@
 /**
- * Created by locsi on 16/03/2017.
+ * Logger oszály
+ *
+ * Statikus osztály csak statikus tagjai vannak, ezért könnyen meg lehet
+ * hívni a pl: Logger.logStart(), Logger.logEnd() függvényt kiíráshoz.
+ *
+ * A használata:
+ *     + Minden függvény a következő képpen kezdődik:
+ *           Logger.logStart("<függvénynév>([<paraméterlista>]) - <tartalmazó osztály>");
+ *     + Minden függvényben a return előtt meg kell hívni a Logger.logEnd()-et
  */
+
 public class Logger {
-    private static int tabs = 0;
+    static int tab; //Tabulátorok száma.
 
-    private static void writeTabs(){
-        for (int i = 0; i < tabs; i++) {
-            System.out.print("\t");
-        }
-    }
+    /**
+     * A növeli a tabulátorokat és a kimenetre írja a kapott string-et
+     * @param msg - A string amit ki kell írnia (tabulátorok nélkül)
+     */
+    static void logStart(String msg){
+        tab++; //tabulátorok számának növelése
 
-    public static void logStart(String message) {
-        System.out.print("\n");
-        writeTabs();
-        System.out.print(message);
-        tabs++;
-    }
+        //Tabulátorok hozzáadása a kapott stringhez
+        String newStr ="";
+        for(int i=0;i<tab;i++)
+            newStr += '\t';
+        newStr+=msg;
 
-    public static void logMessage(String message) {
-        System.out.print("\n");
-        writeTabs();
-        System.out.print(message);
+        System.out.println(newStr);
     }
 
 
-    public static void logEnd() {
-        tabs--;
+    /**
+     * A logger osztály használata előtt kell
+     * ennek le kell futnia (pl a Main-ben)
+     */
+    static void initInc(){
+        tab = -1;
+    }
+
+    /**
+     * Csökkenti a tabulátorok számát
+     * Ezzel kell végződnie minden függvénynek ami meghívja a logStart-ot
+     */
+    static void logEnd(){
+        tab--;
     }
 }

@@ -5,7 +5,7 @@ import java.util.*;
  * 
  */
 public interface TrainElement {
-
+    
     /**
      * @param color
      */
@@ -14,14 +14,11 @@ public interface TrainElement {
     /**
      * 
      */
-    public void stop(EndVoid endVoid);
+    public void stop();
 
     /**
      * 
      */
     public void moveNext();
-
-    public void logPos(ArrayList<Rail> carList);
-
 
 }
