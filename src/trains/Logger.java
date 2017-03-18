@@ -59,6 +59,7 @@ public class Logger {
      * A logger osztály használata előtt kell
      * ennek le kell futnia (pl a Main-ben)
      */
+    @Deprecated
     public static void initInc(){
         tab = -1;
         gameover = false;
@@ -67,6 +68,7 @@ public class Logger {
     /**
      * Átállítja a gameover értékét
      */
+    @Deprecated
     public static void setGameOver(boolean value){
         gameover = value;
     }
