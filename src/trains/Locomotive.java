@@ -1,7 +1,7 @@
 package trains;
 
 /**
- * 
+ * A mozdony osztálya
  */
 public class Locomotive implements TrainElement {
 
@@ -59,12 +59,14 @@ public class Locomotive implements TrainElement {
         Rail railNext = cur.next(prev);
         if(railNext == null){
             Logger.logMessage("GAME OVER: Egy vonat vakvágányra ért, lefutott a sínről.");
+            Main.play=false;
         }
         else {
             cur.leave();
 
             railNext.occupy(this);
         }
+
         Logger.logEnd();
     }
 
@@ -85,7 +87,9 @@ public class Locomotive implements TrainElement {
     public void stop(EndVoid endVoid) {
         Logger.logStart("stop(EndVoid) " + this);
         moveNext();
-        nextCar.move(endVoid);
+        if(Main.play) {
+            nextCar.move(endVoid);
+        }
         Logger.logEnd();
     }
 

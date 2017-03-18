@@ -3,7 +3,7 @@ package trains;
 import java.util.*;
 
 /**
- * 
+ * A kocsi osztálya
  */
 public class Car implements TrainElement {
 
@@ -82,6 +82,7 @@ public class Car implements TrainElement {
                 }
             }
         }
+        scanner.nextLine(); // Discard '\n'
         Logger.logEnd();
     }
 
@@ -99,15 +100,19 @@ public class Car implements TrainElement {
         // FULL CHECK
         if(scanner.nextBoolean()==true){
             Logger.logMessage("GAME OVER: Utasokat tartalmazó kocsi elhagyta a pályát");
+            Main.play=false;
         }
         else{
             this.moveNext();
             // Ha van még kocsi kihuzzuk
             // TODO: Késleltetés majd kéne
-            if(nextCar != null){
-                nextCar.move(endVoid);
+            if(Main.play) {
+                if (nextCar != null) {
+                    nextCar.move(endVoid);
+                }
             }
         }
+        scanner.nextLine(); // Discard '\n'
         Logger.logEnd();
     }
 

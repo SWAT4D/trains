@@ -70,10 +70,12 @@ public class Rail {
         Scanner sc = new Scanner(System.in);
         if (sc.nextBoolean() == true){
             Logger.logMessage("GAME OVER: Ütközés történt, két vonat egy pozíción tartózkodik.");
+            Main.play=false;
         }
         else {
             trainElement.moveNext();
         }
+        sc.nextLine(); // Discard '\n'
         Logger.logEnd();
     }
 
