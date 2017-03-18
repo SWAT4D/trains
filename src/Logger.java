@@ -15,7 +15,10 @@ A használata:
 public class Logger {
     static int tab; //Tabulátorok száma.
 
-    //A kimenetre írja a kapott string-et
+    /**
+     * A kimenetre írja a kapott string-et
+     * @param str - A string amit ki kell írnia (tabulátorok nélkül)
+     */
     static void write(String str){
 
         char tabChar=11; //A tabulátor ASCII kódja

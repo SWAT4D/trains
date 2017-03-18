@@ -1,31 +1,37 @@
-
-import java.util.*;
-
 /**
- * 
+ * A pályán kívülis sín osztálya.
+ * Ha egy vonat erre ér akkor még egy utolsót ránt a vonatokon.
+ * Mindig önmagára mutat ha a következő sínre kérdez a hívó.
  */
 public class EndVoid extends Rail {
-
     /**
      * Default constructor
+     * Semmit nem tárol így nem történik semmi a konstruktorban
+     * ezért nem is kell.
      */
+    /**
     public EndVoid() {
-    }
+    }*/
 
     /**
-     * @param trainElement
+     *
+     * @param trainElement Azon vonatelem amely rá akar lépni
      */
     public void occupy(TrainElement trainElement) {
-        // TODO implement here
+        Logger.write("occupy(TrainElement) - EndVoid");
+        Logger.inc();
+        trainElement.stop();
+        Logger.dec();
     }
 
     /**
-     * @param rail 
-     * @return
+     * Következő sín lekéredezésére szolgáló függvény
+     * @param rail - Az a sín amelyikről érkezett a vonat
+     * @return Konstans önmagát adja vissza
      */
     public Rail next(Rail rail) {
-        // TODO implement here
-        return null;
+        Logger.write("next(Rail) - Endvoid");
+        return this;
     }
 
 }
