@@ -59,7 +59,7 @@ public class Locomotive implements TrainElement {
         Logger.logStart("void step()");
         Rail railNext = cur.next(prev);
         if(railNext == null){
-            System.out.println("GAME OVER: railNext = NULL");
+            Logger.logMessage("GAME OVER: railNext = NULL");
         }
         else {
             cur.leave();

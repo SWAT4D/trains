@@ -71,7 +71,7 @@ public class Car implements TrainElement {
         Scanner scanner = new Scanner(System.in);
 
         // FIRST CHECK
-        System.out.println("A " + this +" kocsi a vonat első, nem üres kocsija?");
+        Logger.logMessage("A " + this +" kocsi a vonat első, nem üres kocsija?");
         if (scanner.nextBoolean()==true){
 
             // COLOR CHECK
@@ -92,10 +92,10 @@ public class Car implements TrainElement {
         Logger.logStart("void stop(EndVoid endVoid)");
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Vannak utasok a " + this + " kocsin?");
+        Logger.logMessage("Vannak utasok a " + this + " kocsin?");
         // FULL CHECK
         if(scanner.nextBoolean()==true){
-            System.out.println("GAME OVER: Utasokat tartalmazó kocsi elhagyta a pályát");
+            Logger.logMessage("GAME OVER: Utasokat tartalmazó kocsi elhagyta a pályát");
         }
         else{
             this.moveNext();
