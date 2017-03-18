@@ -35,7 +35,7 @@ public class Car implements TrainElement {
      * @param car ezt a kocsit csatolja a kocsihoz
      */
     public void addNext(Car car) {
-        Logger.logStart("void addNext(Car car)");
+        Logger.logStart("addNext(Car) - Car");
         nextCar = car;
         Logger.logEnd();
     }
@@ -45,7 +45,7 @@ public class Car implements TrainElement {
      * @param rail ide mozgatja a kocsit
      */
     public void move(Rail rail) {
-        Logger.logStart("void move(Rail rail)");
+        Logger.logStart("move(Rail) - Car");
 
         cur.leave();
         rail.occupy(this);
@@ -57,7 +57,7 @@ public class Car implements TrainElement {
      * Ez a kocsi lesz a vonat első nem üres kocsija
      */
     public void markAsFirst() {
-        Logger.logStart("void markAsFirst()");
+        Logger.logStart("markAsFirst() - Car");
         Logger.logEnd();
     }
 
@@ -66,7 +66,7 @@ public class Car implements TrainElement {
      * @param color
      */
     public void empty(String color) {
-        Logger.logStart("void empty(String color)");
+        Logger.logStart("empty(String) - Car");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -89,7 +89,7 @@ public class Car implements TrainElement {
      * 
      */
     public void stop(EndVoid endVoid) {
-        Logger.logStart("void stop(EndVoid endVoid)");
+        Logger.logStart("stop(EndVoid) - Car");
 
         Scanner scanner = new Scanner(System.in);
         Logger.logMessage("Vannak utasok a " + this + " kocsin?");
@@ -113,7 +113,7 @@ public class Car implements TrainElement {
      *
      */
     public void moveNext() {
-        Logger.logStart("void moveNext()");
+        Logger.logStart("moveNext() - Car");
 
         if(nextCar != null){
             nextCar.move(cur);

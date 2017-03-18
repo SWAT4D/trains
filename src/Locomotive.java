@@ -38,7 +38,7 @@ public class Locomotive implements TrainElement {
      * @param car ezt a kocsit csatolja a mozdonyhoz
      */
     public void addNext(Car car) {
-        Logger.logStart("void addNext(Car car)");
+        Logger.logStart("addNext(Car) - Locomotive");
         nextCar = car;
         Logger.logEnd();
     }
@@ -47,7 +47,7 @@ public class Locomotive implements TrainElement {
      * @param entryPoint
      */
     public void setStartPlace(EntryPoint entryPoint) {
-        Logger.logStart("void setStartPlace(EntryPoint entryPoint)");
+        Logger.logStart("setStartPlace(EntryPoint) - Locomotive");
         cur = entryPoint;
         Logger.logEnd();
     }
@@ -56,7 +56,7 @@ public class Locomotive implements TrainElement {
      * Ezzel lehet a mozdonyt léptetni
      */
     public void step() {
-        Logger.logStart("void step()");
+        Logger.logStart("step() - Locomotive");
         Rail railNext = cur.next(prev);
         if(railNext == null){
             Logger.logMessage("GAME OVER: railNext = NULL");
@@ -74,7 +74,7 @@ public class Locomotive implements TrainElement {
      * @param color
      */
     public void empty(String color) {
-        Logger.logStart("void empty(String color)");
+        Logger.logStart("empty(String color) - Locomotive");
         Logger.logEnd();
     }
 
@@ -89,7 +89,7 @@ public class Locomotive implements TrainElement {
      * A vonat mögötti kocsit lépteti
      */
     public void moveNext() {
-        Logger.logStart("void moveNext()");
+        Logger.logStart("moveNext() - Locomotive");
         nextCar.move(cur);
         Logger.logEnd();
     }
