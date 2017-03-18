@@ -51,7 +51,7 @@ public class Logger {
             newStr += '\t';
         newStr+=msg;
 
-        System.out.println(newStr);
+        System.err.println(newStr);
     }
 
 
