@@ -1,3 +1,5 @@
+package trains;
+
 import java.util.*;
 
 /**

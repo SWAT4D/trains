@@ -1,3 +1,5 @@
+package trains;
+
 /**
  * A pályán kívülis sín osztálya.
  * Ha egy vonat erre ér akkor még egy utolsót ránt a vonatokon.

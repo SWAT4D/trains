@@ -1,3 +1,5 @@
+package trains;
+
 public class Main {
     static void main (String[] asrg){
 

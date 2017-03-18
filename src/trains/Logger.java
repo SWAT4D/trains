@@ -1,3 +1,5 @@
+package trains;
+
 /**
  * Logger oszály
  *
