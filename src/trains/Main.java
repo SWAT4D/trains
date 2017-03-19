@@ -18,7 +18,8 @@ public class Main {
         System.out.println("|    1. Vakvágányra érkezés                                        |	");
         System.out.println("|    2. Vonat mozgása ütközés detektálással                        |	");
         System.out.println("|    3. Kocsi utassal hagyja el a pályát                           |	");
-        System.out.println("|    4. Kilépés                                                    |	");
+        System.out.println("|    4. Kocsi állomásra léptetése                                  |	");
+        System.out.println("|    5. Kilépés                                                    |	");
         System.out.println("|                                                                  |	");
         System.out.println("|                                                                  |	");
         System.out.println("+------------------------------------------------------------------+	");
@@ -49,12 +50,18 @@ public class Main {
                     Logger.logMessage("Menübe való visszatéréshez nyomj entert");
                     scanner.nextLine(); // Discard '\n'
                     break;
+                case 4:
+                    STEP_TO_STATION();
+                    Logger.logMessage("Menübe való visszatéréshez nyomj entert");
+                    scanner.nextLine(); // Discard '\n'
+                    break;
             }
 
-        } while (select != 4);
+        } while (select != 5);
 
     }
 
+    
     static void STEP_TO_DEAD_END (){
 
         Logger.off();
@@ -88,7 +95,7 @@ public class Main {
 
         /**
          * Pályaelemek létrehozása a teszthez alapeset:
-         * EndVoid -> EntryPoint -> EntryPoint -> EndVoid
+         * EndVoid -> EntryPoint -> Rail
          */
         EndVoid ev = new EndVoid();
         EntryPoint ep1 = new EntryPoint();
@@ -157,5 +164,33 @@ public class Main {
          */
         l.step();
     }
+    
+    static void STEP_TO_STATION(){
+
+        Logger.off();
+        /**
+        * Pályaelemek létrehozása a teszthez
+        * Rail -> Station -> Rail
+        */
+        Rail r1 = new Rail();   //egy sín létrehozása
+        Rail r2 = new Rail();
+        Station st1 = new Station("valamilyenSzin"); //állomás létrehozása
+        Rail r3 = new Rail(); 
+        r2.addNext(r2);
+        r2.addNext(st1);
+        st1.addNext(r3);
+        
+        Locomotive l1 = new Locomotive(st1, r2); //mozdony létrehozása teszthez
+        Car c1 = new Car(r2);
+        Car c2 = new Car(r1);
+        l1.addNext(c1);
+        c1.addNext(c2);
+
+        Logger.on();
+
+        l1.step();
+        
+    }
+    
 }
 
