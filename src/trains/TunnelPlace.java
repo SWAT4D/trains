@@ -5,7 +5,6 @@ package trains;
  */
 public class TunnelPlace extends Rail {
 	private boolean isActive;
-	private Rail nextR, prevR;
    
 	/**
      * Default constructor
@@ -24,7 +23,8 @@ public class TunnelPlace extends Rail {
      * 
      */
     public void setActive() {
-    	if (isActive){
+    	Logger.logStart("Begin of activation of a TP.");
+    	if (!isActive){
     		Tunnel.activeTunnelPlace(this);
     	}
     	else{
@@ -32,6 +32,11 @@ public class TunnelPlace extends Rail {
     			Tunnel.inactiveTunnelPlace(this);
     		
     	}	
+    	Logger.logEnd();
+    }
+    
+    public void setIsActive(boolean value){
+    	isActive = value;
     }
 
     /**
