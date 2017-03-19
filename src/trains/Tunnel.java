@@ -46,7 +46,7 @@ public class Tunnel extends Rail {
      * @param tunnelPlace
      */
     public static void activeTunnelPlace(TunnelPlace tunnelPlace) {
-    	Logger.logStart("activeTunnelPlace(TunnelPlace) - " + this);
+    	Logger.logStart("activeTunnelPlace(TunnelPlace) - " + "Tunnel");
     	switch (activeNum){
 	    	case 0:
 	    		Logger.logMessage("TP activated. There are 1 active.");
@@ -54,7 +54,6 @@ public class Tunnel extends Rail {
 	    		start.addPrev(tunnelPlace);
 	    		activeNum++;
 	    		first.setIsActive(true);
-			Logger.logEnd();
 	    		break;
 	    	case 1:
 	    		Logger.logMessage("TP activated. There are 2 active.");
@@ -64,25 +63,23 @@ public class Tunnel extends Rail {
 	    		sec.addNext(end);
 	    		activeNum++;
 	    		sec.setIsActive(true);
-	    		Logger.logEnd();
 	    		break;
 	    	case 2:
 	    		Logger.logMessage("There are 2 active TPs already!");
-	    		Logger.logEnd();
 	    		break;
 	    	default:
 	    		Logger.logMessage("WTF! How did I get here?!");
-        		Logger.logEnd();
         		break;
 	    		
     	}
+	Logger.logEnd();
     }
 
     /**
      * @return
      */
     public static boolean isOccupied() {
-	Logger.logMessage("isOccupied() - " + this);
+	Logger.logMessage("isOccupied() - " + "Tunnel");
 	
         Logger.logEnd();
         return false;
@@ -92,7 +89,7 @@ public class Tunnel extends Rail {
      * @param tunnelPlace
      */
     public static void inactiveTunnelPlace(TunnelPlace tunnelPlace ) {
-    	Logger.logStart("inactiveTunnelPlace(TunnelPlace) - " + this);
+    	Logger.logStart("inactiveTunnelPlace(TunnelPlace) - " + "Tunnel");
     	switch (activeNum){
         	case 1:
         		Logger.logMessage("TP inactivated. There are 0 active.");
