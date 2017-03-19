@@ -23,10 +23,7 @@ public class Station extends Rail {
     public void occupy(TrainElement trainElement)
     {
         Logger.logStart("occupy(TrainElement) - " + this);
-
-        Logger.logMessage("Foglalt már a " + this + " állomás?");
-        Scanner sc = new Scanner(System.in);
-        if (sc.nextBoolean() == true)
+        if (Main.isoccupied == true)
         {
             Logger.logMessage("GAME OVER: Ütközés történt, két vonat egy pozíción tartózkodik.");
             Main.play=false;
@@ -36,7 +33,6 @@ public class Station extends Rail {
             trainElement.empty(color);
             trainElement.moveNext();
         }
-        sc.nextLine(); // Discard '\n'
         Logger.logEnd();
     }
 
