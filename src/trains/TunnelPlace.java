@@ -4,11 +4,19 @@ package trains;
  * 
  */
 public class TunnelPlace extends Rail {
-
-    /**
+	private boolean isActive;
+	private Rail nextR, prevR;
+   
+	/**
      * Default constructor
      */
     public TunnelPlace() {
+    	
+    	Logger.logStart("TunnelPlace Created");
+    	isActive = false;
+    	nextR = null;
+    	prevR = null;
+    	Logger.logEnd();
     }
 
 
@@ -16,14 +24,21 @@ public class TunnelPlace extends Rail {
      * 
      */
     public void setActive() {
-        // TODO implement here
+    	if (isActive){
+    		Tunnel.activeTunnelPlace(this);
+    	}
+    	else{
+    		if(!Tunnel.isOccupied())
+    			Tunnel.inactiveTunnelPlace(this);
+    		
+    	}	
     }
 
     /**
      * 
      */
     public void addTunnel() {
-        // TODO implement here
+        // Ez mi, és mire jó?
     }
 
 }
