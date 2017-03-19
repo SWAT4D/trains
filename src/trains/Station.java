@@ -33,7 +33,6 @@ public class Station extends Rail {
             trainElement.empty(color);
             trainElement.moveNext();
         }
-        sc.nextLine(); // Discard '\n'
         Logger.logEnd();
     }
 
