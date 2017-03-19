@@ -107,7 +107,6 @@ public class Car implements TrainElement {
         else{
             this.moveNext();
             // Ha van még kocsi kihuzzuk
-            // TODO: Késleltetés majd kéne
             if(Main.play) {
                 if (nextCar != null) {
                     nextCar.move(endVoid);
