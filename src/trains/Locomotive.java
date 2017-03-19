@@ -1,7 +1,7 @@
 package trains;
 
 /**
- * 
+ * A mozdony osztálya
  */
 public class Locomotive implements TrainElement {
 
@@ -37,7 +37,7 @@ public class Locomotive implements TrainElement {
      * @param car ezt a kocsit csatolja a mozdonyhoz
      */
     public void addNext(Car car) {
-        Logger.logStart("addNext(Car) - Locomotive");
+        Logger.logStart("addNext(Car) " + this);
         nextCar = car;
         Logger.logEnd();
     }
@@ -46,8 +46,9 @@ public class Locomotive implements TrainElement {
      * @param entryPoint
      */
     public void setStartPlace(EntryPoint entryPoint) {
-        Logger.logStart("setStartPlace(EntryPoint) - Locomotive");
+        Logger.logStart("setStartPlace(EntryPoint) " + this);
         cur = entryPoint;
+        cur.occupy(this);
         Logger.logEnd();
     }
 
@@ -55,16 +56,18 @@ public class Locomotive implements TrainElement {
      * Ezzel lehet a mozdonyt léptetni
      */
     public void step() {
-        Logger.logStart("step() - Locomotive");
+        //Logger.logStart("step() " + this);
         Rail railNext = cur.next(prev);
         if(railNext == null){
             Logger.logMessage("GAME OVER: Egy vonat vakvágányra ért, lefutott a sínről.");
+            Main.play=false;
         }
         else {
             cur.leave();
 
             railNext.occupy(this);
         }
+
         Logger.logEnd();
     }
 
@@ -73,25 +76,29 @@ public class Locomotive implements TrainElement {
      * @param color
      */
     public void empty(String color) {
-        Logger.logStart("empty(String) - Locomotive");
+        Logger.logStart("empty(String) " + this);
         Logger.logEnd();
     }
 
     /**
-     * HELP PLS
+     * Mozgatja a mögötte lévő kocsikat az endVoidra
+     * Akkor hívódik meg, ha endVoidra kerül a mozdony
+     * @param endVoid ide mozgatja a kocsikat
      */
     public void stop(EndVoid endVoid) {
-        Logger.logStart("stop(EndVoid) - Locomotive");
+        Logger.logStart("stop(EndVoid) " + this);
         moveNext();
-        nextCar.move(endVoid);
+        if(Main.play) {
+            nextCar.move(endVoid);
+        }
         Logger.logEnd();
     }
 
     /**
-     * A vonat mögötti kocsit lépteti
+     * A mozdony mögötti kocsit lépteti
      */
     public void moveNext() {
-        Logger.logStart("moveNext() - Locomotive");
+        Logger.logStart("moveNext() " + this);
         nextCar.move(cur);
         Logger.logEnd();
     }

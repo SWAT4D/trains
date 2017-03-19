@@ -1,7 +1,5 @@
 package trains;
 
-import java.util.*;
-
 /**
  * 
  */
@@ -9,6 +7,7 @@ public class Rail {
 
     private Rail nextR;
     private Rail prevR;
+    private TrainElement onRail;
     
     /**
      * Default constructor
@@ -17,6 +16,7 @@ public class Rail {
         Logger.logStart("Rail created");
         nextR = null;
         prevR = null;
+        onRail = null;
         Logger.logEnd();
     }
 
@@ -65,15 +65,16 @@ public class Rail {
      */
     public void occupy(TrainElement trainElement) {
         Logger.logStart("occupy(TrainElement) - " + this);
-        
-        Logger.logMessage("Foglalt már a " + this + " sín?");
-        Scanner sc = new Scanner(System.in);
-        if (sc.nextBoolean() == true){
+
+        if (onRail != null){
             Logger.logMessage("GAME OVER: Ütközés történt, két vonat egy pozíción tartózkodik.");
+            Main.play=false;
         }
         else {
             trainElement.moveNext();
+            onRail = trainElement;
         }
+
         Logger.logEnd();
     }
 
@@ -82,7 +83,7 @@ public class Rail {
      */
     public void leave() {
         Logger.logStart("leave() - " + this);
-        
+        onRail = null;
         Logger.logEnd();
     }
 
