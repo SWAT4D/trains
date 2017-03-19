@@ -216,6 +216,8 @@ public class Main {
         sw.addNextAlt(alt);
         
         Locomotive l = new Locomotive(sw, prev);//mozdony a teszthez
+        Car c = new Car(prev);
+        l.addNext(c);
         
         Logger.on();
         /*
