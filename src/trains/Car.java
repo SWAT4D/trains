@@ -22,6 +22,7 @@ public class Car implements TrainElement {
 
     /**
      * Egy endVoid paraméteres konstruktor, a kocsi a játékban endVoidról indul
+     * @param endVoid
      */
     public Car(EndVoid endVoid) {
         Logger.logStart("Car created");
@@ -65,17 +66,17 @@ public class Car implements TrainElement {
      * Kiüriti a kocsit, ha ez a kocsi az első nem üres kocsi, és a paraméterben kapott szín megegyezik a kocsi színével
      * @param color
      */
+    @Override
     public void empty(String color) {
         Logger.logStart("empty(String) " + this);
 
         Scanner scanner = new Scanner(System.in);
 
         // FIRST CHECK
-        Logger.logMessage("A " + this +" kocsi a vonat első, nem üres kocsija?");
+        Logger.logMessage("A " + this +" kocsi a vonat első, nem üres kocsija? (true/false)");
         if (scanner.nextBoolean()==true){
-
             // COLOR CHECK
-            String outMessage = ("Meg egyezik-e a " + this +" kocsi színe ezzel: " + color + "(i - igen, más - nem)");
+            Logger.logMessage("Meg egyezik-e a " + this +" kocsi színe ezzel: " + color + " (true/false)");
             if(scanner.nextBoolean()==true){
                 if(nextCar != null){
                     nextCar.markAsFirst();
@@ -92,6 +93,7 @@ public class Car implements TrainElement {
      * Akkor hívódik meg, ha endVoidra kerül a kocsi.
      * @param endVoid ide mozgatja a kocsikat
      */
+    @Override
     public void stop(EndVoid endVoid) {
         Logger.logStart("stop(EndVoid) " + this);
 
@@ -120,6 +122,7 @@ public class Car implements TrainElement {
     /**
      *  A kocsi mögötti kocsit lépteti
      */
+    @Override
     public void moveNext() {
         Logger.logStart("moveNext() " + this);
 
