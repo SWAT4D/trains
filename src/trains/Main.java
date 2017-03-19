@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static boolean play;
+    public static boolean isoccupied = false;
     public static void menu1(){
         System.out.println("  _______        _                 _        _      _              	");
         System.out.println(" |__   __|      (_)               | |      | |    | |             	");
@@ -91,11 +92,9 @@ public class Main {
          */
         EndVoid ev = new EndVoid();
         EntryPoint ep1 = new EntryPoint();
-        EntryPoint ep2 = new EntryPoint();
-
         ep1.addPrev(ev);
-        ep1.addNext(ep2);
-        ep2.addNext(ev);
+        Rail nextRail = new Rail(); //egy sín létrehozása
+        ep1.addNext(nextRail);
 
         /**
          * Teszt vizsgálata, ha nincs ütközés:
@@ -107,34 +106,26 @@ public class Main {
         Logger.logMessage("Van ütközés?(i/n)");
         Scanner sc = new Scanner(System.in);
         String ans = sc.next();
-        if(ans.equals("n")){
-            Logger.off();
-            Rail nextRail = new Rail(); //Köztes sín létrehozása
-            ep1.addNext(nextRail);
-            nextRail.addNext(ep2);
-            Logger.on();
+        if(ans.equals("i")){
+            Main.isoccupied = true;
         }
         Logger.logMessage("A választott opció: " + ans);
+        
         Logger.off();
-
         /**
          * Egy mozdony és hozzá egy kocsi
          *  - létrehozás és összekötés
          *  - mozdony kezdőpontra helyezése
          */
         Locomotive l1 = new Locomotive(ev);
-        Locomotive l2 = new Locomotive(ev);
         Car c1 = new Car(ev);
-        Car c2 = new Car(ev);
         l1.addNext(c1);
-        l2.addNext(c2);
         l1.setStartPlace(ep1);
-        l2.setStartPlace(ep2);
 
         Logger.on();
 
         l1.step();
-
+        Main.isoccupied = false;    //hogy ne lehessen true véletlen
     }
 
     static void REMAIN_PASSENGER(){
