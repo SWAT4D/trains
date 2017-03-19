@@ -23,7 +23,7 @@ public class TunnelPlace extends Rail {
      * 
      */
     public void setActive() {
-    	Logger.logStart("Begin of activation of a TP.");
+    	Logger.logStart("setActive() - " + this);
     	if (!isActive){
     		Tunnel.activeTunnelPlace(this);
     	}
@@ -42,8 +42,10 @@ public class TunnelPlace extends Rail {
     /**
      * 
      */
-    public void addTunnel() {
-        // Ez mi, és mire jó?
+    public void addTunnel(Tunnel t) {
+        Logger.logStart("addTunnel(Tunnel) - " + this);
+	//itt most nem csinál semmi publikus dolgot
+	Logger.logEnd();
     }
 
 }
