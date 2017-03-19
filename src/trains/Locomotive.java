@@ -48,6 +48,7 @@ public class Locomotive implements TrainElement {
     public void setStartPlace(EntryPoint entryPoint) {
         Logger.logStart("setStartPlace(EntryPoint) " + this);
         cur = entryPoint;
+        cur.occupy(this);
         Logger.logEnd();
     }
 
@@ -55,7 +56,7 @@ public class Locomotive implements TrainElement {
      * Ezzel lehet a mozdonyt léptetni
      */
     public void step() {
-        Logger.logStart("step() " + this);
+        //Logger.logStart("step() " + this);
         Rail railNext = cur.next(prev);
         if(railNext == null){
             Logger.logMessage("GAME OVER: Egy vonat vakvágányra ért, lefutott a sínről.");
