@@ -19,7 +19,8 @@ public class Main {
         System.out.println("|    2. Vonat mozgása ütközés detektálással                        |	");
         System.out.println("|    3. Kocsi utassal hagyja el a pályát                           |	");
         System.out.println("|    4. Kocsi állomásra léptetése                                  |	");
-        System.out.println("|    5. Kilépés                                                    |	");
+        System.out.println("|    5. Váltó váltása                                              |	");
+        System.out.println("|    6. Kilépés                                                    |	");
         System.out.println("|                                                                  |	");
         System.out.println("|                                                                  |	");
         System.out.println("+------------------------------------------------------------------+	");
@@ -55,9 +56,15 @@ public class Main {
                     Logger.logMessage("Menübe való visszatéréshez nyomj entert");
                     scanner.nextLine(); // Discard '\n'
                     break;
+                    
+                case 5:
+                    SWITCH_THE_SWITCH();
+                    Logger.logMessage("Menübe való visszatéréshez nyomj entert");
+                    scanner.nextLine(); // Discard '\n'
+                    break;
             }
 
-        } while (select != 5);
+        } while (select != 6);
 
     }
 
@@ -190,6 +197,33 @@ public class Main {
 
         l1.step();
         
+    }
+                        
+    static void SWITCH_THE_SWITCH()
+    {
+        Logger.off();
+        /*
+        *Pálya elemek létrehozása a teszthez
+        *Rail -> Switch -> Rail
+        *               -> Rail
+        */
+        Rail main = new Rail();   //sínek létrehozása
+        Rail alt = new Rail();
+        Rail prev = new Rail();
+        Switch sw = new Switch(); //váltó létrehozása
+        prev.addNext(sw);//sínek összekötése
+        sw.addNext(main);
+        sw.addNextAlt(alt);
+        
+        Locomotive l = new Locomotive(sw, prev);//mozdony a teszthez
+        
+        Logger.on();
+        /*
+        *A váltó az alaphelyzetből a mellékágra vált.
+        *A vonat áthalad a váltón
+        */
+        sw.switchIt();
+        l.step();
     }
     
 }
