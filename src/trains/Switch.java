@@ -39,6 +39,7 @@ public class Switch extends Rail {
         Logger.logStart("switchIt() - " + this);
         if (isMain) isMain = false;
         else isMain = true;
+        Logger.logEnd();
     }
 
     /**
