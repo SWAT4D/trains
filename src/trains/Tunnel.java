@@ -91,6 +91,7 @@ public class Tunnel extends Rail {
         		start.addPrev(null);
 	    		first = null;
 	    		activeNum--;
+			Logger.logEnd();
         		break;
         	case 2:
         		
