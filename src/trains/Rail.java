@@ -25,7 +25,8 @@ public class Rail {
     public void addNext(Rail next) {
         Logger.logStart("addNext(Rail) - " + this);
         nextR = next;
-        nextR.addPrev(this);
+        if (nextR != null)
+            nextR.addPrev(this);
         Logger.logEnd();
     }
 

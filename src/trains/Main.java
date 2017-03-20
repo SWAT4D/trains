@@ -254,6 +254,9 @@ public class Main {
     	TunnelPlace t1 = new TunnelPlace(); //create TunnelPlaces
         TunnelPlace t2 = new TunnelPlace();
         TunnelPlace t3 = new TunnelPlace();
+        t1.addTunnel(tt);
+        t2.addTunnel(tt);
+        t3.addTunnel(tt);
         
         Logger.on();
         

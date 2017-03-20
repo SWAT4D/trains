@@ -1,5 +1,7 @@
 package trains;
 
+import java.util.Scanner;
+
 /**
  * 
  */
@@ -45,18 +47,18 @@ public class Tunnel extends Rail {
     /**
      * @param tunnelPlace
      */
-    public static void activeTunnelPlace(TunnelPlace tunnelPlace) {
-    	Logger.logStart("activeTunnelPlace(TunnelPlace) - " + "Tunnel");
+    public void activeTunnelPlace(TunnelPlace tunnelPlace) {
+    	Logger.logStart("activeTunnelPlace(TunnelPlace) - " + this);
     	switch (activeNum){
 	    	case 0:
-	    		Logger.logMessage("TP activated. There are 1 active.");
+	    		Logger.logMessage("TP activated. There is 1 active.");
 	    		first = tunnelPlace;
 	    		start.addPrev(tunnelPlace);
 	    		activeNum++;
 	    		first.setIsActive(true);
 	    		break;
 	    	case 1:
-	    		Logger.logMessage("TP activated. There are 2 active.");
+	    		Logger.logMessage("TP activated. There are 2 actives.");
 	    		sec = tunnelPlace;
 	    		end.addNext(sec);
 	    		first.addNext(start);
@@ -78,18 +80,25 @@ public class Tunnel extends Rail {
     /**
      * @return
      */
-    public static boolean isOccupied() {
-	Logger.logMessage("isOccupied() - " + "Tunnel");
-	
-        Logger.logEnd();
-        return false;
+    public boolean isOccupied() {
+	Logger.logMessage("isOccupied() - " + this);
+        Scanner sc = new Scanner(System.in); 
+        Logger.logMessage("Foglalt az alagút? (true/false)");
+        if (sc.nextBoolean()==true){
+            Logger.logEnd();
+            return true;
+        }
+        else{
+            Logger.logEnd();
+            return false;
+        }
     }
 
     /**
      * @param tunnelPlace
      */
-    public static void inactiveTunnelPlace(TunnelPlace tunnelPlace ) {
-    	Logger.logStart("inactiveTunnelPlace(TunnelPlace) - " + "Tunnel");
+    public void inactiveTunnelPlace(TunnelPlace tunnelPlace ) {
+    	Logger.logStart("inactiveTunnelPlace(TunnelPlace) - " + this);
     	switch (activeNum){
         	case 1:
         		Logger.logMessage("TP inactivated. There are 0 active.");
