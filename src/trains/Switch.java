@@ -5,7 +5,7 @@ package trains;
  */
 public class Switch extends Rail {
 
-    private Rail nextAltR;
+    protected Rail nextAltR;
     private boolean isMain;
     /**
      * Default constructor
@@ -26,8 +26,8 @@ public class Switch extends Rail {
     public void addNextAlt(Rail next)
     {
         Logger.logStart("addNextAlt(Rail) - " + this);
-        nextR = next;
-        nextR.addPrev(this);
+        nextAltR = next;
+        nextAltR.addPrev(this);
         Logger.logEnd();
     }
 
@@ -39,6 +39,7 @@ public class Switch extends Rail {
         Logger.logStart("switchIt() - " + this);
         if (isMain) isMain = false;
         else isMain = true;
+        Logger.logEnd();
     }
 
     /**
@@ -82,6 +83,10 @@ public class Switch extends Rail {
                     return prevR;
                 }
                 else return null;
+            }
+            else
+            {
+                return null;
             }
         }
     }

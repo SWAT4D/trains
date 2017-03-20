@@ -19,7 +19,9 @@ public class Main {
         System.out.println("|    2. Vonat mozgása ütközés detektálással                        |	");
         System.out.println("|    3. Kocsi utassal hagyja el a pályát                           |	");
         System.out.println("|    4. Kocsi állomásra léptetése                                  |	");
-        System.out.println("|    5. Kilépés                                                    |	");
+        System.out.println("|    5. Váltó váltása                                              |	");
+        System.out.println("|    6. Alagút szimulálása                                         |	");
+        System.out.println("|    7. Kilépés                                                    |	");
         System.out.println("|                                                                  |	");
         System.out.println("|                                                                  |	");
         System.out.println("+------------------------------------------------------------------+	");
@@ -55,9 +57,20 @@ public class Main {
                     Logger.logMessage("Menübe való visszatéréshez nyomj entert");
                     scanner.nextLine(); // Discard '\n'
                     break;
+                    
+                case 5:
+                    SWITCH_THE_SWITCH();
+                    Logger.logMessage("Menübe való visszatéréshez nyomj entert");
+                    scanner.nextLine(); // Discard '\n'
+                    break;
+                case 6:
+                    BUILD_TUNNEL();
+                    Logger.logMessage("Menübe való visszatéréshez nyomj entert");
+                    scanner.nextLine(); // Discard '\n'
+                    break;
             }
 
-        } while (select != 5);
+        } while (select != 7);
 
     }
 
@@ -190,6 +203,65 @@ public class Main {
 
         l1.step();
         
+    }
+                        
+    static void SWITCH_THE_SWITCH()
+    {
+        Logger.off();
+        /*
+        *Pálya elemek létrehozása a teszthez
+        *Rail -> Switch -> Rail
+        *               -> Rail
+        */
+        Rail main = new Rail();   //sínek létrehozása
+        Rail alt = new Rail();
+        Rail prev = new Rail();
+        Switch sw = new Switch(); //váltó létrehozása
+        prev.addNext(sw);//sínek összekötése
+        sw.addNext(main);
+        sw.addNextAlt(alt);
+        
+        Locomotive l = new Locomotive(sw, prev);//mozdony a teszthez
+        Car c = new Car(prev);
+        l.addNext(c);
+        
+        Logger.on();
+        /*
+        *A váltó az alaphelyzetből a mellékágra vált.
+        *A vonat áthalad a váltón
+        */
+        
+        Logger.logMessage("Átakarod váltani a váltót?(i/n)");
+        Scanner sc = new Scanner(System.in);
+        String ans = sc.next();
+        if(ans.equals("i"))
+            sw.switchIt();
+        l.step();
+    }
+    
+    static void BUILD_TUNNEL(){
+    	
+    	/**
+         * Pályaelemek létrehozása a teszthez
+         * EndVoid -> EntryPoint -> null
+         */
+        Logger.off();
+        
+    	EndVoid ev = new EndVoid();
+    	EntryPoint ep = new EntryPoint();
+    	ep.addPrev(ev);
+    	Tunnel tt = Tunnel.getInstance();  
+    	TunnelPlace t1 = new TunnelPlace(); //create TunnelPlaces
+        TunnelPlace t2 = new TunnelPlace();
+        TunnelPlace t3 = new TunnelPlace();
+        
+        Logger.on();
+        
+    	t1.setActive();
+    	t2.setActive();
+    	t3.setActive();
+    	t2.setActive();
+
     }
     
 }
