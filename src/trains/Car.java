@@ -98,7 +98,7 @@ public class Car implements TrainElement {
         Logger.logStart("stop(EndVoid) " + this);
 
         Scanner scanner = new Scanner(System.in);
-        Logger.logMessage("Vannak utasok a " + this + " kocsin?");
+        Logger.logMessage("Vannak utasok a " + this + " kocsin? (true/false)");
         // FULL CHECK
         if(scanner.nextBoolean()==true){
             Logger.logMessage("GAME OVER: Utasokat tartalmazó kocsi elhagyta a pályát");
