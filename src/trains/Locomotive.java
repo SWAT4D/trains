@@ -68,7 +68,7 @@ public class Locomotive implements TrainElement {
             railNext.occupy(this);
         }
 
-        Logger.logEnd();
+        //Logger.logEnd();
     }
 
     /**
