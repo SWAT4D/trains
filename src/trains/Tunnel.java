@@ -7,12 +7,12 @@ import java.util.Scanner;
  */
 public class Tunnel extends Rail {
 	
-	private static Rail start, end;
+	private Rail start, end;
 	/**
 	 * Currently active TPs
 	 */
-	private static int activeNum = 0;
-	private static TunnelPlace first, sec;
+	private int activeNum = 0;
+	private TunnelPlace first, sec;
 	private static Tunnel instance = null;
     
 	/**
@@ -42,6 +42,15 @@ public class Tunnel extends Rail {
          }
          return instance;
    }
+    
+   /**
+     * Csak a teszthez ki lehet törölni az intance-ot
+     * 
+     */
+   public static void clearInstance(){
+       instance = null;
+   } 
+   
 
 
     /**
