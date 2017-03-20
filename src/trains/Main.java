@@ -264,7 +264,8 @@ public class Main {
     	t2.setActive();
     	t3.setActive();
     	t2.setActive();
-
+        
+        Tunnel.clearInstance();
     }
     
 }
