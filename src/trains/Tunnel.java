@@ -56,7 +56,6 @@ public class Tunnel extends Rail {
 	    		start.addPrev(tunnelPlace);
 	    		activeNum++;
 	    		first.setIsActive(true);
-			Logger.logEnd();
 	    		break;
 	    	case 1:
 	    		Logger.logMessage("TP activated. There are 2 actives.");
@@ -66,18 +65,16 @@ public class Tunnel extends Rail {
 	    		sec.addNext(end);
 	    		activeNum++;
 	    		sec.setIsActive(true);
-	    		Logger.logEnd();
 	    		break;
 	    	case 2:
 	    		Logger.logMessage("There are 2 active TPs already!");
-	    		Logger.logEnd();
 	    		break;
 	    	default:
 	    		Logger.logMessage("WTF! How did I get here?!");
-        		Logger.logEnd();
         		break;
 	    		
     	}
+	Logger.logEnd();
     }
 
     /**
