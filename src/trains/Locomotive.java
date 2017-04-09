@@ -3,7 +3,7 @@ package trains;
 /**
  * A mozdony osztálya
  */
-public class Locomotive implements TrainElement {
+public class Locomotive extends Placeable implements TrainElement {
 
     private Car nextCar;
     private Rail cur;
@@ -59,7 +59,7 @@ public class Locomotive implements TrainElement {
         Rail railNext = cur.next(prev);
         if(railNext == null){
             Logger.logMessage("GAME OVER: Egy vonat vakvágányra ért, lefutott a sínről.");
-            Main.play=false;
+            //Main.play=false;
         }
         else {
             cur.leave();
@@ -87,9 +87,9 @@ public class Locomotive implements TrainElement {
     public void stop(EndVoid endVoid) {
         Logger.logStart("stop(EndVoid) " + this);
         moveNext();
-        if(Main.play) {
+        /*if(Main.play) {
             nextCar.move(endVoid);
-        }
+        }*/
         Logger.logEnd();
     }
 

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * A kocsi osztálya
  */
-public class Car implements TrainElement {
+public class Car extends Placeable implements TrainElement {
 
     private Car nextCar;
     private Rail cur;
@@ -100,17 +100,17 @@ public class Car implements TrainElement {
         // FULL CHECK
         if(scanner.nextBoolean()==true){
             Logger.logMessage("GAME OVER: Utasokat tartalmazó kocsi elhagyta a pályát");
-            Main.play=false;
+            //Main.play=false;
         }
         else{
             this.moveNext();
             // Ha van még kocsi kihuzzuk
             // TODO: Késleltetés majd kéne
-            if(Main.play) {
+            /*if(Main.play) {
                 if (nextCar != null) {
                     nextCar.move(endVoid);
                 }
-            }
+            }*/
         }
         scanner.nextLine(); // Discard '\n'
         Logger.logEnd();
