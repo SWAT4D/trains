@@ -1,6 +1,8 @@
 package trains;
 
-
+/**
+ * 
+ */
 public class Rail {
 
     protected Rail nextR;
@@ -47,13 +49,11 @@ public class Rail {
     /**
      * A sín elfoglalása egy vonat álltal
      * @param trainElement
-     * @throws java.lang.Exception
+     * @throws trains.OccupyException
      */
-    public void occupy(TrainElement trainElement) throws Exception{
-        // TODO Exception álltalunk csinált leszármazottját dobni
-        // TODO összes leszármazottjában is be kell állítani ezt!
+    public void occupy(TrainElement trainElement) throws OccupyException{
         if (isOccupied){
-            throw new Exception();
+            throw new OccupyException(this);
         }
         else {
             trainElement.moveNext();
@@ -67,4 +67,5 @@ public class Rail {
     public void leave() {
         isOccupied = false;
     }
+
 }
