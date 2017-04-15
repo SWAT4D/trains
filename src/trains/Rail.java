@@ -1,8 +1,6 @@
 package trains;
 
-/**
- * 
- */
+
 public class Rail {
 
     protected Rail nextR;
@@ -69,5 +67,4 @@ public class Rail {
     public void leave() {
         isOccupied = false;
     }
-
 }
