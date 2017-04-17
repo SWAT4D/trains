@@ -108,7 +108,7 @@ public class Car implements TrainElement {
         else{
             this.moveNext();
             // Ha van még kocsi kihuzzuk
-<<<<<<< HEAD
+
             // TODO: Késleltetés majd kéne
             /*if(Main.play) {
 =======
@@ -137,12 +137,12 @@ public class Car implements TrainElement {
         Logger.logEnd();
     }
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
     @Override
     public String toString() {
         return "c";
     }
 }
-=======
+/*=======
 }
->>>>>>> refs/remotes/origin/master
+>>>>>>> refs/remotes/origin/master*/

@@ -22,6 +22,7 @@ public class Station extends Rail {
      */
     public void occupy(TrainElement trainElement)
     {
+        /*
         Logger.logStart("occupy(TrainElement) - " + this);
         if (Main.isoccupied == true)
         {
@@ -33,7 +34,7 @@ public class Station extends Rail {
             trainElement.empty(color);
             trainElement.moveNext();
         }
-        Logger.logEnd();
+        Logger.logEnd();*/
     }
 
 }

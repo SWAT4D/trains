@@ -9,12 +9,7 @@ public class Rail{
     protected Rail prevR;
     protected TrainElement tr;
 
-<<<<<<< HEAD
-=======
-    protected Rail nextR;
-    protected Rail prevR;
-    
->>>>>>> refs/remotes/origin/master
+
     /**
      * Default constructor
      */
@@ -71,18 +66,6 @@ public class Rail{
      * @param trainElement
      */
     public void occupy(TrainElement trainElement) {
-        Logger.logStart("occupy(TrainElement) - " + this);
-
-        if (Main.isoccupied){
-            Logger.logMessage("GAME OVER: Ütközés történt, két vonat egy pozíción tartózkodik.");
-            //Main.play=false;
-        }
-        else {
-            trainElement.moveNext();
-            tr = trainElement;
-        }
-
-        Logger.logEnd();
     }
 
     public TrainElement getTrain(){
@@ -94,10 +77,6 @@ public class Rail{
      */
     public void leave() {
         Logger.logStart("leave() - " + this);
-<<<<<<< HEAD
-        tr = null;
-=======
->>>>>>> refs/remotes/origin/master
         Logger.logEnd();
     }
 

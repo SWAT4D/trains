@@ -103,12 +103,9 @@ public class Locomotive implements TrainElement {
         Logger.logEnd();
     }
 
-<<<<<<< HEAD
+
     @Override
     public String toString() {
         return "l";
     }
 }
-=======
-}
->>>>>>> refs/remotes/origin/master
