@@ -47,4 +47,8 @@ public class TunnelPlace extends Rail {
 	Logger.logEnd();
     }
 
+	@Override
+	public String toString() {
+		return "T";
+	}
 }

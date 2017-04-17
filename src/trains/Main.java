@@ -152,7 +152,7 @@ public class Main {
                         if(carnum!=(commands.length-3))
                             throw new RuntimeException("Bad command!");
                         String[] colors = new String[carnum];
-                        for(int clr = 0;i<carnum;i++){
+                        for(int clr = 0;i<carnum;clr++){
                             colors[clr] = commands[3+clr];
                         }
                         placetrain(commands[0], Koo.parseKoo(commands[1]).dec(), Integer.parseInt(commands[2]), colors);
@@ -205,8 +205,10 @@ public class Main {
                 r = new Cross();
                 break;
         }
-        if(prev != null)
+        if(prev != null) {
             prev.addNext(r);
+            r.addPrev(prev);
+        }
         prev = r;
 
         addRailToMap(pos, r);
