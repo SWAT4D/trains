@@ -41,17 +41,9 @@ public class TunnelPlace extends Rail {
     public void addTunnel(Tunnel t) {
 	tunnel = t;
     }
-<<<<<<< HEAD
 
-	@Override
-	public String toString() {
-		return "T";
-	}
-=======
-    
     @Override
     public String toString(){
         return "T";
     }
->>>>>>> refs/remotes/origin/master
 }
