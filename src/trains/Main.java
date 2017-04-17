@@ -19,7 +19,10 @@ public class Main {
 
     //Mozgatáshoz tároljuk az összes mozdonyt
     private static ArrayList<Locomotive> locolist;
-
+    
+    // Alagút a szájak nyilvántartására és a velük végzendő műveletekhez
+    private static Tunnel T;
+    
     //Csak inicializálja a tagváltozókat
     private static void init() {
         switchlist = new TreeMap<>();
@@ -27,6 +30,7 @@ public class Main {
         map = new TreeMap<Koo, Rail>();
         ev = new EndVoid();
         locolist = new ArrayList<>();
+        T = Tunnel.getInstance();
     }
 
     //Köszöntő képernyő
@@ -314,7 +318,7 @@ public class Main {
 
                 if(command == "act"){
                     TunnelPlace sel = (TunnelPlace) entry.getValue();
-                    sel.setActive();
+                    T.activeTunnelPlace(sel);
                 }else{
                     Switch sel = (Switch)entry.getValue();
                     sel.switchIt();
