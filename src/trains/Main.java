@@ -124,7 +124,10 @@ public class Main {
                 boolean CMDCLASS5 = Pattern.matches(regex5, commands_line);
                 boolean CMDCLASS6 = Pattern.matches(regex6, commands_line);
                 if (!(CMDCLASS1 || CMDCLASS2 || CMDCLASS3 || CMDCLASS4 || CMDCLASS5 || CMDCLASS6))
-                    throw new RuntimeException("Bad command!");
+                {
+                    System.out.println("Bad command!");
+                    continue;
+                }
                 String[] commands = commands_line.split(" ");
                 int i = 0;
                 while (true) {
@@ -148,7 +151,10 @@ public class Main {
                     if (CMDCLASS4) {
                         int carnum=Integer.parseInt(commands[2]);
                         if(carnum!=(commands.length-3))
-                            throw new RuntimeException("Bad command!");
+                        {
+                            System.out.println("Bad command!");
+                            continue;
+                        }
                         String[] colors = new String[carnum];
                         for(int clr = 0;i<carnum;i++){
                             colors[clr] = commands[3+clr];
