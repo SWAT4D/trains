@@ -5,13 +5,14 @@ import java.awt.*;
 public class CoalCar extends Car{
 
     @Override
-    public void markAsFirst(){
-        if(nextCar != null)
-            nextCar.markAsFirst();
+    public void markFirst(boolean value){
+        if(carBehind != null) {
+            carBehind.markFirst(false);
+        }
     }
 
     @Override
-    public void empty(Color color){
+    public void empty(String color){
 
     }
 

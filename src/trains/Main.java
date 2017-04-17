@@ -130,7 +130,10 @@ public class Main {
                 boolean CMDCLASS5 = Pattern.matches(regex5, commands_line);
                 boolean CMDCLASS6 = Pattern.matches(regex6, commands_line);
                 if (!(CMDCLASS1 || CMDCLASS2 || CMDCLASS3 || CMDCLASS4 || CMDCLASS5 || CMDCLASS6))
-                    throw new RuntimeException("Bad command!");
+                {
+                    System.out.println("Bad command!");
+                    continue;
+                }
                 String[] commands = commands_line.split(" ");
                 int i = 0;
                 while (true) {
@@ -154,10 +157,14 @@ public class Main {
                     if (CMDCLASS4) {
                         int carnum=Integer.parseInt(commands[2]);
                         if(carnum!=(commands.length-3))
-                            throw new RuntimeException("Bad command!");
+                        {
+                            System.out.println("Bad command!");
+                            continue;
+                        }
                         String[] colors = new String[carnum];
-                        for(int clr = 0;i<carnum;i++){
+                        for(int clr = 0; clr < carnum; clr++){
                             colors[clr] = commands[3+clr];
+                            i++; // Moving offset
                         }
                         placetrain(commands[0], Koo.parseKoo(commands[1]).dec(), Integer.parseInt(commands[2]), colors);
                         i += 3;
@@ -182,7 +189,7 @@ public class Main {
                 mapWriteOut();
             }
         }catch (OccupyException oe){
-            System.out.println("GAME OVER!");
+            System.out.println("GAME OVER!: " + oe.getMessage());
         }
 
 
@@ -283,17 +290,18 @@ public class Main {
                     Locomotive l = new Locomotive(ep,ev);
                     locolist.add(l);
                     ep.setTrain(l);
-                    Car prevCar = new Car(ev,colors[0]);
+                    Car prevCar = new Car(ev, colors[0]);
+
                     l.addNext(prevCar);
                     prevCar.addNext(null);
-                    for(int i =0;i<carnum-1;i++){
+                    for(int i =1;i<carnum;i++){
                         if(colors[i]=="c"){
                             CoalCar cc = new CoalCar(ev);
                             prevCar.addNext(cc);
                             cc.addNext(null);
                             prevCar = cc;
                         }else {
-                            Car c = new Car(ev, colors[i-1]);
+                            Car c = new Car(ev, colors[i]);
                             prevCar.addNext(c);
                             c.addNext(null);
                             prevCar = c;
