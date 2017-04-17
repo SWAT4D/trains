@@ -1,17 +1,22 @@
 package trains;
 
-/**
- * 
- */
 public class EntryPoint extends Rail {
 
-    /**
-     * Default constructor
-     */
-    public EntryPoint() {
-        Logger.logStart("EntryPoint created");
-        
-        Logger.logEnd();
+    EntryPoint(EndVoid ev){
+        prevR = ev;
     }
 
+    @Override
+    public void addNext(Rail next) {
+        nextR =next;
+    }
+
+    public void setTrain(Locomotive l){
+        train = l;
+    }
+    
+    @Override
+    public String toString(){
+        return "E";
+    }
 }

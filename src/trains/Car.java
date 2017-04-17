@@ -1,5 +1,6 @@
 package trains;
 
+import java.awt.*;
 import java.util.*;
 
 /**
@@ -7,29 +8,25 @@ import java.util.*;
  */
 public class Car implements TrainElement {
 
-    private Car nextCar;
-    private Rail cur;
+    protected Car carBehind;
+    protected TrainElement carAhead;
+    protected Rail cur;
+    protected String color;
+    protected boolean isFirst;
+    protected boolean isFull;
 
-    /**
-     * 1 paraméteres konstruktor, teszteléshez használható
-     * @param cur A kocs előző pozíciója
-     */
-    public Car(Rail cur) {
-        Logger.logStart("Car created");
-        this.cur = cur;
-        Logger.logEnd();
-    }
 
     /**
      * Egy endVoid paraméteres konstruktor, a kocsi a játékban endVoidról indul
      * @param endVoid
      */
-    public Car(EndVoid endVoid) {
+    public Car(EndVoid endVoid, String color) {
         Logger.logStart("Car created");
         cur = endVoid;
+        this.color = color;
         Logger.logEnd();
-    }
 
+    }
 
     /**
      * A kocsihoz csatol egy kocsit
@@ -37,29 +34,51 @@ public class Car implements TrainElement {
      */
     public void addNext(Car car) {
         Logger.logStart("addNext(Car) - " + this);
-        nextCar = car;
+        carBehind = car;
+        if (carBehind != null)
+            carBehind.addPrev(this);
         Logger.logEnd();
+    }
+
+    /**
+     * Elozo elem hozzaadasa
+     * @param prev
+     */
+    public void addPrev(TrainElement prev) {
+        carAhead = prev;
     }
 
     /**
      * Elmozditja a kocsit
      * @param rail ide mozgatja a kocsit
      */
-    public void move(Rail rail) {
-        Logger.logStart("move(Rail) - " + this);
-
+    public void move(Rail rail) throws OccupyException {
         cur.leave();
         rail.occupy(this);
-
-        Logger.logEnd();
+        cur = rail;
     }
 
     /**
-     * Ez a kocsi lesz a vonat első nem üres kocsija
+     * Az osztály isFirst attribútuma a függvény paraméterben kapott értékre változik.
+     * Ha van a kocsi mögött még kocsi akkor meghívja ezen is a markFirst függvényt false paraméterrel.
+     * Ha üres a és van mögötte még kocsi akkor meghívja ezen is a markFirst függvényt true paraméterrel.
+     * @param value erre az értékre állítja
      */
-    public void markAsFirst() {
-        Logger.logStart("markAsFirst() - " + this);
-        Logger.logEnd();
+    public void markFirst(boolean value) {
+        // Ha üres a kocsi, és első nem üres kocsinak akkarjuk megjelölni,
+        // akkor maradjon, hamis az isFirst-je és jelölje a mögötte lévő kocsit első nem üresnek
+        if(value || !isFull){
+            this.isFirst = false;
+            if(carBehind != null){
+                carBehind.markFirst(true);
+            }
+        }
+        else{
+            this.isFirst = value;
+            if(carBehind != null) {
+                carBehind.markFirst(false);
+            }
+        }
     }
 
     /**
@@ -68,67 +87,72 @@ public class Car implements TrainElement {
      */
     @Override
     public void empty(String color) {
-        Logger.logStart("empty(String) " + this);
-
-        Scanner scanner = new Scanner(System.in);
-
-        // FIRST CHECK
-        Logger.logMessage("A " + this +" kocsi a vonat első, nem üres kocsija? (true/false)");
-        if (scanner.nextBoolean()==true){
-            // COLOR CHECK
-            Logger.logMessage("Meg egyezik-e a " + this +" kocsi színe ezzel: " + color + " (true/false)");
-            if(scanner.nextBoolean()==true){
-                if(nextCar != null){
-                    nextCar.markAsFirst();
+        if (isFirst){
+            if(this.color.equals(color)){
+                isFull = false; // Kiürítjuk a kocsit
+                if(carBehind != null){
+                    carBehind.markFirst(true);
                 }
             }
         }
-        scanner.nextLine(); // Discard '\n'
-        Logger.logEnd();
     }
 
     /**
-     * Ha nincsenek utasok a kocsin, akkor mozgatja a mögötte lévő kocsikat az endVoidra.
+     * A teljes vonat pályaelhagyásáért felelős
+     * EndVoid hívja meg, ha ráért az adott TrainElement
+     * Ezzel jelzi a TrainElementnek, hogy a pálya szélére ért
      * Ha vannak utasok a kocsin, akkor a vége a játéknak.
-     * Akkor hívódik meg, ha endVoidra kerül a kocsi.
-     * @param endVoid ide mozgatja a kocsikat
+     * Ha nincs következő kocsi (tehát ez az utolsó kocsi),
+     * akkor meghívja az előtte lévő kocsi finish függvényét.
+     * @param endVoid
      */
     @Override
-    public void stop(EndVoid endVoid) {
-        Logger.logStart("stop(EndVoid) " + this);
-
-        Scanner scanner = new Scanner(System.in);
-        Logger.logMessage("Vannak utasok a " + this + " kocsin?");
+    public void leave(EndVoid endVoid) throws OccupyException {
         // FULL CHECK
-        if(scanner.nextBoolean()==true){
-            Logger.logMessage("GAME OVER: Utasokat tartalmazó kocsi elhagyta a pályát");
-            Main.play=false;
+        if(isFull){
+           throw new OccupyException(endVoid);
         }
-        else{
-            this.moveNext();
-            // Ha van még kocsi kihuzzuk
-            if(Main.play) {
-                if (nextCar != null) {
-                    nextCar.move(endVoid);
-                }
-            }
+        if(carBehind == null){
+            carAhead.finish();
         }
-        scanner.nextLine(); // Discard '\n'
-        Logger.logEnd();
     }
 
+    /**
+     * Visszatérési értéke egy boolean,
+     * ami azt határozza meg hogy ettől a kocsitól kezdve (ezt is beleértve)
+     * van-e az első nem üres kocsi.
+     * Tehát a visszatérési értékét úgy határozza meg,
+     * hogy meghivja az isFirstForward() függvényt az elötte lévő kocsin,
+     * és ha ez igazzal tér vissza vagy ez a kocsi az első,
+     * akkor igazzal tér vissza különben hamissal.
+     */
+    @Override
+    public boolean isFirstForward(){
+        return (isFirst || carAhead.isFirstForward());
+    }
 
     /**
      *  A kocsi mögötti kocsit lépteti
      */
     @Override
-    public void moveNext() {
-        Logger.logStart("moveNext() " + this);
-
-        if(nextCar != null){
-            nextCar.move(cur);
+    public void moveNext() throws OccupyException {
+        if(carBehind != null){
+            carBehind.move(cur);
         }
-        Logger.logEnd();
     }
 
+
+    /**
+     *  Hatására meghívja az előtte lévő kocsi finish fügvényét.
+     */
+    @Override
+    public void finish() {
+        carAhead.finish();
+    }
+
+    @Override
+    public String toString() {
+        return color;
+    }
 }
+
