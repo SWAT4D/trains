@@ -41,7 +41,7 @@ public class TunnelPlace extends Rail {
     public void addTunnel(Tunnel t) {
 	tunnel = t;
     }
-    
+
     @Override
     public String toString(){
         return "T";

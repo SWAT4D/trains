@@ -6,11 +6,13 @@ package trains;
  * Mindig önmagára mutat ha a következő sínre kérdez a hívó.
  */
 public class EndVoid extends Rail {
+
     /**
      * @param trainElement Azon vonatelem amely rá akar lépni
      */
     public void occupy(TrainElement trainElement) throws OccupyException {
         trainElement.leave(this);
+
     }
 
     /**
