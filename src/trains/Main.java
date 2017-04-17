@@ -150,7 +150,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
         while (input.hasNext()) {
             String commands_line = input.nextLine();
-            String regex1 = "(newRail (r|sw|e|tp) \\([1-9][1-9]*,[1-9][1-9]*\\))*";
+            String regex1 = "(newRail (r|sw|e|tp) \\([1-9][1-9]*,[1-9][1-9]*\\)( |))*";
             String regex2 = "newRail c (\\([1-9][1-9]*,[1-9][1-9]*\\)){5}";
             String regex3 = "sw (\\([1-9][1-9]*,[1-9][1-9]*\\)){2}";
             String regex4 = "(newRail (st|gst) \\([1-9][1-9]*,[1-9][1-9]*\\) (r|g|b))*";
