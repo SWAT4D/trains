@@ -7,18 +7,14 @@ public class Rail{
 
     protected Rail nextR;
     protected Rail prevR;
-    protected TrainElement tr;
-
-
+    protected boolean isOccupied;
     /**
      * Default constructor
      */
     public Rail() {
-        Logger.logStart("Rail created");
         nextR = null;
         prevR = null;
-        tr = null;
-        Logger.logEnd();
+        isOccupied = false;
     }
 
     /**
@@ -26,58 +22,49 @@ public class Rail{
      * @param next
      */
     public void addNext(Rail next) {
-        Logger.logStart("addNext(Rail) - " + this);
         nextR = next;
         if (nextR != null)
             nextR.addPrev(this);
-        Logger.logEnd();
     }
 
     /**
      * Elozo elem hozzaadasa
-     * @param rail
+     * @param prev
      */
-    public void addPrev(Rail rail) {
-        Logger.logStart("addPrev(Rail) - " + this);
-        prevR = rail;
-        Logger.logEnd();
+    public void addPrev(Rail prev) {
+        prevR = prev;
     }
 
     /**
-     * Következő elem lekérése
-     * @param prev 
+     * Következő elem lekérése az előző alapján
+     * @param prev előző sín
      * @return
      */
     public Rail next(Rail prev) {
-        Logger.logStart("next(Rail) - " + this);
-        
-        if (nextR != prev){
-            Logger.logEnd();
-            return nextR;
-        }
-        else {
-            Logger.logEnd();
-            return prevR;
-        }
+        if (prevR == prev) return nextR;
+        else               return prevR;
     }
 
     /**
      * A sín elfoglalása egy vonat álltal
      * @param trainElement
+     * @throws trains.OccupyException
      */
-    public void occupy(TrainElement trainElement) {
-    }
-
-    public TrainElement getTrain(){
-        return tr;
+    public void occupy(TrainElement trainElement) throws OccupyException{
+        if (isOccupied){
+            throw new OccupyException(this);
+        }
+        else {
+            trainElement.moveNext();
+            isOccupied = true;
+        }
     }
 
     /**
      * A sín elhagyása egy vonat álltal
      */
     public void leave() {
-        Logger.logStart("leave() - " + this);
-        Logger.logEnd();
+        isOccupied = false;
     }
 
     @Override
