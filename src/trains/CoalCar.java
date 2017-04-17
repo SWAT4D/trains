@@ -18,4 +18,5 @@ public class CoalCar extends Car{
     public CoalCar(EndVoid endVoid) {
         super(endVoid, "c");
     }
+
 }

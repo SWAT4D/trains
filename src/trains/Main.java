@@ -88,6 +88,8 @@ public class Main {
             }
             System.out.print("\n");
         }
+
+        System.out.println("");
     }
 
     public static void addRailToMap(Koo pos, Rail r) {
@@ -97,7 +99,7 @@ public class Main {
     //LEADÁS ELŐTT TÖRÖLNI KELL!
     /*Saját tesztelésre*/
     public static void test(){
-        EntryPoint THE_Rail = new EntryPoint();
+        EntryPoint THE_Rail = new EntryPoint(ev);
         addRailToMap(new Koo(1,1), THE_Rail);
         Locomotive l = new Locomotive(THE_Rail, THE_Rail);
         THE_Rail.setTrain(l);
@@ -194,7 +196,7 @@ public class Main {
                 r = new Rail();
                 break;
             case "e":
-                r = new EntryPoint();
+                r = new EntryPoint(ev);
                 break;
             case "sw":
                 r = new Switch();
@@ -281,7 +283,7 @@ public class Main {
                     Locomotive l = new Locomotive(ep,ev);
                     locolist.add(l);
                     ep.setTrain(l);
-                    Car prevCar = new Car(ev);
+                    Car prevCar = new Car(ev,colors[0]);
                     l.addNext(prevCar);
                     prevCar.addNext(null);
                     for(int i =0;i<carnum-1;i++){
@@ -291,7 +293,7 @@ public class Main {
                             cc.addNext(null);
                             prevCar = cc;
                         }else {
-                            Car c = new Car(ev, colors[i]);
+                            Car c = new Car(ev, colors[i-1]);
                             prevCar.addNext(c);
                             c.addNext(null);
                             prevCar = c;
