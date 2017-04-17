@@ -8,9 +8,9 @@ import java.util.*;
  */
 public class Car implements TrainElement {
 
-    private Car nextCar;
-    private Rail cur;
-    private String clr;
+    protected Car nextCar;
+    protected Rail cur;
+    protected String clr;
 
     /**
      * 1 paraméteres konstruktor, teszteléshez használható
