@@ -70,6 +70,10 @@ public class Rail{
         isOccupied = false;
         train = null;
     }
+    
+    public TrainElement getTrain(){
+        return train;
+    }
 
     @Override
     public String toString(){
