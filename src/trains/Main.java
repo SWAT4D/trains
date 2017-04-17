@@ -112,10 +112,10 @@ public class Main {
                 String commands_line = input.nextLine();
                 String regex1 = "(((newRail (r|sw|e|tp) \\([1-9][1-9]*,[1-9][1-9]*\\))|(newRail (st|gst) \\([1-9][1-9]*,[1-9][1-9]*\\) (r|g|b)))( |))*";
                 String regex2 = "newRail c (\\([1-9][1-9]*,[1-9][1-9]*\\)( )*){5}";
-                String regex3 = "sw (\\([1-9][1-9]*,[1-9][1-9]*\\)){2}";
+                String regex3 = "sw (\\([1-9][1-9]*,[1-9][1-9]*\\)( )*){2}";
                 String regex4 = "loco \\([1-9][1-9]*,[1-9][1-9]*\\) [1-9][0-9]*( r| g| b| c)+";
                 String regex5 = "(act|switch) \\([1-9][0-9]*,[1-9][0-9]*\\)";
-                String regex6 = "move [1-9]*";
+                String regex6 = "move [1-9][0-9]*";
 
                 boolean CMDCLASS1 = Pattern.matches(regex1, commands_line);
                 boolean CMDCLASS2 = Pattern.matches(regex2, commands_line);
@@ -129,7 +129,7 @@ public class Main {
                 int i = 0;
                 while (true) {
                     if (CMDCLASS1) {
-                        if (commands[1] == "st" || commands[1] == "gst") {
+                        if (commands[i+1].equals("st") || commands[i+1].equals("gst")) {
                             build(commands[i + 1], Koo.parseKoo(commands[i + 2]), commands[i + 3]);
                             i += 4;
                         } else {
@@ -142,7 +142,7 @@ public class Main {
                         i += 7;
                     }
                     if (CMDCLASS3) {
-                        connectSwitch(Koo.parseKoo(commands[2]), Koo.parseKoo(commands[3]));
+                        connectSwitch(Koo.parseKoo(commands[1]), Koo.parseKoo(commands[2]));
                         i += 4;
                     }
                     if (CMDCLASS4) {
