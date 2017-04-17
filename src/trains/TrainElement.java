@@ -41,4 +41,9 @@ public interface TrainElement {
      */
     public void inside();
 
+
+    /**
+     * Utasok szállnak fel a TrainElementre
+     */
+    public void fillCar();
 }

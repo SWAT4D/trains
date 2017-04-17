@@ -162,5 +162,20 @@ public class Car implements TrainElement {
     public String toString() {
         return color;
     }
+
+
+    /**
+     * Utasok szállnak fel a kocsira
+     */
+    @Override
+    public void fillCar() {
+        isFull = true;
+        // Ha az eddig első nem üres kocsi ez a kocsi mögött van,
+        // akkor ez lesz az első nem üres kocsi,
+        if( !carAhead.isFirstForward()){
+            isFirst = true;
+            carBehind.markFirst(false);
+        }
+    }
 }
 

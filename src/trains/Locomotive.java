@@ -126,17 +126,10 @@ public class Locomotive implements TrainElement {
         return "l";
     }
 
-    /*    *
-     * Mozgatja a mögötte lévő kocsikat az endVoidra
-     * Akkor hívódik meg, ha endVoidra kerül a mozdony
-     * @param endVoid ide mozgatja a kocsikat
-
-    public void stop(EndVoid endVoid) throws OccupyException {
-        Logger.logStart("stop(EndVoid) " + this);
-        moveNext();
-        if(Main.play) {
-            nextCar.move(endVoid);
-        }
-        Logger.logEnd();
-    }*/
+    /**
+     * Utasok próbálnak felszállni a mozdonyra.
+     * Ezt nem tehetik meg, nem történik semmi.
+     */
+    @Override
+    public void fillCar() {}
 }
