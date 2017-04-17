@@ -3,11 +3,13 @@ package trains;
 /**
  * 
  */
-public class Rail {
+public class Rail{
 
     protected Rail nextR;
     protected Rail prevR;
-    
+    protected TrainElement tr;
+
+
     /**
      * Default constructor
      */
@@ -15,6 +17,7 @@ public class Rail {
         Logger.logStart("Rail created");
         nextR = null;
         prevR = null;
+        tr = null;
         Logger.logEnd();
     }
 
@@ -63,17 +66,10 @@ public class Rail {
      * @param trainElement
      */
     public void occupy(TrainElement trainElement) {
-        Logger.logStart("occupy(TrainElement) - " + this);
+    }
 
-        if (Main.isoccupied){
-            Logger.logMessage("GAME OVER: Ütközés történt, két vonat egy pozíción tartózkodik.");
-            Main.play=false;
-        }
-        else {
-            trainElement.moveNext();
-        }
-
-        Logger.logEnd();
+    public TrainElement getTrain(){
+        return tr;
     }
 
     /**
@@ -84,4 +80,8 @@ public class Rail {
         Logger.logEnd();
     }
 
+    @Override
+    public String toString(){
+        return "+";
+    }
 }
