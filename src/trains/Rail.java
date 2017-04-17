@@ -3,12 +3,11 @@ package trains;
 /**
  * 
  */
-public class Rail {
+public class Rail{
 
     protected Rail nextR;
     protected Rail prevR;
     protected boolean isOccupied;
-    
     /**
      * Default constructor
      */
@@ -68,4 +67,8 @@ public class Rail {
         isOccupied = false;
     }
 
+    @Override
+    public String toString(){
+        return "+";
+    }
 }

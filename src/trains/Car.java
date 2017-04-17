@@ -10,6 +10,7 @@ public class Car implements TrainElement {
     private Car nextCar;
     private Rail cur;
 
+
     /**
      * 1 paraméteres konstruktor, teszteléshez használható
      * @param cur A kocs előző pozíciója
@@ -98,20 +99,25 @@ public class Car implements TrainElement {
         Logger.logStart("stop(EndVoid) " + this);
 
         Scanner scanner = new Scanner(System.in);
-        Logger.logMessage("Vannak utasok a " + this + " kocsin?");
+        Logger.logMessage("Vannak utasok a " + this + " kocsin? (true/false)");
         // FULL CHECK
         if(scanner.nextBoolean()==true){
             Logger.logMessage("GAME OVER: Utasokat tartalmazó kocsi elhagyta a pályát");
-            Main.play=false;
+            //Main.play=false;
         }
         else{
             this.moveNext();
             // Ha van még kocsi kihuzzuk
+
+            // TODO: Késleltetés majd kéne
+            /*if(Main.play) {
+=======
             if(Main.play) {
+>>>>>>> refs/remotes/origin/master
                 if (nextCar != null) {
                     nextCar.move(endVoid);
                 }
-            }
+            }*/
         }
         scanner.nextLine(); // Discard '\n'
         Logger.logEnd();
@@ -131,4 +137,12 @@ public class Car implements TrainElement {
         Logger.logEnd();
     }
 
+//<<<<<<< HEAD
+    @Override
+    public String toString() {
+        return "c";
+    }
 }
+/*=======
+}
+>>>>>>> refs/remotes/origin/master*/
