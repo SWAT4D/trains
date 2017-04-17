@@ -156,8 +156,9 @@ public class Main {
                             continue;
                         }
                         String[] colors = new String[carnum];
-                        for(int clr = 0;i<carnum;i++){
+                        for(int clr = 0; clr < carnum; clr++){
                             colors[clr] = commands[3+clr];
+                            i++; // Moving offset
                         }
                         placetrain(commands[0], Koo.parseKoo(commands[1]).dec(), Integer.parseInt(commands[2]), colors);
                         i += 3;
@@ -286,7 +287,7 @@ public class Main {
                     Car prevCar = new Car(ev, colors[0]);
                     l.addNext(prevCar);
                     prevCar.addNext(null);
-                    for(int i =1;i<carnum-1;i++){
+                    for(int i =1;i<carnum;i++){
                         if(colors[i]=="c"){
                             CoalCar cc = new CoalCar(ev);
                             prevCar.addNext(cc);
