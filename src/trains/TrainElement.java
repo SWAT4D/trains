@@ -36,4 +36,9 @@ public interface TrainElement {
      */
     public void finish();
 
+    /**
+     * Jelzi a TrainElementnek, hogy beért a pályára
+     */
+    public void inside();
+
 }

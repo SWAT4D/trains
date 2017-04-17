@@ -12,8 +12,9 @@ public class Car implements TrainElement {
     protected TrainElement carAhead;
     protected Rail cur;
     protected String color;
-    protected boolean isFirst;
-    protected boolean isFull;
+    protected boolean isFirst = false;
+    protected boolean isFull = true;
+    protected boolean inside = false;
 
 
     /**
@@ -33,11 +34,9 @@ public class Car implements TrainElement {
      * @param car ezt a kocsit csatolja a kocsihoz
      */
     public void addNext(Car car) {
-        Logger.logStart("addNext(Car) - " + this);
         carBehind = car;
         if (carBehind != null)
             carBehind.addPrev(this);
-        Logger.logEnd();
     }
 
     /**
@@ -46,6 +45,7 @@ public class Car implements TrainElement {
      */
     public void addPrev(TrainElement prev) {
         carAhead = prev;
+        isFirst = !carAhead.isFirstForward();
     }
 
     /**
@@ -108,12 +108,14 @@ public class Car implements TrainElement {
      */
     @Override
     public void leave(EndVoid endVoid) throws OccupyException {
-        // FULL CHECK
-        if(isFull){
-           throw new OccupyException(endVoid);
-        }
-        if(carBehind == null){
-            carAhead.finish();
+        if(inside){
+            // FULL CHECK
+            if(isFull){
+                throw new OccupyException(endVoid);
+            }
+            if(carBehind == null){
+                carAhead.finish();
+            }
         }
     }
 
@@ -149,6 +151,12 @@ public class Car implements TrainElement {
     public void finish() {
         carAhead.finish();
     }
+
+    @Override
+    public void inside() {
+        inside = true;
+    }
+
 
     @Override
     public String toString() {
