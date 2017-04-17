@@ -13,7 +13,9 @@ public class Locomotive implements TrainElement {
     private Car nextCar;
     private Rail cur;
     private Rail prev;
-    boolean finish;
+    boolean finish= false;
+    boolean locoOut = false;
+
 
     /**
      * 2 paraméteres konstruktor
@@ -23,8 +25,8 @@ public class Locomotive implements TrainElement {
     public Locomotive(Rail cur, Rail prev) {
         this.cur = cur;
         this.prev = prev;
-        Logger.logEnd();
         finish = false;
+        locoOut = false;
     }
 
     /**
@@ -32,8 +34,8 @@ public class Locomotive implements TrainElement {
      */
     public Locomotive(EndVoid ev) {
         prev = ev;
-        Logger.logEnd();
         finish = false;
+        locoOut = false;
     }
 
 
@@ -89,12 +91,13 @@ public class Locomotive implements TrainElement {
      * A teljes vonat pályaelhagyásáért felelős
      * EndVoid hívja meg, ha ráért az adott TrainElement
      * Ezzel jelzi a TrainElementnek, hogy a pálya szélére ért
-     * A mozdony ezzel nem kezd semmit. A függvény hatására nem történik semmi
      * A mozdony megvárja a kocsijai kiérjenek és szoljanak neki, hogy kiértek.
      * @param endVoid
      */
     @Override
-    public void leave(EndVoid endVoid) {}
+    public void leave(EndVoid endVoid) {
+        locoOut = true;
+    }
 
     @Override
     public boolean isFirstForward() {
@@ -114,7 +117,9 @@ public class Locomotive implements TrainElement {
      */
     @Override
     public void finish() {
-        finish = true;
+        if(locoOut){
+            finish = true;
+        }
     }
 
     /**
