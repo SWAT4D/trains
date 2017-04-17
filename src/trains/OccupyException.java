@@ -9,6 +9,10 @@ public class OccupyException extends Exception{
     public OccupyException(Rail rail){
        message = rail.toString() + "-en Ütközés történt";
     }
+
+    public OccupyException(EntryPoint ep){
+        message = ep.toString() + "-en utasokat tartalmazó kocsi elhagyta a pályát";
+    }
     
     public OccupyException(){
        message = "Ütközés történt";
