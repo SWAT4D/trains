@@ -113,7 +113,7 @@ public class Main {
                 String regex1 = "(((newRail (r|sw|e|tp) \\([1-9][1-9]*,[1-9][1-9]*\\))|(newRail (st|gst) \\([1-9][1-9]*,[1-9][1-9]*\\) (r|g|b)))( |))*";
                 String regex2 = "newRail c (\\([1-9][1-9]*,[1-9][1-9]*\\)){5}";
                 String regex3 = "sw (\\([1-9][1-9]*,[1-9][1-9]*\\)){2}";
-                String regex4 = "loco \\([1-9][1-9]*,[1-9][1-9]*\\) [1-9][0-9]* (r|g|b|c)*";
+                String regex4 = "loco \\([1-9][1-9]*,[1-9][1-9]*\\) [1-9][0-9]*( r| g| b| c)+";
                 String regex5 = "(act|switch) \\([1-9][0-9]*,[1-9][0-9]*\\)";
                 String regex6 = "move [2-9]*";
 
