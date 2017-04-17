@@ -50,8 +50,6 @@ public class Koo implements Comparable {
         return new Koo(Integer.parseInt(c[0]),Integer.parseInt(c[1]));
     }
     public Koo dec(){
-        x--;
-        y--;
-        return this;
+        return new Koo(x-1,y-1);
     }
 }
