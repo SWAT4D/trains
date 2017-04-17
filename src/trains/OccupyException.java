@@ -17,6 +17,9 @@ public class OccupyException extends Exception{
     public OccupyException(){
        message = "Ütközés történt";
     }
+    public OccupyException(String s){
+        message = s;
+    }
     
     @Override
     public String getMessage() {

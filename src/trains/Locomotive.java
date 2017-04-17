@@ -66,7 +66,7 @@ public class Locomotive implements TrainElement {
         if( !finish ) {
             Rail railNext = cur.next(prev);
             if (railNext == null) {
-                throw new OccupyException();
+                throw new OccupyException("Vakvágányra futott a vonat");
             } else {
                 cur.leave();
                 prev = cur;

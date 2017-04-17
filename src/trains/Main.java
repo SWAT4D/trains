@@ -182,7 +182,7 @@ public class Main {
                 mapWriteOut();
             }
         }catch (OccupyException oe){
-            System.out.println("GAME OVER!");
+            System.out.println("GAME OVER!: " + oe.getMessage());
         }
 
 
