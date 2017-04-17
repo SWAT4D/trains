@@ -228,7 +228,6 @@ public class Main {
         addRailToMap(koo, c);
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo1.dec()) == 0){
-                c.addNext(entry.getValue());
                 entry.getValue().addNext(c);
                 break;
             }
@@ -236,21 +235,18 @@ public class Main {
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo2.dec()) == 0){
                 c.addNext(entry.getValue());
-                entry.getValue().addNext(c);
                 break;
             }
         }
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo3.dec()) == 0){
-                c.addNextAlt(entry.getValue());
                 entry.getValue().addNext(c);
                 break;
             }
         }
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo4.dec()) == 0){
-                c.addPrevAlt(entry.getValue());
-                entry.getValue().addNext(c);
+                c.addNext(entry.getValue());
                 break;
             }
         }
@@ -264,7 +260,7 @@ public class Main {
         for(Map.Entry<Koo, Switch> sw : switchlist.entrySet()) {
             if (sw.getKey().compareTo(koo) == 0){
                 for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
-                    if (entry.getKey().compareTo(koo1) == 0){
+                    if (entry.getKey().compareTo(koo1.dec()) == 0){
                         sw.getValue().addNextAlt(entry.getValue());
                         switchlist.remove(koo);
                     }
@@ -314,7 +310,7 @@ public class Main {
 
     private static void turner(String command, Koo koo) {
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
-            if (entry.getKey().compareTo(koo) == 0){
+            if (entry.getKey().compareTo(koo.dec()) == 0){
 
                 if(command == "act"){
                     TunnelPlace sel = (TunnelPlace) entry.getValue();
