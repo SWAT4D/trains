@@ -233,6 +233,11 @@ public class Main {
                 s = new GiverStation(color);
                 break;
         }
+        
+        if(prev != null)
+            prev.addNext(s);
+        prev = s;
+        
         addRailToMap(pos, s);
     }
 
