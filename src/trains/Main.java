@@ -203,7 +203,8 @@ public class Main {
                 r = new Cross();
                 break;
         }
-        prev.addNext(r);
+        if(prev != null)
+            prev.addNext(r);
         prev = r;
 
         addRailToMap(pos, r);
