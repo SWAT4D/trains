@@ -3,33 +3,39 @@ package trains;
 import java.awt.*;
 
 /**
- * A mozdony osztálya
+ * A mozdony osztálya, a játékban a mozdonyt reprezentálja.
+ * Ismeri aktuális és előző pozícióját (Rail).
+ * Képes egyik Rail-ről átlépni a haladási iránya szerinti következőre (step függvény hatására).
+ * Lépésekor, húzza a maga után következő kocsit.
  */
 public class Locomotive implements TrainElement {
 
     private Car nextCar;
     private Rail cur;
     private Rail prev;
+    boolean finish= false;
+    boolean locoOut = false;
+
 
     /**
-     * 2 paraméteres konstruktor teszteléshez használható
+     * 2 paraméteres konstruktor
      * @param cur A mozdony aktuális pozíciója
      * @param prev A mozdony előző pozíciója
      */
     public Locomotive(Rail cur, Rail prev) {
-        Logger.logStart("Locomotive created");
         this.cur = cur;
         this.prev = prev;
-        Logger.logEnd();
+        finish = false;
+        locoOut = false;
     }
 
     /**
      * Egy endVoid paraméteres konstruktor, a mozdony elözö poziciója a játékban az endVoid
      */
     public Locomotive(EndVoid ev) {
-        Logger.logStart("Locomotive created");
         prev = ev;
-        Logger.logEnd();
+        finish = false;
+        locoOut = false;
     }
 
 
@@ -39,71 +45,58 @@ public class Locomotive implements TrainElement {
      * @param car ezt a kocsit csatolja a mozdonyhoz
      */
     public void addNext(Car car) {
-        Logger.logStart("addNext(Car) " + this);
         nextCar = car;
-        Logger.logEnd();
+        if (nextCar != null)
+            nextCar.addPrev(this);
     }
 
     /**
      * @param entryPoint
      */
     public void setStartPlace(EntryPoint entryPoint) throws OccupyException {
-        Logger.logStart("setStartPlace(EntryPoint) " + this);
         cur = entryPoint;
         cur.occupy(this);
-        Logger.logEnd();
     }
 
     /**
      * Ezzel lehet a mozdonyt léptetni
      */
     public void step() throws OccupyException {
-        //Logger.logStart("step() " + this);
-        Rail railNext = cur.next(prev);
-        if(railNext == null){
-            Logger.logMessage("GAME OVER: Egy vonat vakvágányra ért, lefutott a sínről.");
-            //Main.play=false;
-        }
-        else {
-            cur.leave();
+        // Ha még vannak kocsik amik nem értek ki a pályáról, akkor léptetjük csak
+        if( !finish ) {
+            Rail railNext = cur.next(prev);
+            if (railNext == null) {
+                throw new OccupyException("Vakvágányra futott a vonat");
+            } else {
+                cur.leave();
+                prev = cur;
 
-            railNext.occupy(this);
+                railNext.occupy(this);
+                cur = railNext;
+            }
         }
 
-        //Logger.logEnd();
     }
+
 
     /**
-     * Nem csinál semmit
-     * @param color
+     * Ez kezeli azt az eseményt, ha a vonat elem állomásra került
+     * A mozdony ekkor nem csinál semmit
+     * @param color állomás színe
      */
-    public void empty(String color) {
-        Logger.logStart("empty(String) " + this);
-        Logger.logEnd();
-    }
-
-    /**
-     * Mozgatja a mögötte lévő kocsikat az endVoidra
-     * Akkor hívódik meg, ha endVoidra kerül a mozdony
-     * @param endVoid ide mozgatja a kocsikat
-     */
-    public void stop(EndVoid endVoid) throws OccupyException {
-        Logger.logStart("stop(EndVoid) " + this);
-        moveNext();
-        /*if(Main.play) {
-            nextCar.move(endVoid);
-        }*/
-        Logger.logEnd();
-    }
-
     @Override
-    public void empty(Color color) {
+    public void empty(String color) {}
 
-    }
-
+    /**
+     * A teljes vonat pályaelhagyásáért felelős
+     * EndVoid hívja meg, ha ráért az adott TrainElement
+     * Ezzel jelzi a TrainElementnek, hogy a pálya szélére ért
+     * A mozdony megvárja a kocsijai kiérjenek és szoljanak neki, hogy kiértek.
+     * @param endVoid
+     */
     @Override
     public void leave(EndVoid endVoid) {
-
+        locoOut = true;
     }
 
     @Override
@@ -115,14 +108,39 @@ public class Locomotive implements TrainElement {
      * A mozdony mögötti kocsit lépteti
      */
     public void moveNext() throws OccupyException {
-        Logger.logStart("moveNext() " + this);
         nextCar.move(cur);
-        Logger.logEnd();
     }
 
 
+    /**
+     * Hatására átállítja a finish attribútum értékét igazra.
+     */
+    @Override
+    public void finish() {
+        if(locoOut){
+            finish = true;
+        }
+    }
+
+    /**
+     * Visszatér az mozdony pályán való jelével
+     */
     @Override
     public String toString() {
         return "l";
     }
+
+    /*    *
+     * Mozgatja a mögötte lévő kocsikat az endVoidra
+     * Akkor hívódik meg, ha endVoidra kerül a mozdony
+     * @param endVoid ide mozgatja a kocsikat
+
+    public void stop(EndVoid endVoid) throws OccupyException {
+        Logger.logStart("stop(EndVoid) " + this);
+        moveNext();
+        if(Main.play) {
+            nextCar.move(endVoid);
+        }
+        Logger.logEnd();
+    }*/
 }

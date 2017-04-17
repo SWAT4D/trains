@@ -6,11 +6,9 @@ package trains;
  * Mindig önmagára mutat ha a következő sínre kérdez a hívó.
  */
 public class EndVoid extends Rail {
-    /**
-     * @param Car Azon vonatelem amely rá akar lépni
-     */
+
     public void occupy(Car car) throws OccupyException {
-        car.stop(this);
+        car.finish();
     }
     public void occupy(Locomotive loco) throws OccupyException {
     }

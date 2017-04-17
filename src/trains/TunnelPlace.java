@@ -8,21 +8,17 @@ public class TunnelPlace extends Rail {
         private Tunnel tunnel;
    
 	/**
-     * Default constructor
+     * Alapértelmezett konstruktor.
      */
     public TunnelPlace() {
-    	
-    	Logger.logStart("TunnelPlace Created");
     	isActive = false;
-    	Logger.logEnd();
     }
 
 
     /**
-     * 
+     * Aktiválás
      */
     public void setActive() {
-    	Logger.logStart("setActive() - " + this);
     	if (!isActive){
     		tunnel.activeTunnelPlace(this);
     	}
@@ -31,24 +27,31 @@ public class TunnelPlace extends Rail {
     			tunnel.inactiveTunnelPlace(this);
     		
     	}	
-    	Logger.logEnd();
     }
-    
+    /**
+     * Inaktiválás
+     */
     public void setIsActive(boolean value){
     	isActive = value;
     }
 
     /**
-     * 
+     * Alagút hozzáadása
      */
     public void addTunnel(Tunnel t) {
-        Logger.logStart("addTunnel(Tunnel) - " + this);
 	tunnel = t;
-	Logger.logEnd();
     }
+<<<<<<< HEAD
 
 	@Override
 	public String toString() {
 		return "T";
 	}
+=======
+    
+    @Override
+    public String toString(){
+        return "T";
+    }
+>>>>>>> refs/remotes/origin/master
 }
