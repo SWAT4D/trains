@@ -295,7 +295,7 @@ public class Main {
                     l.addNext(prevCar);
                     prevCar.addNext(null);
                     for(int i =1;i<carnum;i++){
-                        if(colors[i]=="c"){
+                        if(colors[i].equals("c")){
                             CoalCar cc = new CoalCar(ev);
                             prevCar.addNext(cc);
                             cc.addNext(null);
@@ -326,7 +326,7 @@ public class Main {
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo.dec()) == 0){
 
-                if(command == "act"){
+                if(command.equals("act")){
                     TunnelPlace sel = (TunnelPlace) entry.getValue();
                     T.activeTunnelPlace(sel);
                 }else{
