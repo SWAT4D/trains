@@ -8,12 +8,14 @@ public class Rail{
     protected Rail nextR;
     protected Rail prevR;
     protected boolean isOccupied;
+    protected TrainElement train;
     /**
      * Default constructor
      */
     public Rail() {
         nextR = null;
         prevR = null;
+        train = null;
         isOccupied = false;
     }
 
@@ -57,6 +59,7 @@ public class Rail{
         else {
             trainElement.moveNext();
             isOccupied = true;
+            train = trainElement;
         }
     }
 
@@ -65,6 +68,11 @@ public class Rail{
      */
     public void leave() {
         isOccupied = false;
+        train = null;
+    }
+    
+    public TrainElement getTrain(){
+        return train;
     }
 
     @Override
