@@ -1,7 +1,5 @@
 package trains;
 
-import java.util.*;
-
 /**
  * 
  */
@@ -11,6 +9,12 @@ public class Rail{
     protected Rail prevR;
     protected TrainElement tr;
 
+<<<<<<< HEAD
+=======
+    protected Rail nextR;
+    protected Rail prevR;
+    
+>>>>>>> refs/remotes/origin/master
     /**
      * Default constructor
      */
@@ -29,7 +33,8 @@ public class Rail{
     public void addNext(Rail next) {
         Logger.logStart("addNext(Rail) - " + this);
         nextR = next;
-        nextR.addPrev(this);
+        if (nextR != null)
+            nextR.addPrev(this);
         Logger.logEnd();
     }
 
@@ -67,10 +72,8 @@ public class Rail{
      */
     public void occupy(TrainElement trainElement) {
         Logger.logStart("occupy(TrainElement) - " + this);
-        
-        Logger.logMessage("Foglalt már a " + this + " sín?");
-        Scanner sc = new Scanner(System.in);
-        if (sc.nextBoolean() == true){
+
+        if (Main.isoccupied){
             Logger.logMessage("GAME OVER: Ütközés történt, két vonat egy pozíción tartózkodik.");
             //Main.play=false;
         }
@@ -78,7 +81,7 @@ public class Rail{
             trainElement.moveNext();
             tr = trainElement;
         }
-        sc.nextLine(); // Discard '\n'
+
         Logger.logEnd();
     }
 
@@ -91,7 +94,10 @@ public class Rail{
      */
     public void leave() {
         Logger.logStart("leave() - " + this);
+<<<<<<< HEAD
         tr = null;
+=======
+>>>>>>> refs/remotes/origin/master
         Logger.logEnd();
     }
 

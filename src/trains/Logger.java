@@ -15,21 +15,35 @@ package trains;
 
 public class Logger {
     private static int tab; //Tabulátorok száma.
+    private static boolean log;
+
+    static void init(){
+        tab=0;
+        log = true;
+    }
 
     /**
      * A növeli a tabulátorokat és a kimenetre írja a kapott string-et
      * @param msg - A string amit ki kell írnia (tabulátorok nélkül)
      */
     public static void logStart(String msg){
+        if(log){
+            String msg2 ="";
+            if(msg.contains(".")&&msg.contains("@"))
+                 msg2 = msg.replace("trains.", "");
             //Tabulátorok hozzáadása a kapott stringhez
             String newStr ="";
             for(int i=0;i<tab;i++)
                 newStr += '\t';
-            newStr+=msg;
+            if(msg.contains(".")&&msg.contains("@"))
+                newStr+=msg2;
+            else
+                newStr+=msg;
 
             System.out.println(newStr);
 
             tab++; //tabulátorok számának növelése
+        }
     }
 
     /**
@@ -37,12 +51,14 @@ public class Logger {
      * @param msg a kiírandó üzenet
      */
     public static void logMessage(String msg){
-        String newStr ="";
-        for(int i=0;i<tab;i++)
-            newStr += '\t';
-        newStr+=msg;
+        if(log){
+            String newStr ="";
+            for(int i=0;i<tab;i++)
+                newStr += '\t';
+            newStr+=msg;
 
-        System.out.println(newStr);
+            System.out.println(newStr);
+        }
     }
 
     /**
@@ -50,6 +66,15 @@ public class Logger {
      * Ezzel kell végződnie minden függvénynek ami meghívja a logStart-ot
      */
     public static void logEnd(){
-        tab--;
+        if(log)
+            tab--;
+    }
+
+    public static void on(){
+        log = true;
+    }
+
+    public static void off(){
+        log = false;
     }
 }
