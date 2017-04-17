@@ -71,6 +71,10 @@ public class Rail{
         train = null;
     }
     
+    /**
+     * Visszaadja a rajta lévő vonatelemet
+     * @return train
+     */
     public TrainElement getTrain(){
         return train;
     }
