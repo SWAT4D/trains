@@ -1,5 +1,6 @@
 package trains;
 
+import java.awt.*;
 import java.util.*;
 
 /**
@@ -46,7 +47,7 @@ public class Car implements TrainElement {
      * Elmozditja a kocsit
      * @param rail ide mozgatja a kocsit
      */
-    public void move(Rail rail) {
+    public void move(Rail rail) throws OccupyException {
         Logger.logStart("move(Rail) - " + this);
 
         cur.leave();
@@ -67,8 +68,8 @@ public class Car implements TrainElement {
      * Kiüriti a kocsit, ha ez a kocsi az első nem üres kocsi, és a paraméterben kapott szín megegyezik a kocsi színével
      * @param color
      */
-    @Override
-    public void empty(String color) {
+    //@Override
+    public void empty(Color color) {
         Logger.logStart("empty(String) " + this);
 
         Scanner scanner = new Scanner(System.in);
@@ -94,8 +95,8 @@ public class Car implements TrainElement {
      * Akkor hívódik meg, ha endVoidra kerül a kocsi.
      * @param endVoid ide mozgatja a kocsikat
      */
-    @Override
-    public void stop(EndVoid endVoid) {
+    //@Override
+    public void stop(EndVoid endVoid) throws OccupyException {
         Logger.logStart("stop(EndVoid) " + this);
 
         Scanner scanner = new Scanner(System.in);
@@ -124,11 +125,23 @@ public class Car implements TrainElement {
     }
 
 
+
+
+    @Override
+    public void leave(EndVoid endVoid) {
+
+    }
+
+    @Override
+    public boolean isFirstForward() {
+        return false;
+    }
+
     /**
      *  A kocsi mögötti kocsit lépteti
      */
     @Override
-    public void moveNext() {
+    public void moveNext() throws OccupyException {
         Logger.logStart("moveNext() " + this);
 
         if(nextCar != null){

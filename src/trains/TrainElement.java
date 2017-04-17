@@ -27,6 +27,6 @@ public interface TrainElement {
     /**
      * A vonat elem mögötti kocsit lépteti
      */
-    public void moveNext();
+    public void moveNext() throws OccupyException;
 
 }

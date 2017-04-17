@@ -9,8 +9,10 @@ public class EndVoid extends Rail {
     /**
      * @param trainElement Azon vonatelem amely rá akar lépni
      */
-    public void occupy(TrainElement trainElement) {
-        trainElement.stop(this);
+    public void occupy(Car car) throws OccupyException {
+        car.stop(this);
+    }
+    public void occupy(Locomotive loco) throws OccupyException {
     }
 
     /**

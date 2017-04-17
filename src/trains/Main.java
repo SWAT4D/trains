@@ -143,36 +143,39 @@ public class Main {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws OccupyException {
         init();
         welcomeScreen();
 
         Scanner input = new Scanner(System.in);
         while (input.hasNext()) {
             String commands_line = input.nextLine();
-            String regex1 = "(newRail (r|sw|e|tp) \\([1-9][1-9]*,[1-9][1-9]*\\))*";
+            String regex1 = "(((newRail (r|sw|e|tp) \\([1-9][1-9]*,[1-9][1-9]*\\))|(newRail (st|gst) \\([1-9][1-9]*,[1-9][1-9]*\\) (r|g|b)))( |))*";
             String regex2 = "newRail c (\\([1-9][1-9]*,[1-9][1-9]*\\)){5}";
             String regex3 = "sw (\\([1-9][1-9]*,[1-9][1-9]*\\)){2}";
-            String regex4 = "(newRail (st|gst) \\([1-9][1-9]*,[1-9][1-9]*\\) (r|g|b))*";
-            String regex5 = "loco \\([1-9][1-9]*,[1-9][1-9]*\\) [1-9][0-9]*";
-            String regex6 = "(act|switch) \\([1-9][0-9]*,[1-9][0-9]*\\)";
-            String regex7 = "move [2-9]*";
+            String regex4 = "loco \\([1-9][1-9]*,[1-9][1-9]*\\) [1-9][0-9]*";
+            String regex5 = "(act|switch) \\([1-9][0-9]*,[1-9][0-9]*\\)";
+            String regex6 = "move [2-9]*";
 
             boolean CMDCLASS1 = Pattern.matches(regex1, commands_line);
             boolean CMDCLASS2 = Pattern.matches(regex2, commands_line);
             boolean CMDCLASS3 = Pattern.matches(regex3, commands_line);
             boolean CMDCLASS4 = Pattern.matches(regex4, commands_line);
             boolean CMDCLASS5 = Pattern.matches(regex5, commands_line);
-            boolean CMDCLASS6 = Pattern.matches(regex5, commands_line);
-            boolean CMDCLASS7 = Pattern.matches(regex5, commands_line);
-            if(!(CMDCLASS1||CMDCLASS2||CMDCLASS3||CMDCLASS4||CMDCLASS5))
+            boolean CMDCLASS6 = Pattern.matches(regex6, commands_line);
+            if(!(CMDCLASS1||CMDCLASS2||CMDCLASS3||CMDCLASS4||CMDCLASS5||CMDCLASS6))
                 throw new RuntimeException("Bad command!");
             String[] commands = commands_line.split(" ");
             int i = 0;
             while(true){
                 if(CMDCLASS1){
-                    build(commands[i+1], Koo.parseKoo(commands[i+2]));
-                    i+=3;
+                    if(commands[1] == "st"||commands[1]=="gst"){
+                        build(commands[i+1], Koo.parseKoo(commands[i+2]), commands[i+3]);
+                        i+=4;
+                    }else {
+                        build(commands[i + 1], Koo.parseKoo(commands[i + 2]));
+                        i+=3;
+                    }
                 }
                 if(CMDCLASS2){
                     buildcross(Koo.parseKoo(commands[2]), Koo.parseKoo(commands[3]), Koo.parseKoo(commands[4]), Koo.parseKoo(commands[5]), Koo.parseKoo(commands[6]));
@@ -183,18 +186,14 @@ public class Main {
                     i+=4;
                 }
                 if(CMDCLASS4){
-                    build(commands[i+1], Koo.parseKoo(commands[i+2]), commands[i+3]);
-                    i+=4;
-                }
-                if(CMDCLASS5){
                     placetrain(commands[0], Koo.parseKoo(commands[1]).dec(), Integer.parseInt(commands[2]));
                     i+=3;
                 }
-                if(CMDCLASS6){
+                if(CMDCLASS5){
                     turner(commands[0], Koo.parseKoo(commands[1]).dec());
                     i+=2;
                 }
-                if(CMDCLASS7){
+                if(CMDCLASS6){
                     move(Integer.parseInt(commands[1]));
                     i+=2;
                 }
@@ -281,7 +280,7 @@ public class Main {
         }
     }
 
-    private static void move(int num) {
+    private static void move(int num) throws OccupyException {
         for(int i = 0;i<num;i++)
             for(Locomotive l : locolist)
                 l.step();
