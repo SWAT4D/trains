@@ -10,7 +10,7 @@ public class Car implements TrainElement {
 
     private Car nextCar;
     private Rail cur;
-
+    private String clr;
 
     /**
      * 1 paraméteres konstruktor, teszteléshez használható
@@ -26,10 +26,12 @@ public class Car implements TrainElement {
      * Egy endVoid paraméteres konstruktor, a kocsi a játékban endVoidról indul
      * @param endVoid
      */
-    public Car(EndVoid endVoid) {
+    public Car(EndVoid endVoid, String color) {
         Logger.logStart("Car created");
         cur = endVoid;
+        clr = color;
         Logger.logEnd();
+
     }
 
 
@@ -153,7 +155,7 @@ public class Car implements TrainElement {
 //<<<<<<< HEAD
     @Override
     public String toString() {
-        return "c";
+        return clr;
     }
 }
 /*=======
