@@ -19,7 +19,10 @@ public class Main {
 
     //Mozgatáshoz tároljuk az összes mozdonyt
     private static ArrayList<Locomotive> locolist;
-
+    
+    // Alagút a szájak nyilvántartására és a velük végzendő műveletekhez
+    private static Tunnel T;
+    
     //Csak inicializálja a tagváltozókat
     private static void init() {
         switchlist = new TreeMap<>();
@@ -27,6 +30,7 @@ public class Main {
         map = new TreeMap<Koo, Rail>();
         ev = new EndVoid();
         locolist = new ArrayList<>();
+        T = Tunnel.getInstance();
     }
 
     //Köszöntő képernyő
@@ -84,6 +88,8 @@ public class Main {
             }
             System.out.print("\n");
         }
+
+        System.out.println("");
     }
 
     public static void addRailToMap(Koo pos, Rail r) {
@@ -93,7 +99,7 @@ public class Main {
     //LEADÁS ELŐTT TÖRÖLNI KELL!
     /*Saját tesztelésre*/
     public static void test(){
-        EntryPoint THE_Rail = new EntryPoint();
+        EntryPoint THE_Rail = new EntryPoint(ev);
         addRailToMap(new Koo(1,1), THE_Rail);
         Locomotive l = new Locomotive(THE_Rail, THE_Rail);
         THE_Rail.setTrain(l);
@@ -112,10 +118,10 @@ public class Main {
                 String commands_line = input.nextLine();
                 String regex1 = "(((newRail (r|sw|e|tp) \\([1-9][1-9]*,[1-9][1-9]*\\))|(newRail (st|gst) \\([1-9][1-9]*,[1-9][1-9]*\\) (r|g|b)))( |))*";
                 String regex2 = "newRail c (\\([1-9][1-9]*,[1-9][1-9]*\\)( )*){5}";
-                String regex3 = "sw (\\([1-9][1-9]*,[1-9][1-9]*\\)){2}";
+                String regex3 = "sw (\\([1-9][1-9]*,[1-9][1-9]*\\)( )*){2}";
                 String regex4 = "loco \\([1-9][1-9]*,[1-9][1-9]*\\) [1-9][0-9]*( r| g| b| c)+";
                 String regex5 = "(act|switch) \\([1-9][0-9]*,[1-9][0-9]*\\)";
-                String regex6 = "move [1-9]*";
+                String regex6 = "move [1-9][0-9]*";
 
                 boolean CMDCLASS1 = Pattern.matches(regex1, commands_line);
                 boolean CMDCLASS2 = Pattern.matches(regex2, commands_line);
@@ -132,7 +138,7 @@ public class Main {
                 int i = 0;
                 while (true) {
                     if (CMDCLASS1) {
-                        if (commands[1] == "st" || commands[1] == "gst") {
+                        if (commands[i+1].equals("st") || commands[i+1].equals("gst")) {
                             build(commands[i + 1], Koo.parseKoo(commands[i + 2]), commands[i + 3]);
                             i += 4;
                         } else {
@@ -145,7 +151,7 @@ public class Main {
                         i += 7;
                     }
                     if (CMDCLASS3) {
-                        connectSwitch(Koo.parseKoo(commands[2]), Koo.parseKoo(commands[3]));
+                        connectSwitch(Koo.parseKoo(commands[1]), Koo.parseKoo(commands[2]));
                         i += 4;
                     }
                     if (CMDCLASS4) {
@@ -197,7 +203,7 @@ public class Main {
                 r = new Rail();
                 break;
             case "e":
-                r = new EntryPoint();
+                r = new EntryPoint(ev);
                 break;
             case "sw":
                 r = new Switch();
@@ -285,6 +291,7 @@ public class Main {
                     locolist.add(l);
                     ep.setTrain(l);
                     Car prevCar = new Car(ev, colors[0]);
+
                     l.addNext(prevCar);
                     prevCar.addNext(null);
                     for(int i =1;i<carnum;i++){
@@ -321,7 +328,7 @@ public class Main {
 
                 if(command == "act"){
                     TunnelPlace sel = (TunnelPlace) entry.getValue();
-                    sel.setActive();
+                    T.activeTunnelPlace(sel);
                 }else{
                     Switch sel = (Switch)entry.getValue();
                     sel.switchIt();

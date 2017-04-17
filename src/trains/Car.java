@@ -8,12 +8,12 @@ import java.util.*;
  */
 public class Car implements TrainElement {
 
-    private Car carBehind;
-    private TrainElement carAhead;
-    private Rail cur;
-    private String color;
-    private boolean isFirst;
-    private boolean isFull;
+    protected Car carBehind;
+    protected TrainElement carAhead;
+    protected Rail cur;
+    protected String color;
+    protected boolean isFirst;
+    protected boolean isFull;
 
 
     /**
@@ -150,12 +150,9 @@ public class Car implements TrainElement {
         carAhead.finish();
     }
 
-    //<<<<<<< HEAD
     @Override
     public String toString() {
         return color;
     }
 }
-/*=======
-}
->>>>>>> refs/remotes/origin/master*/
+

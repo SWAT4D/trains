@@ -8,18 +8,14 @@ import java.util.Scanner;
 public class Tunnel extends Rail {
 	
 	private Rail start, end;
-	/**
-	 * Currently active TPs
-	 */
 	private int activeNum = 0;
 	private TunnelPlace first, sec;
 	private static Tunnel instance = null;
     
 	/**
-     * Default private constructor
+     * Alapértelmezett (privát) konstruktor
      */
     private Tunnel() {
-    	Logger.logStart("The One-And-Only Tunnel was created.");
     	/*
     	 * TEMP! 
     	 */
@@ -43,31 +39,24 @@ public class Tunnel extends Rail {
          return instance;
    }
     
-   /**
-     * Csak a teszthez ki lehet törölni az intance-ot
-     * 
+   /** Csak a teszthez ki lehet törölni az intance-ot
      */
    public static void clearInstance(){
        instance = null;
    } 
-   
 
-
-    /**
+    /** Alagútszáj aktiválása.
      * @param tunnelPlace
      */
     public void activeTunnelPlace(TunnelPlace tunnelPlace) {
-    	Logger.logStart("activeTunnelPlace(TunnelPlace) - " + this);
     	switch (activeNum){
 	    	case 0:
-	    		Logger.logMessage("TP activated. There is 1 active.");
 	    		first = tunnelPlace;
 	    		start.addPrev(tunnelPlace);
 	    		activeNum++;
 	    		first.setIsActive(true);
 	    		break;
-	    	case 1:
-	    		Logger.logMessage("TP activated. There are 2 actives.");
+	    	case 1:	    		
 	    		sec = tunnelPlace;
 	    		end.addNext(sec);
 	    		first.addNext(start);
@@ -76,46 +65,38 @@ public class Tunnel extends Rail {
 	    		sec.setIsActive(true);
 	    		break;
 	    	case 2:
-	    		Logger.logMessage("There are 2 active TPs already!");
 	    		break;
 	    	default:
-	    		Logger.logMessage("WTF! How did I get here?!");
         		break;
 	    		
     	}
-	Logger.logEnd();
     }
 
-    /**
-     * @return
+    /** Alagút foglaltságának lekérdezése
+     * @return Foglalt-e az alagút.
      */
     public boolean isOccupied() {
 	Logger.logMessage("isOccupied() - " + this);
         Scanner sc = new Scanner(System.in); 
-        Logger.logMessage("Foglalt az alagút? (true/false)");
         if (sc.nextBoolean()==true){
-            Logger.logEnd();
             return true;
         }
         else{
-            Logger.logEnd();
             return false;
         }
     }
 
-    /**
+    /** Alagútszáj inaktiválása
      * @param tunnelPlace
      */
     public void inactiveTunnelPlace(TunnelPlace tunnelPlace ) {
     	Logger.logStart("inactiveTunnelPlace(TunnelPlace) - " + this);
     	switch (activeNum){
-        	case 1:
-        		Logger.logMessage("TP inactivated. There are 0 active.");
+        	case 1:        		
         		start.addPrev(null);
 	    		activeNum--;
         		break;
-        	case 2:
-        		Logger.logMessage("TPs was inactivated, Tunnel was destroyed.");
+        	case 2:       		
         		first.setIsActive(false);
         		sec.setIsActive(false);
         		end.addNext(null);
@@ -124,12 +105,18 @@ public class Tunnel extends Rail {
 	    		sec.addNext(null);
 	    		activeNum = 0;
         		break;
-        	default:
-        		Logger.logMessage("WTF! How did I get here?!");
+        	default:       		
         		break;
         }
-	Logger.logEnd();
         
     }
-
+    
+    @Override
+    public String toString(){
+        return "~";
+    }
+    
+    int getActiveNum(){
+    	return activeNum;
+    }
 }

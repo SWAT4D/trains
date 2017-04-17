@@ -11,30 +11,32 @@ public class Station extends Rail {
      */
     public Station(String c)
     {
-        Logger.logStart("Station created");
         color = c;
-        Logger.logEnd();
     }
 
     /**
      * Az állomás elfoglalása egy vonat által
      * @param trainElement
      */
-    public void occupy(TrainElement trainElement)
+    public void occupy(TrainElement trainElement) throws OccupyException
     {
-        /*
-        Logger.logStart("occupy(TrainElement) - " + this);
-        if (Main.isoccupied == true)
+        //ha foglalt már akkor kivételt dob
+        if (isOccupied)
         {
-            Logger.logMessage("GAME OVER: Ütközés történt, két vonat egy pozíción tartózkodik.");
-            Main.play=false;
+            throw new OccupyException(this);
         }
+        //ha nem foglalt, akkor elfoglaljuk és a rálépő elemet megpróbáljuk üríteni
         else
         {
-            trainElement.empty(color);
             trainElement.moveNext();
+            isOccupied = true;
+            train = trainElement;
+            //train.empty(color);
         }
-        Logger.logEnd();*/
     }
 
+    @Override
+    public String toString() {
+        return "S";
+    }
 }
