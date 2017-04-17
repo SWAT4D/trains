@@ -5,10 +5,11 @@ import java.util.*;
 /**
  * A kocsi osztálya
  */
-public class Car extends Placeable implements TrainElement {
+public class Car implements TrainElement {
 
     private Car nextCar;
     private Rail cur;
+
 
     /**
      * 1 paraméteres konstruktor, teszteléshez használható
@@ -129,4 +130,8 @@ public class Car extends Placeable implements TrainElement {
         Logger.logEnd();
     }
 
+    @Override
+    public String toString() {
+        return "c";
+    }
 }

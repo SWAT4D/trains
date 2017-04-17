@@ -3,7 +3,7 @@ package trains;
 /**
  * A mozdony osztálya
  */
-public class Locomotive extends Placeable implements TrainElement {
+public class Locomotive implements TrainElement {
 
     private Car nextCar;
     private Rail cur;
@@ -102,4 +102,8 @@ public class Locomotive extends Placeable implements TrainElement {
         Logger.logEnd();
     }
 
+    @Override
+    public String toString() {
+        return "l";
+    }
 }

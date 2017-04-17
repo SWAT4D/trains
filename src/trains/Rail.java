@@ -5,11 +5,12 @@ import java.util.*;
 /**
  * 
  */
-public class Rail extends Placeable{
+public class Rail{
 
-    private Rail nextR;
-    private Rail prevR;
-    
+    protected Rail nextR;
+    protected Rail prevR;
+    protected TrainElement tr;
+
     /**
      * Default constructor
      */
@@ -17,6 +18,7 @@ public class Rail extends Placeable{
         Logger.logStart("Rail created");
         nextR = null;
         prevR = null;
+        tr = null;
         Logger.logEnd();
     }
 
@@ -74,9 +76,14 @@ public class Rail extends Placeable{
         }
         else {
             trainElement.moveNext();
+            tr = trainElement;
         }
         sc.nextLine(); // Discard '\n'
         Logger.logEnd();
+    }
+
+    public TrainElement getTrain(){
+        return tr;
     }
 
     /**
@@ -84,8 +91,12 @@ public class Rail extends Placeable{
      */
     public void leave() {
         Logger.logStart("leave() - " + this);
-        
+        tr = null;
         Logger.logEnd();
     }
 
+    @Override
+    public String toString(){
+        return "+";
+    }
 }
