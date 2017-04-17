@@ -7,13 +7,6 @@ public class EntryPoint extends Rail {
         prevR = ev;
     }
 
-    //Az entrypoint pályához csatlakozó felét köti egy sínhez
-    @Override
-    public void addNext(Rail next) {
-        nextR =next;
-    }
-
-    //Ezzel lehet vonatot helyezni az entry pointra
     public void setTrain(Locomotive l){
         train = l;
     }
