@@ -5,25 +5,24 @@ import java.util.regex.Pattern;
 
 
 public class Main {
-    //A parancsok tárolására
-    private static Stack<String> stack;
-    //A sínek összekötésére
-    private static Map<Koo, Switch> switchStack;
-
-    private static Rail prev;
-
-
-    private static EndVoid ev;
-
-    private static ArrayList<Locomotive> locolist;
-
     //A pályán elhelyezkedő síneket tárolja a koordinátájukkal
     private static Map<Koo, Rail> map;
 
+    //Egy darab EndVoid
+    private static EndVoid ev;
+
+    //A sínek lerakásánál, a sínek összekötéséhez kell
+    private static Rail prev;
+
+    //Tároljuk a switch-eket mivel ezek összekötése speciális
+    private static Map<Koo, Switch> switchlist;
+
+    //Mozgatáshoz tároljuk az összes mozdonyt
+    private static ArrayList<Locomotive> locolist;
+
     //Csak inicializálja a tagváltozókat
     private static void init() {
-        stack = new Stack<>();
-        switchStack = new TreeMap<>();
+        switchlist = new TreeMap<>();
         prev = null;
         map = new TreeMap<Koo, Rail>();
         ev = new EndVoid();
@@ -35,44 +34,6 @@ public class Main {
         System.out.println("Hello!\nTODO: Welcome Screen\n-----------\n\n\n");
     }
 
-    private static void build(String type, Koo pos){
-        Rail r = null;
-        switch(type){
-            case "r":
-                r = new Rail();
-                break;
-            case "e":
-                r = new EntryPoint();
-                break;
-            case "sw":
-                r = new Switch();
-                switchStack.put(pos,(Switch)r);
-                break;
-            case "tp":
-                r = new TunnelPlace();
-                break;
-            case "c":
-                r = new Cross();
-                break;
-        }
-        prev.addNext(r);
-        prev = r;
-
-        addRailToMap(pos, r);
-    }
-
-    private static void build(String type, Koo pos, String color){
-        Station s = null;
-        switch(type){
-            case "st":
-                s = new Station(color);
-                break;
-            case "gst":
-                s = new GiverStation(color);
-                break;
-        }
-        addRailToMap(pos, s);
-    }
     //Kiírja a pályát
     private static void mapWriteOut() {
         if(map.isEmpty())
@@ -142,75 +103,123 @@ public class Main {
         mapWriteOut();
     }
 
-
-    public static void main(String[] args) throws OccupyException {
+    public static void main(String[] args){
         init();
         welcomeScreen();
+        try {
+            Scanner input = new Scanner(System.in);
+            while (input.hasNext()) {
+                String commands_line = input.nextLine();
+                String regex1 = "(((newRail (r|sw|e|tp) \\([1-9][1-9]*,[1-9][1-9]*\\))|(newRail (st|gst) \\([1-9][1-9]*,[1-9][1-9]*\\) (r|g|b)))( |))*";
+                String regex2 = "newRail c (\\([1-9][1-9]*,[1-9][1-9]*\\)){5}";
+                String regex3 = "sw (\\([1-9][1-9]*,[1-9][1-9]*\\)){2}";
+                String regex4 = "loco \\([1-9][1-9]*,[1-9][1-9]*\\) [1-9][0-9]* (r|g|b|c)*";
+                String regex5 = "(act|switch) \\([1-9][0-9]*,[1-9][0-9]*\\)";
+                String regex6 = "move [2-9]*";
 
-        Scanner input = new Scanner(System.in);
-        while (input.hasNext()) {
-            String commands_line = input.nextLine();
-            String regex1 = "(((newRail (r|sw|e|tp) \\([1-9][1-9]*,[1-9][1-9]*\\))|(newRail (st|gst) \\([1-9][1-9]*,[1-9][1-9]*\\) (r|g|b)))( |))*";
-            String regex2 = "newRail c (\\([1-9][1-9]*,[1-9][1-9]*\\)){5}";
-            String regex3 = "sw (\\([1-9][1-9]*,[1-9][1-9]*\\)){2}";
-            String regex4 = "loco \\([1-9][1-9]*,[1-9][1-9]*\\) [1-9][0-9]*";
-            String regex5 = "(act|switch) \\([1-9][0-9]*,[1-9][0-9]*\\)";
-            String regex6 = "move [2-9]*";
+                boolean CMDCLASS1 = Pattern.matches(regex1, commands_line);
+                boolean CMDCLASS2 = Pattern.matches(regex2, commands_line);
+                boolean CMDCLASS3 = Pattern.matches(regex3, commands_line);
+                boolean CMDCLASS4 = Pattern.matches(regex4, commands_line);
+                boolean CMDCLASS5 = Pattern.matches(regex5, commands_line);
+                boolean CMDCLASS6 = Pattern.matches(regex6, commands_line);
+                if (!(CMDCLASS1 || CMDCLASS2 || CMDCLASS3 || CMDCLASS4 || CMDCLASS5 || CMDCLASS6))
+                    throw new RuntimeException("Bad command!");
+                String[] commands = commands_line.split(" ");
+                int i = 0;
+                while (true) {
+                    if (CMDCLASS1) {
+                        if (commands[1] == "st" || commands[1] == "gst") {
+                            build(commands[i + 1], Koo.parseKoo(commands[i + 2]), commands[i + 3]);
+                            i += 4;
+                        } else {
+                            build(commands[i + 1], Koo.parseKoo(commands[i + 2]));
+                            i += 3;
+                        }
+                    }
+                    if (CMDCLASS2) {
+                        buildcross(Koo.parseKoo(commands[2]), Koo.parseKoo(commands[3]), Koo.parseKoo(commands[4]), Koo.parseKoo(commands[5]), Koo.parseKoo(commands[6]));
+                        i += 7;
+                    }
+                    if (CMDCLASS3) {
+                        connectSwitch(Koo.parseKoo(commands[2]), Koo.parseKoo(commands[3]));
+                        i += 4;
+                    }
+                    if (CMDCLASS4) {
+                        int carnum=Integer.parseInt(commands[2]);
+                        if(carnum!=(commands.length-3))
+                            throw new RuntimeException("Bad command!");
+                        String[] colors = new String[carnum];
+                        for(int clr = 0;i<carnum;i++){
+                            colors[clr] = commands[3+clr];
+                        }
+                        placetrain(commands[0], Koo.parseKoo(commands[1]).dec(), Integer.parseInt(commands[2]), colors);
+                        i += 3;
+                    }
+                    if (CMDCLASS5) {
+                        turner(commands[0], Koo.parseKoo(commands[1]).dec());
+                        i += 2;
+                    }
+                    if (CMDCLASS6) {
+                        move(Integer.parseInt(commands[1]));
+                        i += 2;
+                    }
 
-            boolean CMDCLASS1 = Pattern.matches(regex1, commands_line);
-            boolean CMDCLASS2 = Pattern.matches(regex2, commands_line);
-            boolean CMDCLASS3 = Pattern.matches(regex3, commands_line);
-            boolean CMDCLASS4 = Pattern.matches(regex4, commands_line);
-            boolean CMDCLASS5 = Pattern.matches(regex5, commands_line);
-            boolean CMDCLASS6 = Pattern.matches(regex6, commands_line);
-            if(!(CMDCLASS1||CMDCLASS2||CMDCLASS3||CMDCLASS4||CMDCLASS5||CMDCLASS6))
-                throw new RuntimeException("Bad command!");
-            String[] commands = commands_line.split(" ");
-            int i = 0;
-            while(true){
-                if(CMDCLASS1){
-                    if(commands[1] == "st"||commands[1]=="gst"){
-                        build(commands[i+1], Koo.parseKoo(commands[i+2]), commands[i+3]);
-                        i+=4;
-                    }else {
-                        build(commands[i + 1], Koo.parseKoo(commands[i + 2]));
-                        i+=3;
+                    if (i > (commands.length - 1)) {
+                        break;
                     }
                 }
-                if(CMDCLASS2){
-                    buildcross(Koo.parseKoo(commands[2]), Koo.parseKoo(commands[3]), Koo.parseKoo(commands[4]), Koo.parseKoo(commands[5]), Koo.parseKoo(commands[6]));
-                    i+=7;
-                }
-                if(CMDCLASS3){
-                    connectSwitch(Koo.parseKoo(commands[2]), Koo.parseKoo(commands[3]));
-                    i+=4;
-                }
-                if(CMDCLASS4){
-                    placetrain(commands[0], Koo.parseKoo(commands[1]).dec(), Integer.parseInt(commands[2]));
-                    i+=3;
-                }
-                if(CMDCLASS5){
-                    turner(commands[0], Koo.parseKoo(commands[1]).dec());
-                    i+=2;
-                }
-                if(CMDCLASS6){
-                    move(Integer.parseInt(commands[1]));
-                    i+=2;
-                }
-
-                if(i>(commands.length-1)){
-                    break;
-                }
-            }
             /*
             for (String cmd : commands)
                 if(!cmd.equals(""))
                     execute(cmd);*/
-            mapWriteOut();
+                mapWriteOut();
+            }
+        }catch (OccupyException oe){
+            System.out.println("GAME OVER!");
         }
 
 
         //test();
+    }
+
+    private static void build(String type, Koo pos){
+        Rail r = null;
+        switch(type){
+            case "r":
+                r = new Rail();
+                break;
+            case "e":
+                r = new EntryPoint();
+                break;
+            case "sw":
+                r = new Switch();
+                switchlist.put(pos,(Switch)r);
+                break;
+            case "tp":
+                r = new TunnelPlace();
+                break;
+            case "c":
+                r = new Cross();
+                break;
+        }
+        prev.addNext(r);
+        prev = r;
+
+        addRailToMap(pos, r);
+    }
+
+    private static void build(String type, Koo pos, String color){
+        Station s = null;
+        switch(type){
+            case "st":
+                s = new Station(color);
+                break;
+            case "gst":
+                s = new GiverStation(color);
+                break;
+        }
+        addRailToMap(pos, s);
     }
 
     private static void buildcross(Koo koo, Koo koo1, Koo koo2, Koo koo3, Koo koo4) {
@@ -237,24 +246,25 @@ public class Main {
             }
         }
     }
+
     private static void connectSwitch(Koo koo, Koo koo1) {
-        if(switchStack.isEmpty()){
+        if(switchlist.isEmpty()){
            throw new RuntimeException("There's no switch on the map!");
         }
 
-        for(Map.Entry<Koo, Switch> sw : switchStack.entrySet()) {
+        for(Map.Entry<Koo, Switch> sw : switchlist.entrySet()) {
             if (sw.getKey().compareTo(koo) == 0){
                 for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
                     if (entry.getKey().compareTo(koo1) == 0){
                         sw.getValue().addNextAlt(entry.getValue());
-                        switchStack.remove(koo);
+                        switchlist.remove(koo);
                     }
                 }
             }
         }
     }
 
-    private static void placetrain(String command, Koo koo, int carnum) {
+    private static void placetrain(String command, Koo koo, int carnum, String[] colors) {
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo) == 0) {
                 try{
@@ -266,10 +276,17 @@ public class Main {
                     l.addNext(prevCar);
                     prevCar.addNext(null);
                     for(int i =0;i<carnum-1;i++){
-                        Car c = new Car(ev);
-                        prevCar.addNext(c);
-                        c.addNext(null);
-                        prevCar = c;
+                        if(colors[i]=="c"){
+                            CoalCar cc = new CoalCar(ev);
+                            prevCar.addNext(cc);
+                            cc.addNext(null);
+                            prevCar = cc;
+                        }else {
+                            Car c = new Car(ev, colors[i]);
+                            prevCar.addNext(c);
+                            c.addNext(null);
+                            prevCar = c;
+                        }
                     }
                     break;
                 }catch (ClassCastException ce){
