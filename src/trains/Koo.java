@@ -1,7 +1,5 @@
 package trains;
 
-import com.sun.org.apache.xpath.internal.operations.Equals;
-
 public class Koo implements Comparable {
     public Koo(int x, int y) {
         this.x = x;
@@ -24,6 +22,17 @@ public class Koo implements Comparable {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public boolean around(Koo oth){
+        if(
+                (oth.x==x-1&&oth.y==y)||
+                        (oth.x==x+1&&oth.y==y)||
+                        (oth.x==x&&oth.y==y+1)||
+                        (oth.x==x&&oth.y==y-1)
+                )
+            return true;
+        return false;
     }
 
 

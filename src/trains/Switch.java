@@ -91,4 +91,8 @@ public class Switch extends Rail {
         }
     }
 
+    @Override
+    public String toString() {
+        return "S";
+    }
 }
