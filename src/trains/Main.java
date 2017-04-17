@@ -143,7 +143,7 @@ public class Main {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws OccupyException {
         init();
         welcomeScreen();
 
@@ -281,7 +281,7 @@ public class Main {
         }
     }
 
-    private static void move(int num) {
+    private static void move(int num) throws OccupyException {
         for(int i = 0;i<num;i++)
             for(Locomotive l : locolist)
                 l.step();

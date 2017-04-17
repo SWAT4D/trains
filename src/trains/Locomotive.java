@@ -1,5 +1,7 @@
 package trains;
 
+import java.awt.*;
+
 /**
  * A mozdony osztálya
  */
@@ -45,7 +47,7 @@ public class Locomotive implements TrainElement {
     /**
      * @param entryPoint
      */
-    public void setStartPlace(EntryPoint entryPoint) {
+    public void setStartPlace(EntryPoint entryPoint) throws OccupyException {
         Logger.logStart("setStartPlace(EntryPoint) " + this);
         cur = entryPoint;
         cur.occupy(this);
@@ -55,7 +57,7 @@ public class Locomotive implements TrainElement {
     /**
      * Ezzel lehet a mozdonyt léptetni
      */
-    public void step() {
+    public void step() throws OccupyException {
         //Logger.logStart("step() " + this);
         Rail railNext = cur.next(prev);
         if(railNext == null){
@@ -85,7 +87,7 @@ public class Locomotive implements TrainElement {
      * Akkor hívódik meg, ha endVoidra kerül a mozdony
      * @param endVoid ide mozgatja a kocsikat
      */
-    public void stop(EndVoid endVoid) {
+    public void stop(EndVoid endVoid) throws OccupyException {
         Logger.logStart("stop(EndVoid) " + this);
         moveNext();
         /*if(Main.play) {
@@ -94,10 +96,25 @@ public class Locomotive implements TrainElement {
         Logger.logEnd();
     }
 
+    @Override
+    public void empty(Color color) {
+
+    }
+
+    @Override
+    public void leave(EndVoid endVoid) {
+
+    }
+
+    @Override
+    public boolean isFirstForward() {
+        return false;
+    }
+
     /**
      * A mozdony mögötti kocsit lépteti
      */
-    public void moveNext() {
+    public void moveNext() throws OccupyException {
         Logger.logStart("moveNext() " + this);
         nextCar.move(cur);
         Logger.logEnd();
