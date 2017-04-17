@@ -63,4 +63,9 @@ public class Cross extends Rail{
         else if (altprevR == prev)  return altnextR;
         else                        return altprevR;
     }
+
+    @Override
+    public String toString() {
+        return "C";
+    }
 }

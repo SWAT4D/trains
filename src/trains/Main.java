@@ -111,7 +111,7 @@ public class Main {
             while (input.hasNext()) {
                 String commands_line = input.nextLine();
                 String regex1 = "(((newRail (r|sw|e|tp) \\([1-9][1-9]*,[1-9][1-9]*\\))|(newRail (st|gst) \\([1-9][1-9]*,[1-9][1-9]*\\) (r|g|b)))( |))*";
-                String regex2 = "newRail c (\\([1-9][1-9]*,[1-9][1-9]*\\)){5}";
+                String regex2 = "newRail c (\\([1-9][1-9]*,[1-9][1-9]*\\)( )*){5}";
                 String regex3 = "sw (\\([1-9][1-9]*,[1-9][1-9]*\\)){2}";
                 String regex4 = "loco \\([1-9][1-9]*,[1-9][1-9]*\\) [1-9][0-9]*( r| g| b| c)+";
                 String regex5 = "(act|switch) \\([1-9][0-9]*,[1-9][0-9]*\\)";
@@ -225,29 +225,33 @@ public class Main {
 
     private static void buildcross(Koo koo, Koo koo1, Koo koo2, Koo koo3, Koo koo4) {
         Cross c = new Cross();
-        map.put(koo, c);
+        addRailToMap(koo, c);
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
-            if (entry.getKey().compareTo(koo1) == 0){
+            if (entry.getKey().compareTo(koo1.dec()) == 0){
                 c.addNext(entry.getValue());
                 entry.getValue().addNext(c);
+                break;
             }
         }
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
-            if (entry.getKey().compareTo(koo2) == 0){
+            if (entry.getKey().compareTo(koo2.dec()) == 0){
                 c.addNext(entry.getValue());
                 entry.getValue().addNext(c);
+                break;
             }
         }
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
-            if (entry.getKey().compareTo(koo3) == 0){
+            if (entry.getKey().compareTo(koo3.dec()) == 0){
                 c.addNextAlt(entry.getValue());
                 entry.getValue().addNext(c);
+                break;
             }
         }
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
-            if (entry.getKey().compareTo(koo4) == 0){
+            if (entry.getKey().compareTo(koo4.dec()) == 0){
                 c.addPrevAlt(entry.getValue());
                 entry.getValue().addNext(c);
+                break;
             }
         }
     }
