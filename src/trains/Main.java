@@ -115,7 +115,7 @@ public class Main {
                 String regex3 = "sw (\\([1-9][1-9]*,[1-9][1-9]*\\)){2}";
                 String regex4 = "loco \\([1-9][1-9]*,[1-9][1-9]*\\) [1-9][0-9]*( r| g| b| c)+";
                 String regex5 = "(act|switch) \\([1-9][0-9]*,[1-9][0-9]*\\)";
-                String regex6 = "move [2-9]*";
+                String regex6 = "move [1-9]*";
 
                 boolean CMDCLASS1 = Pattern.matches(regex1, commands_line);
                 boolean CMDCLASS2 = Pattern.matches(regex2, commands_line);
@@ -229,21 +229,25 @@ public class Main {
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo1) == 0){
                 c.addNext(entry.getValue());
+                entry.getValue().addNext(c);
             }
         }
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo2) == 0){
                 c.addNext(entry.getValue());
+                entry.getValue().addNext(c);
             }
         }
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo3) == 0){
                 c.addNextAlt(entry.getValue());
+                entry.getValue().addNext(c);
             }
         }
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo4) == 0){
                 c.addPrevAlt(entry.getValue());
+                entry.getValue().addNext(c);
             }
         }
     }
@@ -270,7 +274,7 @@ public class Main {
             if (entry.getKey().compareTo(koo) == 0) {
                 try{
                     EntryPoint ep = (EntryPoint)entry.getValue();
-                    Locomotive l = new Locomotive(ev);
+                    Locomotive l = new Locomotive(ep,ev);
                     locolist.add(l);
                     ep.setTrain(l);
                     Car prevCar = new Car(ev);

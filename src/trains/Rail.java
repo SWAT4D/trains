@@ -24,6 +24,8 @@ public class Rail{
      * @param next
      */
     public void addNext(Rail next) {
+        if(nextR!=null)
+            prevR = next;
         nextR = next;
         if (nextR != null)
             nextR.addPrev(this);
