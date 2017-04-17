@@ -2,6 +2,7 @@ package trains;
 
 public class EntryPoint extends Rail {
 
+    //Konstruktor mely kéri az EndVoidot
     EntryPoint(EndVoid ev){
         prevR = ev;
     }
@@ -9,9 +10,9 @@ public class EntryPoint extends Rail {
     public void setTrain(Locomotive l){
         train = l;
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return "E";
     }
 }

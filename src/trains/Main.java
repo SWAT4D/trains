@@ -19,10 +19,7 @@ public class Main {
 
     //Mozgatáshoz tároljuk az összes mozdonyt
     private static ArrayList<Locomotive> locolist;
-    
-    // Alagút a szájak nyilvántartására és a velük végzendő műveletekhez
-    private static Tunnel T;
-    
+
     //Csak inicializálja a tagváltozókat
     private static void init() {
         switchlist = new TreeMap<>();
@@ -30,7 +27,6 @@ public class Main {
         map = new TreeMap<Koo, Rail>();
         ev = new EndVoid();
         locolist = new ArrayList<>();
-        T = Tunnel.getInstance();
     }
 
     //Köszöntő képernyő
@@ -92,23 +88,14 @@ public class Main {
         System.out.println("");
     }
 
+    //Hozzáad egy pályaelemet a pályához.
     public static void addRailToMap(Koo pos, Rail r) {
         map.put(new Koo(pos.getX()-1, pos.getY()-1), r);
     }
 
-    //LEADÁS ELŐTT TÖRÖLNI KELL!
-    /*Saját tesztelésre*/
-    public static void test(){
-        EntryPoint THE_Rail = new EntryPoint(ev);
-        addRailToMap(new Koo(1,1), THE_Rail);
-        Locomotive l = new Locomotive(THE_Rail, THE_Rail);
-        THE_Rail.setTrain(l);
-        addRailToMap(new Koo(4,5), new Rail());
-        addRailToMap(new Koo(1,4), new Rail());
-        addRailToMap(new Koo(10,1), new Rail());
-        mapWriteOut();
-    }
-
+    //A main függvény a kezdő inicializálás után egy köszöntő képernyővel fogadja a játékost
+    //Ezután megvizsgálja hogy milyen típusú és hogy helyes e a parancs amit a felhasználó adott ki.
+    //Végül a parancsosztályoknak megfelelő függvényeket hívja meg.
     public static void main(String[] args){
         init();
         welcomeScreen();
@@ -130,10 +117,7 @@ public class Main {
                 boolean CMDCLASS5 = Pattern.matches(regex5, commands_line);
                 boolean CMDCLASS6 = Pattern.matches(regex6, commands_line);
                 if (!(CMDCLASS1 || CMDCLASS2 || CMDCLASS3 || CMDCLASS4 || CMDCLASS5 || CMDCLASS6))
-                {
-                    System.out.println("Bad command!");
-                    continue;
-                }
+                    throw new RuntimeException("Bad command!");
                 String[] commands = commands_line.split(" ");
                 int i = 0;
                 while (true) {
@@ -157,14 +141,10 @@ public class Main {
                     if (CMDCLASS4) {
                         int carnum=Integer.parseInt(commands[2]);
                         if(carnum!=(commands.length-3))
-                        {
-                            System.out.println("Bad command!");
-                            continue;
-                        }
+                            throw new RuntimeException("Bad command!");
                         String[] colors = new String[carnum];
-                        for(int clr = 0; clr < carnum; clr++){
+                        for(int clr = 0;i<carnum;clr++){
                             colors[clr] = commands[3+clr];
-                            i++; // Moving offset
                         }
                         placetrain(commands[0], Koo.parseKoo(commands[1]).dec(), Integer.parseInt(commands[2]), colors);
                         i += 3;
@@ -189,15 +169,15 @@ public class Main {
                 mapWriteOut();
             }
         }catch (OccupyException oe){
-            System.out.println("GAME OVER!: " + oe.getMessage());
+            System.out.println("GAME OVER!");
         }
 
-
-        //test();
     }
 
+    //Áltolános pályaelemek létrehozására van, melyek konstruktora nem igényel felhasználó által adott információt.
     private static void build(String type, Koo pos){
         Rail r = null;
+        //Pályaelem létrehozása
         switch(type){
             case "r":
                 r = new Rail();
@@ -216,13 +196,17 @@ public class Main {
                 r = new Cross();
                 break;
         }
-        if(prev != null)
+        //Pályaelem bekötése a már meglévő pályaelemekhez
+        if(prev != null) {
             prev.addNext(r);
+            r.addPrev(prev);
+        }
         prev = r;
 
         addRailToMap(pos, r);
     }
 
+    //Állomás létrehozására szolgáló függvény
     private static void build(String type, Koo pos, String color){
         Station s = null;
         switch(type){
@@ -241,9 +225,12 @@ public class Main {
         addRailToMap(pos, s);
     }
 
+    //Kereszteződés megalkotására alkalmas függvény
     private static void buildcross(Koo koo, Koo koo1, Koo koo2, Koo koo3, Koo koo4) {
+        //Létrehozzuk a kereszteződést
         Cross c = new Cross();
         addRailToMap(koo, c);
+        //Bekötjük a megadott koordinátákhoz
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo1.dec()) == 0){
                 entry.getValue().addNext(c);
@@ -270,6 +257,7 @@ public class Main {
         }
     }
 
+    //A kapcsoló másik ágának bekötésére szolgáló függvény
     private static void connectSwitch(Koo koo, Koo koo1) {
         if(switchlist.isEmpty()){
            throw new RuntimeException("There's no switch on the map!");
@@ -287,26 +275,32 @@ public class Main {
         }
     }
 
+    //Vonat létrehozására szolgáló függvény
     private static void placetrain(String command, Koo koo, int carnum, String[] colors) {
+
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo) == 0) {
                 try{
+                    //Létrehozzuk a mozdonyt az EntryPointon
                     EntryPoint ep = (EntryPoint)entry.getValue();
                     Locomotive l = new Locomotive(ep,ev);
+                    //Hozzáadjuk a mozdonyok listájához a mozdonyt
                     locolist.add(l);
+                    //Rárakjuk az entrypointra a mozdonyt
                     ep.setTrain(l);
-                    Car prevCar = new Car(ev, colors[0]);
-
+                    //Hozzáadjuk a kocsikat a mozdonyhoz
+                    Car prevCar = new Car(ev,colors[0]);
                     l.addNext(prevCar);
                     prevCar.addNext(null);
-                    for(int i =1;i<carnum;i++){
+                    for(int i =0;i<carnum-1;i++){
+                        //Megnézzük hogy szeneskocsi-e
                         if(colors[i]=="c"){
                             CoalCar cc = new CoalCar(ev);
                             prevCar.addNext(cc);
                             cc.addNext(null);
                             prevCar = cc;
                         }else {
-                            Car c = new Car(ev, colors[i]);
+                            Car c = new Car(ev, colors[i-1]);
                             prevCar.addNext(c);
                             c.addNext(null);
                             prevCar = c;
@@ -321,19 +315,21 @@ public class Main {
         }
     }
 
+    //Mozgatjuk a vonatokat
     private static void move(int num) throws OccupyException {
         for(int i = 0;i<num;i++)
             for(Locomotive l : locolist)
                 l.step();
     }
 
+    //Átkapcsoljuk az adott koordinátán elhelyezkedő váltót vagy alagútszájat aktiválunk.
     private static void turner(String command, Koo koo) {
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo.dec()) == 0){
 
-                if(command == "act"){
+                if(command.equals("act")){
                     TunnelPlace sel = (TunnelPlace) entry.getValue();
-                    T.activeTunnelPlace(sel);
+                    sel.setActive();
                 }else{
                     Switch sel = (Switch)entry.getValue();
                     sel.switchIt();
