@@ -283,10 +283,10 @@ public class Main {
                     Locomotive l = new Locomotive(ep,ev);
                     locolist.add(l);
                     ep.setTrain(l);
-                    Car prevCar = new Car(ev);
+                    Car prevCar = new Car(ev, colors[0]);
                     l.addNext(prevCar);
                     prevCar.addNext(null);
-                    for(int i =0;i<carnum-1;i++){
+                    for(int i =1;i<carnum-1;i++){
                         if(colors[i]=="c"){
                             CoalCar cc = new CoalCar(ev);
                             prevCar.addNext(cc);

@@ -15,15 +15,6 @@ public class Car implements TrainElement {
     private boolean isFirst;
     private boolean isFull;
 
-    /**
-     * 1 paraméteres konstruktor
-     * @param cur A kocs előző pozíciója
-     */
-    public Car(Rail cur) {
-        Logger.logStart("Car created");
-        this.cur = cur;
-        Logger.logEnd();
-    }
 
     /**
      * Egy endVoid paraméteres konstruktor, a kocsi a játékban endVoidról indul
