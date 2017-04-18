@@ -131,5 +131,5 @@ public class Locomotive implements TrainElement {
      * Ezt nem tehetik meg, nem történik semmi.
      */
     @Override
-    public void fillCar() {}
+    public void fillCar(String color) {}
 }

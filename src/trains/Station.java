@@ -5,7 +5,7 @@ package trains;
  */
 public class Station extends Rail {
 
-    private String color;
+    protected String color;
     /**
      * Default constructor
      */
@@ -31,7 +31,7 @@ public class Station extends Rail {
             trainElement.moveNext();
             isOccupied = true;
             train = trainElement;
-            //train.empty(color);
+            train.empty(color);
         }
     }
 

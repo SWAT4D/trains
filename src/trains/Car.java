@@ -67,7 +67,7 @@ public class Car implements TrainElement {
     public void markFirst(boolean value) {
         // Ha üres a kocsi, és első nem üres kocsinak akkarjuk megjelölni,
         // akkor maradjon, hamis az isFirst-je és jelölje a mögötte lévő kocsit első nem üresnek
-        if(value || !isFull){
+        if(value && !isFull){
             this.isFirst = false;
             if(carBehind != null){
                 carBehind.markFirst(true);
@@ -90,6 +90,7 @@ public class Car implements TrainElement {
         if (isFirst){
             if(this.color.equals(color)){
                 isFull = false; // Kiürítjuk a kocsit
+                isFirst = false;
                 if(carBehind != null){
                     carBehind.markFirst(true);
                 }
@@ -111,7 +112,7 @@ public class Car implements TrainElement {
         if(inside){
             // FULL CHECK
             if(isFull){
-                throw new OccupyException(endVoid);
+                throw new OccupyException("Utasokat tartalmazó kocsi elhagyta a pályát");
             }
             if(carBehind == null){
                 carAhead.finish();
@@ -160,7 +161,7 @@ public class Car implements TrainElement {
 
     @Override
     public String toString() {
-        return color;
+        return isFull ? color : "e";
     }
 
 
@@ -168,13 +169,17 @@ public class Car implements TrainElement {
      * Utasok szállnak fel a kocsira
      */
     @Override
-    public void fillCar() {
-        isFull = true;
-        // Ha az eddig első nem üres kocsi ez a kocsi mögött van,
-        // akkor ez lesz az első nem üres kocsi,
-        if( !carAhead.isFirstForward()){
-            isFirst = true;
-            carBehind.markFirst(false);
+    public void fillCar(String color) {
+        if(this.color.equals(color)){
+            isFull = true;
+            // Ha az eddig első nem üres kocsi ez a kocsi mögött van,
+            // akkor ez lesz az első nem üres kocsi,
+            if( !carAhead.isFirstForward()){
+                isFirst = true;
+                if(carBehind!=null){
+                    carBehind.markFirst(false);
+                }
+            }
         }
     }
 }

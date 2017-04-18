@@ -21,8 +21,7 @@ public class GiverStation extends Station {
             trainElement.moveNext();
             isOccupied = true;
             train = trainElement;
-            //train.fillCar(color);
-           // train.remark();
+            trainElement.fillCar(color);
         }
     }
 
