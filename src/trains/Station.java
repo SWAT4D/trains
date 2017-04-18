@@ -31,7 +31,7 @@ public class Station extends Rail {
             trainElement.moveNext();
             isOccupied = true;
             train = trainElement;
-            //train.empty(color);
+            train.empty(color);
         }
     }
 

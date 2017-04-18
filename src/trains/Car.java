@@ -160,7 +160,7 @@ public class Car implements TrainElement {
 
     @Override
     public String toString() {
-        return color;
+        return isFull ? color : "c";
     }
 
 
