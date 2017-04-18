@@ -36,4 +36,14 @@ public interface TrainElement {
      */
     public void finish();
 
+    /**
+     * Jelzi a TrainElementnek, hogy beért a pályára
+     */
+    public void inside();
+
+
+    /**
+     * Utasok szállnak fel a TrainElementre
+     */
+    public void fillCar();
 }

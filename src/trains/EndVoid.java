@@ -7,10 +7,12 @@ package trains;
  */
 public class EndVoid extends Rail {
 
-    public void occupy(Car car) throws OccupyException {
-        car.finish();
-    }
-    public void occupy(Locomotive loco) throws OccupyException {
+    /**
+     * @param trainElement Azon vonatelem amely rá akar lépni
+     */
+    public void occupy(TrainElement trainElement) throws OccupyException {
+        trainElement.leave(this);
+
     }
 
     /**

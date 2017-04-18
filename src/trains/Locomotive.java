@@ -14,7 +14,6 @@ public class Locomotive implements TrainElement {
     private Rail cur;
     private Rail prev;
     boolean finish= false;
-    boolean locoOut = false;
 
 
     /**
@@ -26,7 +25,6 @@ public class Locomotive implements TrainElement {
         this.cur = cur;
         this.prev = prev;
         finish = false;
-        locoOut = false;
     }
 
     /**
@@ -35,7 +33,6 @@ public class Locomotive implements TrainElement {
     public Locomotive(EndVoid ev) {
         prev = ev;
         finish = false;
-        locoOut = false;
     }
 
 
@@ -95,9 +92,7 @@ public class Locomotive implements TrainElement {
      * @param endVoid
      */
     @Override
-    public void leave(EndVoid endVoid) {
-        locoOut = true;
-    }
+    public void leave(EndVoid endVoid) {}
 
     @Override
     public boolean isFirstForward() {
@@ -117,10 +112,11 @@ public class Locomotive implements TrainElement {
      */
     @Override
     public void finish() {
-        if(locoOut){
-            finish = true;
-        }
+       finish = true;
     }
+
+    @Override
+    public void inside() {}
 
     /**
      * Visszatér az mozdony pályán való jelével
@@ -130,17 +126,10 @@ public class Locomotive implements TrainElement {
         return "l";
     }
 
-    /*    *
-     * Mozgatja a mögötte lévő kocsikat az endVoidra
-     * Akkor hívódik meg, ha endVoidra kerül a mozdony
-     * @param endVoid ide mozgatja a kocsikat
-
-    public void stop(EndVoid endVoid) throws OccupyException {
-        Logger.logStart("stop(EndVoid) " + this);
-        moveNext();
-        if(Main.play) {
-            nextCar.move(endVoid);
-        }
-        Logger.logEnd();
-    }*/
+    /**
+     * Utasok próbálnak felszállni a mozdonyra.
+     * Ezt nem tehetik meg, nem történik semmi.
+     */
+    @Override
+    public void fillCar() {}
 }
