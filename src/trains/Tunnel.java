@@ -76,7 +76,6 @@ public class Tunnel extends Rail {
      */
     public boolean isOccupied() {
         return isOccupied;
-        }
     }
 
     /** Alagútszáj inaktiválása
