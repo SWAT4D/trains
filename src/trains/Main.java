@@ -90,7 +90,7 @@ public class Main {
 
     //Hozzáad egy pályaelemet a pályához.
     public static void addRailToMap(Koo pos, Rail r) {
-        map.put(new Koo(pos.getX()-1, pos.getY()-1), r);
+        map.put(new Koo(pos.getX() - 1, pos.getY() - 1), r);
     }
 
     //A main függvény a kezdő inicializálás után egy köszöntő képernyővel fogadja a játékost
@@ -331,17 +331,26 @@ public class Main {
     //Átkapcsoljuk az adott koordinátán elhelyezkedő váltót vagy alagútszájat aktiválunk.
     private static void turner(String command, Koo koo) {
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
-            if (entry.getKey().compareTo(koo.dec()) == 0){
-
-                if(command.equals("act")){
+            if (command.equals("act"))
+            {
+                if (entry.getKey().compareTo(koo.dec()) == 0)
+                {
                     TunnelPlace sel = (TunnelPlace) entry.getValue();
                     sel.setActive();
-                }else{
+                    break;
+                }
+            }
+            else
+            {
+                if (entry.getKey().compareTo(koo) == 0)
+                {
                     Switch sel = (Switch)entry.getValue();
                     sel.switchIt();
+                    break;
                 }
-                break;
             }
+
         }
     }
 }
+
