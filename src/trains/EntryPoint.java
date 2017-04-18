@@ -10,6 +10,8 @@ public class EntryPoint extends Rail {
     @Override
     public void addNext(Rail next) {
         nextR = next;
+        if (nextR != null)
+            nextR.addPrev(this);
     }
 
     @Override
