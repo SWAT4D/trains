@@ -1,0 +1,12 @@
+newRail e (1,1)
+newRail r (1,2)
+newRail st (1,3) b
+newRail r (1,4)
+newRail e (1,5)
+loco (1,5) 1 r
+move 1
+move 1
+move 1
+move 1
+move 1
+move 1
