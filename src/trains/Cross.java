@@ -1,9 +1,17 @@
 package trains;
 
+/**
+ * Kereszteződés a pályán.
+ * A vonatok csak egyenesen tudnak áthaladni rajta,
+ * viszont ha egyszerre több is van rajta akkor ütközés történik.
+ */
 public class Cross extends Rail{
     private Rail altnextR;
     private Rail altprevR;
-    
+
+    /**
+     * Paraméter nélküli konstruktor
+     */
     Cross(){
         altnextR = null;
         altprevR = null;

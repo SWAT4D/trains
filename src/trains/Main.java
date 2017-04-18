@@ -175,7 +175,7 @@ public class Main {
                     execute(cmd);*/
                 mapWriteOut();
             }
-        }catch (OccupyException oe){
+        }catch (GameOverException oe){
             System.out.println("GAME OVER!: " + oe.getMessage());
         }
 
@@ -322,7 +322,7 @@ public class Main {
     }
 
     //Mozgatjuk a vonatokat
-    private static void move(int num) throws OccupyException {
+    private static void move(int num) throws GameOverException {
         for(int i = 0;i<num;i++)
             for(Locomotive l : locolist)
                 l.step();

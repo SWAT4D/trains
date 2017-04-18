@@ -1,7 +1,9 @@
 package trains;
 
 /**
- * 
+ * Alagútszájakat valósítja meg.
+ * Ezekből egyszerre maximum kettő lehet aktív (ilyenkor alagúttal vannak összekötve),
+ * melynek ellenőrzését a Tunnel valósítja meg.
  */
 public class TunnelPlace extends Rail {
 	private boolean isActive;

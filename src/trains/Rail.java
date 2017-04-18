@@ -1,7 +1,10 @@
 package trains;
 
 /**
- * 
+ * A sín osztálya, innen származik le minden osztály, amin a vonat haladhat.
+ * Meghatározza, hogy a rajta lévő vonat merre mehet tovább,
+ * azáltal, hogy megkapja merről érkezett.
+ * Tudja, hogy tartózkodik-e rajta mozdony/kocsi vagy nem.
  */
 public class Rail{
 
@@ -50,11 +53,11 @@ public class Rail{
     /**
      * A sín elfoglalása egy vonat álltal
      * @param trainElement
-     * @throws trains.OccupyException
+     * @throws GameOverException
      */
-    public void occupy(TrainElement trainElement) throws OccupyException{
+    public void occupy(TrainElement trainElement) throws GameOverException {
         if (isOccupied){
-            throw new OccupyException(this);
+            throw new GameOverException(this);
         }
         else {
             trainElement.moveNext();
@@ -70,7 +73,10 @@ public class Rail{
         isOccupied = false;
         train = null;
     }
-    
+
+    /**
+     * A sínen tartózkodó trainElement lekérdezése
+     */
     public TrainElement getTrain(){
         return train;
     }
