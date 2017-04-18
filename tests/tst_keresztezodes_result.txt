@@ -27,4 +27,4 @@ rlE
 rll
 .E.
 
-GAME OVER!
+GAME OVER!: C-en Ütközés történt

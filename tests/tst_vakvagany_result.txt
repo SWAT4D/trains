@@ -6,4 +6,4 @@ rlT
 
 Erl
 
-GAME OVER!
+GAME OVER!: Vakvágányra futott a vonat
