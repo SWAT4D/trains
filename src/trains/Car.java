@@ -19,10 +19,8 @@ public class Car implements TrainElement {
      * @param endVoid
      */
     public Car(EndVoid endVoid, String color) {
-        Logger.logStart("Car created");
         cur = endVoid;
         this.color = color;
-        Logger.logEnd();
 
     }
 
