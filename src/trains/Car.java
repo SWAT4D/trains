@@ -160,7 +160,7 @@ public class Car implements TrainElement {
 
     @Override
     public String toString() {
-        return isFull ? color : "c";
+        return isFull ? color : "e";
     }
 
 
@@ -168,13 +168,17 @@ public class Car implements TrainElement {
      * Utasok szállnak fel a kocsira
      */
     @Override
-    public void fillCar() {
-        isFull = true;
-        // Ha az eddig első nem üres kocsi ez a kocsi mögött van,
-        // akkor ez lesz az első nem üres kocsi,
-        if( !carAhead.isFirstForward()){
-            isFirst = true;
-            carBehind.markFirst(false);
+    public void fillCar(String color) {
+        if(this.color.equals(color)){
+            isFull = true;
+            // Ha az eddig első nem üres kocsi ez a kocsi mögött van,
+            // akkor ez lesz az első nem üres kocsi,
+            if( !carAhead.isFirstForward()){
+                isFirst = true;
+                if(carBehind!=null){
+                    carBehind.markFirst(false);
+                }
+            }
         }
     }
 }

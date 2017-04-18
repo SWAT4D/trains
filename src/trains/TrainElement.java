@@ -45,5 +45,5 @@ public interface TrainElement {
     /**
      * Utasok szállnak fel a TrainElementre
      */
-    public void fillCar();
+    public void fillCar(String color);
 }

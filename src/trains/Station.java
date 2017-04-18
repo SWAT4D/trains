@@ -5,7 +5,7 @@ package trains;
  */
 public class Station extends Rail {
 
-    private String color;
+    protected String color;
     /**
      * Default constructor
      */
