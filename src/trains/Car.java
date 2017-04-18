@@ -111,7 +111,7 @@ public class Car implements TrainElement {
         if(inside){
             // FULL CHECK
             if(isFull){
-                throw new OccupyException(endVoid);
+                throw new OccupyException("Utasokat tartalmazó kocsi elhagyta a pályát");
             }
             if(carBehind == null){
                 carAhead.finish();

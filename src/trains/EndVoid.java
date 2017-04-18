@@ -11,8 +11,8 @@ public class EndVoid extends Rail {
      * @param trainElement Azon vonatelem amely rá akar lépni
      */
     public void occupy(TrainElement trainElement) throws OccupyException {
-        trainElement.leave(this);
-
+            trainElement.moveNext();
+            trainElement.leave(this);
     }
 
     /**
@@ -20,7 +20,8 @@ public class EndVoid extends Rail {
      * @param rail - Az a sín amelyikről érkezett a vonat
      * @return Konstans önmagát adja vissza
      */
-    public Rail next(EntryPoint rail) {
+    @Override
+    public Rail next(Rail rail) {
         return this;
     }
 }

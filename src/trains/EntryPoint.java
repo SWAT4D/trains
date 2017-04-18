@@ -7,6 +7,16 @@ public class EntryPoint extends Rail {
         prevR = ev;
     }
 
+    @Override
+    public void addNext(Rail next) {
+        nextR = next;
+    }
+
+    @Override
+    public void addPrev(Rail prev) {
+        nextR = prev;
+    }
+
     public void setTrain(Locomotive l){
         train = l;
     }
