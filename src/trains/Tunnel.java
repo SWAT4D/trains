@@ -23,7 +23,6 @@ public class Tunnel extends Rail {
     	end = new Rail();
     	first = null;
     	sec = null;
-    	Logger.logEnd();
     }
     
     /**
@@ -76,7 +75,6 @@ public class Tunnel extends Rail {
      * @return Foglalt-e az alagút.
      */
     public boolean isOccupied() {
-	Logger.logMessage("isOccupied() - " + this);
         Scanner sc = new Scanner(System.in); 
         if (sc.nextBoolean()==true){
             return true;
@@ -90,7 +88,6 @@ public class Tunnel extends Rail {
      * @param tunnelPlace
      */
     public void inactiveTunnelPlace(TunnelPlace tunnelPlace ) {
-    	Logger.logStart("inactiveTunnelPlace(TunnelPlace) - " + this);
     	switch (activeNum){
         	case 1:        		
         		start.addPrev(null);
