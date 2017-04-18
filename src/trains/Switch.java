@@ -40,6 +40,7 @@ public class Switch extends Rail {
      * @param prev
      * @return
      */
+    @Override
     public Rail next(Rail prev)
     {
         if (nextR != prev && nextAltR != prev)

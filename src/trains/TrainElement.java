@@ -1,7 +1,7 @@
 package trains;
 
 /**
- * 
+ * Vonatelem interfész
  */
 public interface TrainElement {
     
@@ -16,16 +16,19 @@ public interface TrainElement {
      * EndVoid hívja meg, ha ráért az adott TrainElement
      * Ezzel jelzi a TrainElementnek, hogy a pálya szélére ért
      * @param endVoid 
+     * @throws trains.GameOverException 
      */
     public void leave(EndVoid endVoid) throws GameOverException;
 
     /**
      * Megnézi hogy a kocsi előtt van-e üres kocsi valahol.
+     * @return 
      */
     public boolean isFirstForward();
 
     /**
      * A vonat elem mögötti kocsit lépteti
+     * @throws trains.GameOverException
      */
     public void moveNext() throws GameOverException;
 
@@ -42,6 +45,7 @@ public interface TrainElement {
 
     /**
      * Utasok szállnak fel a TrainElementre
+     * @param color
      */
     public void fillCar(String color);
 }

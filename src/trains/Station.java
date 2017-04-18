@@ -8,6 +8,7 @@ public class Station extends Rail {
     protected String color;
     /**
      * Default constructor
+     * @param c
      */
     public Station(String c)
     {
@@ -17,7 +18,9 @@ public class Station extends Rail {
     /**
      * Az állomás elfoglalása egy vonat által
      * @param trainElement
+     * @throws trains.GameOverException
      */
+    @Override
     public void occupy(TrainElement trainElement) throws GameOverException
     {
         //ha foglalt már akkor kivételt dob

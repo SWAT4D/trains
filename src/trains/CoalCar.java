@@ -1,7 +1,5 @@
 package trains;
 
-import java.awt.*;
-
 /**
  *  Olyan kocsi amely nem szállít utasokat,
  *  emiatt nem is lehet első utasokat szállító kocsi.
@@ -11,6 +9,7 @@ public class CoalCar extends Car{
 
     /**
      *  Rogtön továbbadja az első nem üres köcsi jelzést az utána következő kocsinak
+     * @param b
      */
     @Override
     public void markFirst(boolean b){
@@ -21,6 +20,7 @@ public class CoalCar extends Car{
     /**
      *  Nem tud feltöltődni
      */
+    @Override
     public void fillCar(String color) {}
 
     /**
@@ -31,6 +31,7 @@ public class CoalCar extends Car{
 
     /**
      * 1 EndVoid paraméteres knstruktor
+     * @param endVoid
      */
     public CoalCar(EndVoid endVoid) {
         super(endVoid, "c");

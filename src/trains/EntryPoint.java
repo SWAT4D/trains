@@ -47,6 +47,7 @@ public class EntryPoint extends Rail {
      * @param trainElement ez a TrainElement foglalja el az EntryPointot
      * @throws GameOverException
      */
+    @Override
     public void occupy(TrainElement trainElement) throws GameOverException {
         if (isOccupied){
             throw new GameOverException(this);

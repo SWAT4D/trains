@@ -1,7 +1,5 @@
 package trains;
 
-import java.util.Scanner;
-
 /**
  * Alagút megvalósítása, melyből egyszerre mindig csak egy lehet a pályán.
  */
