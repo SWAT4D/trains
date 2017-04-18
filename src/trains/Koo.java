@@ -12,6 +12,7 @@ public class Koo implements Comparable {
     }
     /**
      * X koordináta lekérdezése
+     * @return x
      */
     public int getX() {
         return x;
@@ -19,6 +20,7 @@ public class Koo implements Comparable {
 
     /**
      * Y koordináta lekérdezése
+     * @return y
      */
     public int getY() {
         return y;
@@ -57,6 +59,8 @@ public class Koo implements Comparable {
 
     /**
      * Stringból koordináta készítés
+     * @param str
+     * @return koord
      */
     public static Koo parseKoo(String str){
         String[] c = str.replace('(',' ').replace(')',' ').trim().split(",");
@@ -65,6 +69,7 @@ public class Koo implements Comparable {
 
     /**
      * x és y koordináták csökkentése 1-el
+     * @return csökkentett koord
      */
     public Koo dec(){
         return new Koo(x-1,y-1);

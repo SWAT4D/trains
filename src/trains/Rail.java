@@ -76,6 +76,7 @@ public class Rail{
 
     /**
      * A sínen tartózkodó trainElement lekérdezése
+     * @return train
      */
     public TrainElement getTrain(){
         return train;

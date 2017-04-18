@@ -9,7 +9,9 @@ public class EndVoid extends Rail {
 
     /**
      * @param trainElement Azon vonatelem amely rá akar lépni
+     * @throws trains.GameOverException
      */
+    @Override
     public void occupy(TrainElement trainElement) throws GameOverException {
             trainElement.moveNext();
             trainElement.leave(this);

@@ -1,5 +1,8 @@
 package trains;
 
+/**
+ * Felszálló utasok állomásának az osztálya
+ */
 public class GiverStation extends Station {
     /**
      * Szín paraméterű konstruktor
@@ -14,6 +17,7 @@ public class GiverStation extends Station {
      * @param trainElement ez a TrainElement foglalja el az EntryPointot
      * @throws GameOverException
      */
+    @Override
     public void occupy(TrainElement trainElement) throws GameOverException
     {
         if (isOccupied)

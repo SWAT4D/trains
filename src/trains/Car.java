@@ -17,6 +17,7 @@ public class Car implements TrainElement {
     /**
      * Egy endVoid paraméteres konstruktor, a kocsi a játékban endVoidról indul
      * @param endVoid
+     * @param color
      */
     public Car(EndVoid endVoid, String color) {
         cur = endVoid;
@@ -46,6 +47,7 @@ public class Car implements TrainElement {
     /**
      * Elmozditja a kocsit
      * @param rail ide mozgatja a kocsit
+     * @throws trains.GameOverException
      */
     public void move(Rail rail) throws GameOverException {
         cur.leave();
@@ -101,6 +103,7 @@ public class Car implements TrainElement {
      * Ha nincs következő kocsi (tehát ez az utolsó kocsi),
      * akkor meghívja az előtte lévő kocsi finish függvényét.
      * @param endVoid
+     * @throws trains.GameOverException
      */
     @Override
     public void leave(EndVoid endVoid) throws GameOverException {
@@ -123,6 +126,7 @@ public class Car implements TrainElement {
      * hogy meghivja az isFirstForward() függvényt az elötte lévő kocsin,
      * és ha ez igazzal tér vissza vagy ez a kocsi az első,
      * akkor igazzal tér vissza különben hamissal.
+     * @return elso-e
      */
     @Override
     public boolean isFirstForward(){
@@ -131,6 +135,7 @@ public class Car implements TrainElement {
 
     /**
      *  A kocsi mögötti kocsit lépteti
+     * @throws trains.GameOverException
      */
     @Override
     public void moveNext() throws GameOverException {
@@ -165,6 +170,7 @@ public class Car implements TrainElement {
 
     /**
      * Utasok szállnak fel a kocsira
+     * @param color
      */
     @Override
     public void fillCar(String color) {

@@ -32,6 +32,7 @@ public class TunnelPlace extends Rail {
     }
     /**
      * Inaktiválás
+     * @param value
      */
     public void setIsActive(boolean value){
     	isActive = value;
@@ -39,6 +40,7 @@ public class TunnelPlace extends Rail {
 
     /**
      * Alagút hozzáadása
+     * @param t
      */
     public void addTunnel(Tunnel t) {
 	tunnel = t;
