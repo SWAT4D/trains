@@ -153,6 +153,9 @@ public class Car implements TrainElement {
         carAhead.finish();
     }
 
+    /**
+     *  Jelzi a kocsinak, hogy tulment egy EntryPointon
+     */
     @Override
     public void inside() {
         inside = true;

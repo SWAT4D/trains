@@ -1,20 +1,30 @@
 package trains;
 
+/**
+ * Koordináta osztály
+ */
 public class Koo implements Comparable {
+    int x,y;
+
     public Koo(int x, int y) {
         this.x = x;
         this.y = y;
     }
-
+    /**
+     * X koordináta lekérdezése
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Y koordináta lekérdezése
+     */
     public int getY() {
         return y;
     }
 
-    int x,y;
+
 
     public void setX(int x) {
         this.x = x;
@@ -45,10 +55,17 @@ public class Koo implements Comparable {
         return -1;
     }
 
+    /**
+     * Stringból koordináta készítés
+     */
     public static Koo parseKoo(String str){
         String[] c = str.replace('(',' ').replace(')',' ').trim().split(",");
         return new Koo(Integer.parseInt(c[0]),Integer.parseInt(c[1]));
     }
+
+    /**
+     * x és y koordináták csökkentése 1-el
+     */
     public Koo dec(){
         return new Koo(x-1,y-1);
     }

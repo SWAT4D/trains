@@ -1,0 +1,10 @@
+...
+E+E
+
+...
+l+E
+
+...
+l+l
+
+GAME OVER!: +-en Ütközés történt

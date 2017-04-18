@@ -1,7 +1,10 @@
 package trains;
 
 /**
- * 
+ * A sín osztálya, innen származik le minden osztály, amin a vonat haladhat.
+ * Meghatározza, hogy a rajta lévő vonat merre mehet tovább,
+ * azáltal, hogy megkapja merről érkezett.
+ * Tudja, hogy tartózkodik-e rajta mozdony/kocsi vagy nem.
  */
 public class Rail{
 
@@ -70,7 +73,10 @@ public class Rail{
         isOccupied = false;
         train = null;
     }
-    
+
+    /**
+     * A sínen tartózkodó trainElement lekérdezése
+     */
     public TrainElement getTrain(){
         return train;
     }
