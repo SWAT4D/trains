@@ -75,12 +75,7 @@ public class Tunnel extends Rail {
      * @return Foglalt-e az alagút.
      */
     public boolean isOccupied() {
-        Scanner sc = new Scanner(System.in); 
-        if (sc.nextBoolean()==true){
-            return true;
-        }
-        else{
-            return false;
+        return isOccupied;
         }
     }
 
