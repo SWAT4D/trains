@@ -45,13 +45,6 @@ public class Main {
     }
 
     /**
-     * Köszöntő képernyő
-     */
-    private static void welcomeScreen() {
-        System.out.println("Hello!\nTODO: Welcome Screen\n-----------\n\n\n");
-    }
-
-    /**
      * Kiírja a pályát
      */
     private static void mapWriteOut() {
@@ -124,7 +117,6 @@ public class Main {
      */
     public static void main(String[] args){
         init();
-        welcomeScreen();
         try {
             Scanner input = new Scanner(System.in);
             while (input.hasNext()) {
