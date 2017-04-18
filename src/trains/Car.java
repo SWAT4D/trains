@@ -67,7 +67,7 @@ public class Car implements TrainElement {
     public void markFirst(boolean value) {
         // Ha üres a kocsi, és első nem üres kocsinak akkarjuk megjelölni,
         // akkor maradjon, hamis az isFirst-je és jelölje a mögötte lévő kocsit első nem üresnek
-        if(value || !isFull){
+        if(value && !isFull){
             this.isFirst = false;
             if(carBehind != null){
                 carBehind.markFirst(true);
@@ -90,6 +90,7 @@ public class Car implements TrainElement {
         if (isFirst){
             if(this.color.equals(color)){
                 isFull = false; // Kiürítjuk a kocsit
+                isFirst = false;
                 if(carBehind != null){
                     carBehind.markFirst(true);
                 }
