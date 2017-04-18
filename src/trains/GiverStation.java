@@ -1,7 +1,5 @@
 package trains;
 
-import java.awt.*;
-
 public class GiverStation extends Station {
     /**
      * Szín paraméterű konstruktor
@@ -14,13 +12,13 @@ public class GiverStation extends Station {
      * A Rail occupy által megvalósítottakon fellül jelzi a TrainElementnek,
      * hogy áthaladt egy GiverStationön és ennek a színét.
      * @param trainElement ez a TrainElement foglalja el az EntryPointot
-     * @throws trains.OccupyException
+     * @throws GameOverException
      */
-    public void occupy(TrainElement trainElement) throws OccupyException
+    public void occupy(TrainElement trainElement) throws GameOverException
     {
         if (isOccupied)
         {
-            throw new OccupyException(this);
+            throw new GameOverException(this);
         }
         else
         {

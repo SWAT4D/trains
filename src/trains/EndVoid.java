@@ -10,7 +10,7 @@ public class EndVoid extends Rail {
     /**
      * @param trainElement Azon vonatelem amely rá akar lépni
      */
-    public void occupy(TrainElement trainElement) throws OccupyException {
+    public void occupy(TrainElement trainElement) throws GameOverException {
             trainElement.moveNext();
             trainElement.leave(this);
     }

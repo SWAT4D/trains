@@ -1,8 +1,5 @@
 package trains;
 
-import java.awt.*;
-import java.util.*;
-
 /**
  * A kocsi osztálya
  */
@@ -52,7 +49,7 @@ public class Car implements TrainElement {
      * Elmozditja a kocsit
      * @param rail ide mozgatja a kocsit
      */
-    public void move(Rail rail) throws OccupyException {
+    public void move(Rail rail) throws GameOverException {
         cur.leave();
         rail.occupy(this);
         cur = rail;
@@ -108,11 +105,11 @@ public class Car implements TrainElement {
      * @param endVoid
      */
     @Override
-    public void leave(EndVoid endVoid) throws OccupyException {
+    public void leave(EndVoid endVoid) throws GameOverException {
         if(inside){
             // FULL CHECK
             if(isFull){
-                throw new OccupyException("Utasokat tartalmazó kocsi elhagyta a pályát");
+                throw new GameOverException("Utasokat tartalmazó kocsi elhagyta a pályát");
             }
             if(carBehind == null){
                 carAhead.finish();
@@ -138,7 +135,7 @@ public class Car implements TrainElement {
      *  A kocsi mögötti kocsit lépteti
      */
     @Override
-    public void moveNext() throws OccupyException {
+    public void moveNext() throws GameOverException {
         if(carBehind != null){
             carBehind.move(cur);
         }

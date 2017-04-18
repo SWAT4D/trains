@@ -1,7 +1,5 @@
 package trains;
 
-import java.awt.Color;
-
 /**
  * 
  */
@@ -19,7 +17,7 @@ public interface TrainElement {
      * Ezzel jelzi a TrainElementnek, hogy a pálya szélére ért
      * @param endVoid 
      */
-    public void leave(EndVoid endVoid) throws OccupyException;
+    public void leave(EndVoid endVoid) throws GameOverException;
 
     /**
      * Megnézi hogy a kocsi előtt van-e üres kocsi valahol.
@@ -29,7 +27,7 @@ public interface TrainElement {
     /**
      * A vonat elem mögötti kocsit lépteti
      */
-    public void moveNext() throws OccupyException;
+    public void moveNext() throws GameOverException;
 
     /**
      * Jelzi a TrainElementnek, hogy a mögötte lévő TrainElementek kiértek a pályáról

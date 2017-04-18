@@ -18,12 +18,12 @@ public class Station extends Rail {
      * Az állomás elfoglalása egy vonat által
      * @param trainElement
      */
-    public void occupy(TrainElement trainElement) throws OccupyException
+    public void occupy(TrainElement trainElement) throws GameOverException
     {
         //ha foglalt már akkor kivételt dob
         if (isOccupied)
         {
-            throw new OccupyException(this);
+            throw new GameOverException(this);
         }
         //ha nem foglalt, akkor elfoglaljuk és a rálépő elemet megpróbáljuk üríteni
         else

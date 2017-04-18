@@ -3,7 +3,7 @@ package trains;
 import java.util.Scanner;
 
 /**
- * 
+ * Alagút megvalósítása, melyből egyszerre mindig csak egy lehet a pályán.
  */
 public class Tunnel extends Rail {
 	
@@ -17,7 +17,7 @@ public class Tunnel extends Rail {
      */
     private Tunnel() {
     	/*
-    	 * TEMP! 
+    	 * TEMP!
     	 */
     	start = new Rail();
     	end = new Rail();

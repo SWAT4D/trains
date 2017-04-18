@@ -1,7 +1,5 @@
 package trains;
 
-import java.awt.*;
-
 /**
  * A mozdony osztálya, a játékban a mozdonyt reprezentálja.
  * Ismeri aktuális és előző pozícióját (Rail).
@@ -50,7 +48,7 @@ public class Locomotive implements TrainElement {
     /**
      * @param entryPoint
      */
-    public void setStartPlace(EntryPoint entryPoint) throws OccupyException {
+    public void setStartPlace(EntryPoint entryPoint) throws GameOverException {
         cur = entryPoint;
         cur.occupy(this);
     }
@@ -58,12 +56,12 @@ public class Locomotive implements TrainElement {
     /**
      * Ezzel lehet a mozdonyt léptetni
      */
-    public void step() throws OccupyException {
+    public void step() throws GameOverException {
         // Ha még vannak kocsik amik nem értek ki a pályáról, akkor léptetjük csak
         if( !finish ) {
             Rail railNext = cur.next(prev);
             if (railNext == null) {
-                throw new OccupyException("Vakvágányra futott a vonat");
+                throw new GameOverException("Vakvágányra futott a vonat");
             } else {
                 cur.leave();
                 prev = cur;
@@ -102,7 +100,7 @@ public class Locomotive implements TrainElement {
     /**
      * A mozdony mögötti kocsit lépteti
      */
-    public void moveNext() throws OccupyException {
+    public void moveNext() throws GameOverException {
         nextCar.move(cur);
     }
 
