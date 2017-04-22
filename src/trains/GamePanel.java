@@ -1,8 +1,8 @@
 package trains;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Map;
 
 
@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 
 public class GamePanel extends JPanel{
     Map<Koo, Rail> map;
+    int rectwidth = 30;
+    int rectheight = 30;
 
     GamePanel(Map<Koo, Rail> map){
         super();
@@ -22,13 +24,14 @@ public class GamePanel extends JPanel{
 
 
 
+
+
     @Override
     public void paintComponent( Graphics g ) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        int rectwidth = 30;
-        int rectheight = 30;
+
 
         for(int i=0; i<10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -49,6 +52,8 @@ public class GamePanel extends JPanel{
                     }
                 }
                 Color c = Color.WHITE;
+                boolean isSwitch = false;
+                boolean fo = true;
                 switch(sMap){
                     case "E":
                         c = new Color(153,76,0); break;
@@ -78,6 +83,16 @@ public class GamePanel extends JPanel{
                         }break;
                     case "T":
                         c = new Color(128, 128, 128); break;
+                    case "M":
+                        c = new Color(153,76,0);
+                        isSwitch = true;
+                        fo = false;
+                        break;
+                    case "F":
+                        c = new Color(153,76,0);
+                        isSwitch = true;
+                        fo = true;
+                        break;
                     default:
                         c = Color.WHITE; break;
                 }
@@ -103,11 +118,21 @@ public class GamePanel extends JPanel{
                 g.fillRect(j*rectwidth, i*rectheight , rectwidth, rectheight);
                 if(isTrain){
                     g2.setColor(cTrain);
+
                     g.fillOval(j*rectwidth, i*rectheight , rectwidth, rectheight);
+                }
+
+                if(isSwitch){
+                    if(fo) {
+                        g2.setColor(Color.BLACK);
+                        g.fillRoundRect(j*rectwidth + rectwidth/4, i*rectheight + rectheight/4, rectwidth/2, rectheight/2, 2,2);
+                    }
+                    else{
+                        g2.setColor(Color.WHITE);
+                        g.fillRoundRect(j*rectwidth + rectwidth/4, i*rectheight + rectheight/4, rectwidth/2, rectheight/2, 2,2);
+                    }
                 }
             }
         }
-
-
-            }
+    }
 }

@@ -81,6 +81,12 @@ public class Switch extends Rail {
 
     @Override
     public String toString() {
-        return "s";
+        if(isMain){
+            return "F";
+        }
+        else{
+            return "M";
+        }
+
     }
 }
