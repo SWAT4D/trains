@@ -86,4 +86,8 @@ public class Rail{
     public String toString(){
         return "+";
     }
+
+    public String getColor(){
+        return "";
+    }
 }

@@ -42,4 +42,8 @@ public class Station extends Rail {
     public String toString() {
         return "S";
     }
+
+    public String getColor(){
+        return color;
+    }
 }

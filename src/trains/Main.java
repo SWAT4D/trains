@@ -2,6 +2,9 @@ package trains;
 
 import java.util.*;
 import java.util.regex.Pattern;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.*;
 
 /**
  * Program belépési pont,
@@ -33,6 +36,9 @@ public class Main {
      */
     private static ArrayList<Locomotive> locolist;
 
+
+    private static GamePanel gamePanel;
+
     /**
      * Csak inicializálja a tagváltozókat
      */
@@ -42,12 +48,19 @@ public class Main {
         map = new TreeMap<Koo, Rail>();
         ev = new EndVoid();
         locolist = new ArrayList<>();
+        JFrame frame = new JFrame();
+        gamePanel = new GamePanel(map);
+        frame.add(gamePanel);
+        gamePanel.setPreferredSize(new Dimension(300,300));
+        frame.pack();
+        frame.setVisible( true );
     }
 
     /**
      * Kiírja a pályát
      */
     private static void mapWriteOut() {
+        gamePanel.repaint();
         if(map.isEmpty())
             System.out.println("Your Map is empty!");
 
