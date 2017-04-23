@@ -1,11 +1,12 @@
 package trains;
 
 /**
- * 
+ * Alagútszájakat valósítja meg.
+ * Ezekből egyszerre maximum kettő lehet aktív (ilyenkor alagúttal vannak összekötve),
+ * melynek ellenőrzését a Tunnel valósítja meg.
  */
 public class TunnelPlace extends Rail {
 	private boolean isActive;
-        private Tunnel tunnel;
    
 	/**
      * Alapértelmezett konstruktor.
@@ -14,36 +15,32 @@ public class TunnelPlace extends Rail {
     	isActive = false;
     }
 
-
     /**
      * Aktiválás
      */
     public void setActive() {
     	if (!isActive){
-    		tunnel.activeTunnelPlace(this);
+            Tunnel.getInstance().activeTunnelPlace(this);
     	}
     	else{
-    		if(!tunnel.isOccupied())
-    			tunnel.inactiveTunnelPlace(this);
+            if(!Tunnel.getInstance().isOccupied())
+                Tunnel.getInstance().inactiveTunnelPlace(this);
     		
     	}	
     }
     /**
      * Inaktiválás
+     * @param value
      */
     public void setIsActive(boolean value){
     	isActive = value;
     }
 
-    /**
-     * Alagút hozzáadása
-     */
-    public void addTunnel(Tunnel t) {
-	tunnel = t;
-    }
-    
     @Override
     public String toString(){
-        return "T";
+        if (isActive)
+            return "T";
+        else
+            return "V";
     }
 }

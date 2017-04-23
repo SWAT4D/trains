@@ -1,9 +1,7 @@
 package trains;
 
-import java.awt.Color;
-
 /**
- * 
+ * Vonatelem interfész
  */
 public interface TrainElement {
     
@@ -18,22 +16,36 @@ public interface TrainElement {
      * EndVoid hívja meg, ha ráért az adott TrainElement
      * Ezzel jelzi a TrainElementnek, hogy a pálya szélére ért
      * @param endVoid 
+     * @throws trains.GameOverException 
      */
-    public void leave(EndVoid endVoid) throws OccupyException;
+    public void leave(EndVoid endVoid) throws GameOverException;
 
     /**
      * Megnézi hogy a kocsi előtt van-e üres kocsi valahol.
+     * @return 
      */
     public boolean isFirstForward();
 
     /**
      * A vonat elem mögötti kocsit lépteti
+     * @throws trains.GameOverException
      */
-    public void moveNext() throws OccupyException;
+    public void moveNext() throws GameOverException;
 
     /**
      * Jelzi a TrainElementnek, hogy a mögötte lévő TrainElementek kiértek a pályáról
      */
     public void finish();
 
+    /**
+     * Jelzi a TrainElementnek, hogy beért a pályára
+     */
+    public void inside();
+
+
+    /**
+     * Utasok szállnak fel a TrainElementre
+     * @param color
+     */
+    public void fillCar(String color);
 }

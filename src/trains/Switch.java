@@ -40,6 +40,7 @@ public class Switch extends Rail {
      * @param prev
      * @return
      */
+    @Override
     public Rail next(Rail prev)
     {
         if (nextR != prev && nextAltR != prev)
@@ -80,6 +81,12 @@ public class Switch extends Rail {
 
     @Override
     public String toString() {
-        return "s";
+        if(isMain){
+            return "F";
+        }
+        else{
+            return "M";
+        }
+
     }
 }

@@ -1,9 +1,7 @@
 package trains;
 
-import java.util.Scanner;
-
 /**
- * 
+ * Alagút megvalósítása, melyből egyszerre mindig csak egy lehet a pályán.
  */
 public class Tunnel extends Rail {
 	
@@ -17,13 +15,12 @@ public class Tunnel extends Rail {
      */
     private Tunnel() {
     	/*
-    	 * TEMP! 
+    	 * TEMP!
     	 */
     	start = new Rail();
     	end = new Rail();
     	first = null;
     	sec = null;
-    	Logger.logEnd();
     }
     
     /**
@@ -76,25 +73,18 @@ public class Tunnel extends Rail {
      * @return Foglalt-e az alagút.
      */
     public boolean isOccupied() {
-	Logger.logMessage("isOccupied() - " + this);
-        Scanner sc = new Scanner(System.in); 
-        if (sc.nextBoolean()==true){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return isOccupied;
     }
 
     /** Alagútszáj inaktiválása
      * @param tunnelPlace
      */
     public void inactiveTunnelPlace(TunnelPlace tunnelPlace ) {
-    	Logger.logStart("inactiveTunnelPlace(TunnelPlace) - " + this);
     	switch (activeNum){
         	case 1:        		
         		start.addPrev(null);
 	    		activeNum--;
+                        first.setIsActive(false);   //itt lehet nem stimelnek a dolgok...
         		break;
         	case 2:       		
         		first.setIsActive(false);

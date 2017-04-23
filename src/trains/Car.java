@@ -1,8 +1,5 @@
 package trains;
 
-import java.awt.*;
-import java.util.*;
-
 /**
  * A kocsi osztálya
  */
@@ -12,19 +9,19 @@ public class Car implements TrainElement {
     protected TrainElement carAhead;
     protected Rail cur;
     protected String color;
-    protected boolean isFirst;
-    protected boolean isFull;
+    protected boolean isFirst = false;
+    protected boolean isFull = true;
+    protected boolean inside = false;
 
 
     /**
      * Egy endVoid paraméteres konstruktor, a kocsi a játékban endVoidról indul
      * @param endVoid
+     * @param color
      */
     public Car(EndVoid endVoid, String color) {
-        Logger.logStart("Car created");
         cur = endVoid;
         this.color = color;
-        Logger.logEnd();
 
     }
 
@@ -33,11 +30,9 @@ public class Car implements TrainElement {
      * @param car ezt a kocsit csatolja a kocsihoz
      */
     public void addNext(Car car) {
-        Logger.logStart("addNext(Car) - " + this);
         carBehind = car;
         if (carBehind != null)
             carBehind.addPrev(this);
-        Logger.logEnd();
     }
 
     /**
@@ -46,13 +41,15 @@ public class Car implements TrainElement {
      */
     public void addPrev(TrainElement prev) {
         carAhead = prev;
+        isFirst = !carAhead.isFirstForward();
     }
 
     /**
      * Elmozditja a kocsit
      * @param rail ide mozgatja a kocsit
+     * @throws trains.GameOverException
      */
-    public void move(Rail rail) throws OccupyException {
+    public void move(Rail rail) throws GameOverException {
         cur.leave();
         rail.occupy(this);
         cur = rail;
@@ -67,7 +64,7 @@ public class Car implements TrainElement {
     public void markFirst(boolean value) {
         // Ha üres a kocsi, és első nem üres kocsinak akkarjuk megjelölni,
         // akkor maradjon, hamis az isFirst-je és jelölje a mögötte lévő kocsit első nem üresnek
-        if(value || !isFull){
+        if(value && !isFull){
             this.isFirst = false;
             if(carBehind != null){
                 carBehind.markFirst(true);
@@ -90,6 +87,7 @@ public class Car implements TrainElement {
         if (isFirst){
             if(this.color.equals(color)){
                 isFull = false; // Kiürítjuk a kocsit
+                isFirst = false;
                 if(carBehind != null){
                     carBehind.markFirst(true);
                 }
@@ -105,15 +103,18 @@ public class Car implements TrainElement {
      * Ha nincs következő kocsi (tehát ez az utolsó kocsi),
      * akkor meghívja az előtte lévő kocsi finish függvényét.
      * @param endVoid
+     * @throws trains.GameOverException
      */
     @Override
-    public void leave(EndVoid endVoid) throws OccupyException {
-        // FULL CHECK
-        if(isFull){
-           throw new OccupyException(endVoid);
-        }
-        if(carBehind == null){
-            carAhead.finish();
+    public void leave(EndVoid endVoid) throws GameOverException {
+        if(inside){
+            // FULL CHECK
+            if(isFull){
+                throw new GameOverException("Utasokat tartalmazó kocsi elhagyta a pályát");
+            }
+            if(carBehind == null){
+                carAhead.finish();
+            }
         }
     }
 
@@ -125,6 +126,7 @@ public class Car implements TrainElement {
      * hogy meghivja az isFirstForward() függvényt az elötte lévő kocsin,
      * és ha ez igazzal tér vissza vagy ez a kocsi az első,
      * akkor igazzal tér vissza különben hamissal.
+     * @return elso-e
      */
     @Override
     public boolean isFirstForward(){
@@ -133,9 +135,10 @@ public class Car implements TrainElement {
 
     /**
      *  A kocsi mögötti kocsit lépteti
+     * @throws trains.GameOverException
      */
     @Override
-    public void moveNext() throws OccupyException {
+    public void moveNext() throws GameOverException {
         if(carBehind != null){
             carBehind.move(cur);
         }
@@ -150,9 +153,38 @@ public class Car implements TrainElement {
         carAhead.finish();
     }
 
+    /**
+     *  Jelzi a kocsinak, hogy tulment egy EntryPointon
+     */
+    @Override
+    public void inside() {
+        inside = true;
+    }
+
+
     @Override
     public String toString() {
-        return color;
+        return isFull ? color : "e";
+    }
+
+
+    /**
+     * Utasok szállnak fel a kocsira
+     * @param color
+     */
+    @Override
+    public void fillCar(String color) {
+        if(this.color.equals(color)){
+            isFull = true;
+            // Ha az eddig első nem üres kocsi ez a kocsi mögött van,
+            // akkor ez lesz az első nem üres kocsi,
+            if( !carAhead.isFirstForward()){
+                isFirst = true;
+                if(carBehind!=null){
+                    carBehind.markFirst(false);
+                }
+            }
+        }
     }
 }
 

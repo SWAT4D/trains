@@ -5,9 +5,10 @@ package trains;
  */
 public class Station extends Rail {
 
-    private String color;
+    protected String color;
     /**
      * Default constructor
+     * @param c
      */
     public Station(String c)
     {
@@ -17,13 +18,15 @@ public class Station extends Rail {
     /**
      * Az állomás elfoglalása egy vonat által
      * @param trainElement
+     * @throws trains.GameOverException
      */
-    public void occupy(TrainElement trainElement) throws OccupyException
+    @Override
+    public void occupy(TrainElement trainElement) throws GameOverException
     {
         //ha foglalt már akkor kivételt dob
         if (isOccupied)
         {
-            throw new OccupyException(this);
+            throw new GameOverException(this);
         }
         //ha nem foglalt, akkor elfoglaljuk és a rálépő elemet megpróbáljuk üríteni
         else
@@ -31,12 +34,16 @@ public class Station extends Rail {
             trainElement.moveNext();
             isOccupied = true;
             train = trainElement;
-            //train.empty(color);
+            train.empty(color);
         }
     }
 
     @Override
     public String toString() {
         return "S";
+    }
+
+    public String getColor(){
+        return color;
     }
 }

@@ -6,11 +6,15 @@ package trains;
  * Mindig önmagára mutat ha a következő sínre kérdez a hívó.
  */
 public class EndVoid extends Rail {
+
     /**
-     * @param Car Azon vonatelem amely rá akar lépni
+     * @param trainElement Azon vonatelem amely rá akar lépni
+     * @throws trains.GameOverException
      */
-    public void occupy(TrainElement trainElement) throws OccupyException {
-        trainElement.leave(this);
+    @Override
+    public void occupy(TrainElement trainElement) throws GameOverException {
+            trainElement.moveNext();
+            trainElement.leave(this);
     }
 
     /**
@@ -18,7 +22,8 @@ public class EndVoid extends Rail {
      * @param rail - Az a sín amelyikről érkezett a vonat
      * @return Konstans önmagát adja vissza
      */
-    public Rail next(EntryPoint rail) {
+    @Override
+    public Rail next(Rail rail) {
         return this;
     }
 }

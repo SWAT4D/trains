@@ -1,45 +1,58 @@
 package trains;
 
+import java.awt.Color;
 import java.util.*;
 import java.util.regex.Pattern;
 
-
+/**
+ * Program belépési pont,
+ * Parancsok feldolgozása
+ */
 public class Main {
-    //A pályán elhelyezkedő síneket tárolja a koordinátájukkal
+    /**
+     * A pályán elhelyezkedő síneket tárolja a koordinátájukkal
+     */
     private static Map<Koo, Rail> map;
 
-    //Egy darab EndVoid
+    /**
+     * Egy darab EndVoid
+     */
     private static EndVoid ev;
 
-    //A sínek lerakásánál, a sínek összekötéséhez kell
+    /**
+     * A sínek lerakásánál, a sínek összekötéséhez kell
+     */
     private static Rail prev;
 
-    //Tároljuk a switch-eket mivel ezek összekötése speciális
+    /**
+     * Tároljuk a switch-eket mivel ezek összekötése speciális
+     */
     private static Map<Koo, Switch> switchlist;
 
-    //Mozgatáshoz tároljuk az összes mozdonyt
+    /**
+     * Mozgatáshoz tároljuk az összes mozdonyt
+     */
     private static ArrayList<Locomotive> locolist;
     
-    // Alagút a szájak nyilvántartására és a velük végzendő műveletekhez
-    private static Tunnel T;
-    
-    //Csak inicializálja a tagváltozókat
+    private static TrainFrame frame;
+
+    /**
+     * Csak inicializálja a tagváltozókat
+     */
     private static void init() {
         switchlist = new TreeMap<>();
         prev = null;
         map = new TreeMap<Koo, Rail>();
         ev = new EndVoid();
         locolist = new ArrayList<>();
-        T = Tunnel.getInstance();
+        frame = new TrainFrame(map);
     }
 
-    //Köszöntő képernyő
-    private static void welcomeScreen() {
-        System.out.println("Hello!\nTODO: Welcome Screen\n-----------\n\n\n");
-    }
-
-    //Kiírja a pályát
+    /**
+     * Kiírja a pályát
+     */
     private static void mapWriteOut() {
+        frame.repaintBoard();
         if(map.isEmpty())
             System.out.println("Your Map is empty!");
 
@@ -92,26 +105,23 @@ public class Main {
         System.out.println("");
     }
 
+    /**
+     * Hozzáad egy pályaelemet a pályához.
+     * @param pos
+     * @param r 
+     */
     public static void addRailToMap(Koo pos, Rail r) {
-        map.put(new Koo(pos.getX()-1, pos.getY()-1), r);
+        map.put(new Koo(pos.getX() - 1, pos.getY() - 1), r);
     }
 
-    //LEADÁS ELŐTT TÖRÖLNI KELL!
-    /*Saját tesztelésre*/
-    public static void test(){
-        EntryPoint THE_Rail = new EntryPoint(ev);
-        addRailToMap(new Koo(1,1), THE_Rail);
-        Locomotive l = new Locomotive(THE_Rail, THE_Rail);
-        THE_Rail.setTrain(l);
-        addRailToMap(new Koo(4,5), new Rail());
-        addRailToMap(new Koo(1,4), new Rail());
-        addRailToMap(new Koo(10,1), new Rail());
-        mapWriteOut();
-    }
-
+    /**
+     * A main függvény a kezdő inicializálás után egy köszöntő képernyővel fogadja a játékost
+     * Ezután megvizsgálja hogy milyen típusú és hogy helyes e a parancs amit a felhasználó adott ki.
+     * Végül a parancsosztályoknak megfelelő függvényeket hívja meg.
+     * @param args 
+     */
     public static void main(String[] args){
         init();
-        welcomeScreen();
         try {
             Scanner input = new Scanner(System.in);
             while (input.hasNext()) {
@@ -188,16 +198,20 @@ public class Main {
                     execute(cmd);*/
                 mapWriteOut();
             }
-        }catch (OccupyException oe){
+        }catch (GameOverException oe){
             System.out.println("GAME OVER!: " + oe.getMessage());
         }
 
-
-        //test();
     }
 
+    /**
+     * Áltolános pályaelemek létrehozására van, melyek konstruktora nem igényel felhasználó által adott információt.
+     * @param type
+     * @param pos 
+     */
     private static void build(String type, Koo pos){
         Rail r = null;
+        //Pályaelem létrehozása
         switch(type){
             case "r":
                 r = new Rail();
@@ -208,21 +222,32 @@ public class Main {
             case "sw":
                 r = new Switch();
                 switchlist.put(pos,(Switch)r);
+                frame.CreateSwitchButton(pos.dec());
                 break;
             case "tp":
                 r = new TunnelPlace();
+                frame.CreateTunnelButton(pos.dec());
                 break;
             case "c":
                 r = new Cross();
                 break;
         }
-        if(prev != null)
+        //Pályaelem bekötése a már meglévő pályaelemekhez
+        if(prev != null) {
             prev.addNext(r);
+            r.addPrev(prev);
+        }
         prev = r;
 
         addRailToMap(pos, r);
     }
 
+    /**
+     * Állomás létrehozására szolgáló függvény
+     * @param type
+     * @param pos
+     * @param color 
+     */
     private static void build(String type, Koo pos, String color){
         Station s = null;
         switch(type){
@@ -241,9 +266,19 @@ public class Main {
         addRailToMap(pos, s);
     }
 
+    /**
+     * Kereszteződés megalkotására alkalmas függvény
+     * @param koo
+     * @param koo1
+     * @param koo2
+     * @param koo3
+     * @param koo4 
+     */
     private static void buildcross(Koo koo, Koo koo1, Koo koo2, Koo koo3, Koo koo4) {
+        //Létrehozzuk a kereszteződést
         Cross c = new Cross();
         addRailToMap(koo, c);
+        //Bekötjük a megadott koordinátákhoz
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo1.dec()) == 0){
                 entry.getValue().addNext(c);
@@ -270,6 +305,11 @@ public class Main {
         }
     }
 
+    /**
+     * A kapcsoló másik ágának bekötésére szolgáló függvény
+     * @param koo
+     * @param koo1 
+     */
     private static void connectSwitch(Koo koo, Koo koo1) {
         if(switchlist.isEmpty()){
            throw new RuntimeException("There's no switch on the map!");
@@ -287,20 +327,31 @@ public class Main {
         }
     }
 
+    /**
+     * Vonat létrehozására szolgáló függvény
+     * @param command
+     * @param koo
+     * @param carnum
+     * @param colors 
+     */
     private static void placetrain(String command, Koo koo, int carnum, String[] colors) {
+
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo) == 0) {
                 try{
+                    //Létrehozzuk a mozdonyt az EntryPointon
                     EntryPoint ep = (EntryPoint)entry.getValue();
                     Locomotive l = new Locomotive(ep,ev);
+                    //Hozzáadjuk a mozdonyok listájához a mozdonyt
                     locolist.add(l);
+                    //Rárakjuk az entrypointra a mozdonyt
                     ep.setTrain(l);
-                    Car prevCar = new Car(ev, colors[0]);
-
+                    //Hozzáadjuk a kocsikat a mozdonyhoz
+                    Car prevCar = new Car(ev,colors[0]);
                     l.addNext(prevCar);
                     prevCar.addNext(null);
                     for(int i =1;i<carnum;i++){
-                        if(colors[i]=="c"){
+                        if(colors[i].equals("c")){
                             CoalCar cc = new CoalCar(ev);
                             prevCar.addNext(cc);
                             cc.addNext(null);
@@ -321,25 +372,43 @@ public class Main {
         }
     }
 
-    private static void move(int num) throws OccupyException {
+    /**
+     * Mozgatjuk a vonatokat
+     * @param num
+     * @throws GameOverException 
+     */
+    private static void move(int num) throws GameOverException {
         for(int i = 0;i<num;i++)
             for(Locomotive l : locolist)
                 l.step();
     }
 
+    /**
+     * Átkapcsoljuk az adott koordinátán elhelyezkedő váltót vagy alagútszájat aktiválunk.
+     * @param command
+     * @param koo 
+     */
     private static void turner(String command, Koo koo) {
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
-            if (entry.getKey().compareTo(koo.dec()) == 0){
-
-                if(command == "act"){
+            if (command.equals("act"))
+            {
+                if (entry.getKey().compareTo(koo) == 0)
+                {
                     TunnelPlace sel = (TunnelPlace) entry.getValue();
-                    T.activeTunnelPlace(sel);
-                }else{
+                    sel.setActive();
+                    break;
+                }
+            }
+            else
+            {
+                if (entry.getKey().compareTo(koo) == 0)
+                {
                     Switch sel = (Switch)entry.getValue();
                     sel.switchIt();
+                    break;
                 }
-                break;
             }
         }
     }
 }
+
