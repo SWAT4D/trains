@@ -1,10 +1,8 @@
 package trains;
 
+import java.awt.Color;
 import java.util.*;
 import java.util.regex.Pattern;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.*;
 
 /**
  * Program belépési pont,
@@ -35,9 +33,8 @@ public class Main {
      * Mozgatáshoz tároljuk az összes mozdonyt
      */
     private static ArrayList<Locomotive> locolist;
-
-
-    private static GamePanel gamePanel;
+    
+    private static TrainFrame frame;
 
     /**
      * Csak inicializálja a tagváltozókat
@@ -48,19 +45,14 @@ public class Main {
         map = new TreeMap<Koo, Rail>();
         ev = new EndVoid();
         locolist = new ArrayList<>();
-        JFrame frame = new JFrame();
-        gamePanel = new GamePanel(map);
-        frame.add(gamePanel);
-        gamePanel.setPreferredSize(new Dimension(300,300));
-        frame.pack();
-        frame.setVisible( true );
+        frame = new TrainFrame(map);
     }
 
     /**
      * Kiírja a pályát
      */
     private static void mapWriteOut() {
-        gamePanel.repaint();
+        frame.repaintBoard();
         if(map.isEmpty())
             System.out.println("Your Map is empty!");
 
@@ -230,9 +222,11 @@ public class Main {
             case "sw":
                 r = new Switch();
                 switchlist.put(pos,(Switch)r);
+                frame.CreateSwitchButton(pos.dec());
                 break;
             case "tp":
                 r = new TunnelPlace();
+                frame.CreateTunnelButton(pos.dec());
                 break;
             case "c":
                 r = new Cross();
@@ -398,7 +392,7 @@ public class Main {
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (command.equals("act"))
             {
-                if (entry.getKey().compareTo(koo.dec()) == 0)
+                if (entry.getKey().compareTo(koo) == 0)
                 {
                     TunnelPlace sel = (TunnelPlace) entry.getValue();
                     sel.setActive();
@@ -414,7 +408,6 @@ public class Main {
                     break;
                 }
             }
-
         }
     }
 }
