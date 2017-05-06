@@ -1,0 +1,7 @@
+newRail e (1,1) newRail sw (2,1) newRail r (3,1)
+newRail r (3,2)
+sw (2,1) (3,2)
+loco (1,1) 1 r
+switch (2,1)
+move 1
+move 1

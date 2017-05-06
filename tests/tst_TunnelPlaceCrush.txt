@@ -1,0 +1,7 @@
+newRail e (1,2) newRail tp (2,2) newRail tp (3,2) newRail e (4,2)
+loco (1,2) 1 r
+loco (4,2) 1 g
+act (2,2)
+act (3,2)
+move 1
+move 1

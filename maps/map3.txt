@@ -1,0 +1,3 @@
+newRail e (1,1) newRail r (2,1) newRail st (3,1) r newRail st (4,1) g newRail r (5,1) newRail sw (6,1) newRail sw (7,1) newRail r (8,1) newRail r (9,1) newRail e (10,1)
+loco (1,1) 3 r g k
+end
