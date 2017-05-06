@@ -1,23 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package trains;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-/**
- *
- * @author MarxAttila
- */
+
 public class TrainFrame extends JFrame{
-    private GamePanel gamePanel;
+    private final GamePanel gamePanel;
     private static Map<Koo, Rail> map;
 
     private final int ELEMENT_WIDTH = 30;
@@ -58,7 +51,7 @@ public class TrainFrame extends JFrame{
     }
 
     private class SwitchActionListener implements ActionListener {
-        private Koo koo;
+        private final Koo koo;
         
         public SwitchActionListener(Koo pos){
             koo = pos;
@@ -79,7 +72,7 @@ public class TrainFrame extends JFrame{
     }
      
     private class TunnelPlaceActionListener implements ActionListener {
-        private Koo koo;
+        private final Koo koo;
         
         public TunnelPlaceActionListener(Koo pos){
             koo = pos;
@@ -97,6 +90,20 @@ public class TrainFrame extends JFrame{
             }
             gamePanel.repaint();
         }
+    }
+    
+    public static void main(String[] args){
+        LinkedList<String> maplist = new LinkedList<>();
+        maplist.add("maps/map1.txt");
+        maplist.add("maps/map2.txt");
+        maplist.add("maps/map3.txt");
+        
+        for (String maploc : maplist){
+            GameBoard controll = new GameBoard();
+            if (!controll.controllGame(maploc))
+                break;
+        }
+        
     }
      
 }

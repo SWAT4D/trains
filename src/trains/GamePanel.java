@@ -1,6 +1,5 @@
 package trains;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
 
@@ -15,17 +14,9 @@ public class GamePanel extends JPanel{
 
     GamePanel(Map<Koo, Rail> map, int width, int height){
         super();
-        rectwidth = w;
-        rectheight = h;
-        this.map = map;
-    }
-
-    GamePanel(Map<Koo, Rail> map){
-
-        super();
-        this.map = map;
         rectwidth = width;
         rectheight = height;
+        this.map = map;
     }
 
     public void setMap(Map<Koo, Rail> map){
