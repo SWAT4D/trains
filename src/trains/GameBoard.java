@@ -212,14 +212,11 @@ public class GameBoard {
                         break;
                     }
                 }
-            /*
-            for (String cmd : commands)
-                if(!cmd.equals(""))
-                    execute(cmd);*/
                 mapWriteOut();
             }
         }catch (GameOverException oe){
             System.out.println("GAME OVER!: " + oe.getMessage());
+            return false;
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (FileNotFoundException fnfe){
@@ -230,14 +227,14 @@ public class GameBoard {
         return true;
     }
 
-    private void autoMove() throws InterruptedException {
+    private void autoMove() throws InterruptedException, GameOverException {
 
         while(true) {
             try {
                 move(1);
             } catch (GameOverException e) {
                 System.out.println("LOST!!!");
-                return;
+                throw new GameOverException("Mwhahahha");
             }
             if(ev.getTeNum()==teNum){
                 System.out.println("WON!!!");
