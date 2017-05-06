@@ -1,7 +1,16 @@
 package trains;
 
+
 import java.awt.Color;
 import java.util.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.TreeMap;
+
 import java.util.regex.Pattern;
 
 /**
@@ -35,6 +44,9 @@ public class Main {
     private static ArrayList<Locomotive> locolist;
     
     private static TrainFrame frame;
+
+    //Train elements number
+    private static int teNum;
 
     /**
      * Csak inicializálja a tagváltozókat
@@ -126,10 +138,10 @@ public class Main {
             Scanner input = new Scanner(System.in);
             while (input.hasNext()) {
                 String commands_line = input.nextLine();
-                String regex1 = "(((newRail (r|sw|e|tp) \\([1-9][1-9]*,[1-9][1-9]*\\))|(newRail (st|gst) \\([1-9][1-9]*,[1-9][1-9]*\\) (r|g|b)))( |))*";
-                String regex2 = "newRail c (\\([1-9][1-9]*,[1-9][1-9]*\\)( )*){5}";
-                String regex3 = "sw (\\([1-9][1-9]*,[1-9][1-9]*\\)( )*){2}";
-                String regex4 = "loco \\([1-9][1-9]*,[1-9][1-9]*\\) [1-9][0-9]*( r| g| b| c)+";
+                String regex1 = "(((newRail (r|sw|e|tp) \\([1-9][0-9]*,[0-9][1-9]*\\))|(newRail (st|gst) \\([1-9][0-9]*,[1-9][0-9]*\\) (r|g|b)))( |))*";
+                String regex2 = "newRail c (\\([1-9][0-9]*,[1-9][0-9]*\\)( )*){5}";
+                String regex3 = "sw (\\([1-9][0-9]*,[1-9][0-9]*\\)( )*){2}";
+                String regex4 = "loco \\([1-9][0-9]*,[1-9][0-9]*\\) [1-9][0-9]*( r| g| b| k)+";
                 String regex5 = "(act|switch) \\([1-9][0-9]*,[1-9][0-9]*\\)";
                 String regex6 = "move [1-9][0-9]*";
 
@@ -175,8 +187,10 @@ public class Main {
                         for(int clr = 0; clr < carnum; clr++){
                             colors[clr] = commands[3+clr];
                             i++; // Moving offset
+                            teNum++;
                         }
                         placetrain(commands[0], Koo.parseKoo(commands[1]).dec(), Integer.parseInt(commands[2]), colors);
+                        teNum++;
                         i += 3;
                     }
                     if (CMDCLASS5) {
@@ -185,6 +199,8 @@ public class Main {
                     }
                     if (CMDCLASS6) {
                         move(Integer.parseInt(commands[1]));
+                        if(ev.getTeNum()==teNum)
+                            System.out.println("WON!!!");
                         i += 2;
                     }
 
@@ -351,7 +367,7 @@ public class Main {
                     l.addNext(prevCar);
                     prevCar.addNext(null);
                     for(int i =1;i<carnum;i++){
-                        if(colors[i].equals("c")){
+                        if(colors[i].equals("k")){
                             CoalCar cc = new CoalCar(ev);
                             prevCar.addNext(cc);
                             cc.addNext(null);

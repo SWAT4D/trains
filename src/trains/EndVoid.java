@@ -7,6 +7,14 @@ package trains;
  */
 public class EndVoid extends Rail {
 
+
+
+    private int teNum;
+
+    EndVoid(){
+        teNum = 0;
+    }
+
     /**
      * @param trainElement Azon vonatelem amely rá akar lépni
      * @throws trains.GameOverException
@@ -15,6 +23,14 @@ public class EndVoid extends Rail {
     public void occupy(TrainElement trainElement) throws GameOverException {
             trainElement.moveNext();
             trainElement.leave(this);
+            teNum++;
+    }
+    public void incTeNum(){
+        teNum++;
+    }
+
+    public int getTeNum() {
+        return teNum;
     }
 
     /**
@@ -25,5 +41,11 @@ public class EndVoid extends Rail {
     @Override
     public Rail next(Rail rail) {
         return this;
+    }
+
+    public void leave() {
+        isOccupied = false;
+        train = null;
+        teNum--;
     }
 }
