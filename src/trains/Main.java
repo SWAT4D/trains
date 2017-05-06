@@ -1,12 +1,13 @@
 package trains;
 
-import javax.swing.*;
-import java.awt.*;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
+
+import static java.lang.Thread.sleep;
 
 /**
  * Program belépési pont,
@@ -37,9 +38,8 @@ public class Main {
      * Mozgatáshoz tároljuk az összes mozdonyt
      */
     private static ArrayList<Locomotive> locolist;
-
-
-    private static GamePanel gamePanel;
+    
+    private static TrainFrame frame;
 
     //Train elements number
     private static int teNum;
@@ -53,19 +53,14 @@ public class Main {
         map = new TreeMap<Koo, Rail>();
         ev = new EndVoid();
         locolist = new ArrayList<>();
-        JFrame frame = new JFrame();
-        gamePanel = new GamePanel(map);
-        frame.add(gamePanel);
-        gamePanel.setPreferredSize(new Dimension(300,300));
-        frame.pack();
-        frame.setVisible( true );
+        frame = new TrainFrame(map);
     }
 
     /**
      * Kiírja a pályát
      */
     private static void mapWriteOut() {
-        gamePanel.repaint();
+        frame.repaintBoard();
         if(map.isEmpty())
             System.out.println("Your Map is empty!");
 
@@ -145,6 +140,7 @@ public class Main {
                 String regex4 = "loco \\([1-9][0-9]*,[1-9][0-9]*\\) [1-9][0-9]*( r| g| b| k)+";
                 String regex5 = "(act|switch) \\([1-9][0-9]*,[1-9][0-9]*\\)";
                 String regex6 = "move [1-9][0-9]*";
+                String regex7 = "end";
 
                 boolean CMDCLASS1 = Pattern.matches(regex1, commands_line);
                 boolean CMDCLASS2 = Pattern.matches(regex2, commands_line);
@@ -152,7 +148,8 @@ public class Main {
                 boolean CMDCLASS4 = Pattern.matches(regex4, commands_line);
                 boolean CMDCLASS5 = Pattern.matches(regex5, commands_line);
                 boolean CMDCLASS6 = Pattern.matches(regex6, commands_line);
-                if (!(CMDCLASS1 || CMDCLASS2 || CMDCLASS3 || CMDCLASS4 || CMDCLASS5 || CMDCLASS6))
+                boolean CMDCLASS7 = Pattern.matches(regex7, commands_line);
+                if (!(CMDCLASS1 || CMDCLASS2 || CMDCLASS3 || CMDCLASS4 || CMDCLASS5 || CMDCLASS6 || CMDCLASS7))
                 {
                     System.out.println("Bad command!");
                     continue;
@@ -204,6 +201,10 @@ public class Main {
                             System.out.println("WON!!!");
                         i += 2;
                     }
+                    if (CMDCLASS7) {
+                        autoMove();
+                        i += 1;
+                    }
 
                     if (i > (commands.length - 1)) {
                         break;
@@ -217,6 +218,27 @@ public class Main {
             }
         }catch (GameOverException oe){
             System.out.println("GAME OVER!: " + oe.getMessage());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void autoMove() throws InterruptedException {
+
+        while(true) {
+            try {
+                move(1);
+            } catch (GameOverException e) {
+                System.out.println("LOST!!!");
+                return;
+            }
+            if(ev.getTeNum()==teNum){
+                System.out.println("WON!!!");
+                return;
+            }
+            mapWriteOut();
+            sleep(1000);
         }
 
     }
@@ -239,9 +261,11 @@ public class Main {
             case "sw":
                 r = new Switch();
                 switchlist.put(pos,(Switch)r);
+                frame.CreateSwitchButton(pos.dec());
                 break;
             case "tp":
                 r = new TunnelPlace();
+                frame.CreateTunnelButton(pos.dec());
                 break;
             case "c":
                 r = new Cross();
@@ -407,7 +431,7 @@ public class Main {
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (command.equals("act"))
             {
-                if (entry.getKey().compareTo(koo.dec()) == 0)
+                if (entry.getKey().compareTo(koo) == 0)
                 {
                     TunnelPlace sel = (TunnelPlace) entry.getValue();
                     sel.setActive();
@@ -423,7 +447,6 @@ public class Main {
                     break;
                 }
             }
-
         }
     }
 }
