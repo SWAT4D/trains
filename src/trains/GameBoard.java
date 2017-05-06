@@ -1,60 +1,57 @@
 package trains;
 
 
-import java.awt.Color;
-import java.util.*;
-
-import javax.swing.*;
-import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
-
 import java.util.regex.Pattern;
 
 /**
  * Program belépési pont,
  * Parancsok feldolgozása
  */
-public class Main {
+public class GameBoard {
     /**
      * A pályán elhelyezkedő síneket tárolja a koordinátájukkal
      */
-    private static Map<Koo, Rail> map;
+    private final Map<Koo, Rail> map;
 
     /**
      * Egy darab EndVoid
      */
-    private static EndVoid ev;
+    private final EndVoid ev;
 
     /**
      * A sínek lerakásánál, a sínek összekötéséhez kell
      */
-    private static Rail prev;
+    private Rail prev;
 
     /**
      * Tároljuk a switch-eket mivel ezek összekötése speciális
      */
-    private static Map<Koo, Switch> switchlist;
+    private final Map<Koo, Switch> switchlist;
 
     /**
      * Mozgatáshoz tároljuk az összes mozdonyt
      */
-    private static ArrayList<Locomotive> locolist;
+    private final ArrayList<Locomotive> locolist;
     
-    private static TrainFrame frame;
+    private final TrainFrame frame;
 
     //Train elements number
-    private static int teNum;
+    private int teNum;
 
     /**
      * Csak inicializálja a tagváltozókat
      */
-    private static void init() {
+    public GameBoard() {
         switchlist = new TreeMap<>();
         prev = null;
-        map = new TreeMap<Koo, Rail>();
+        map = new TreeMap<>();
         ev = new EndVoid();
         locolist = new ArrayList<>();
         frame = new TrainFrame(map);
@@ -63,7 +60,7 @@ public class Main {
     /**
      * Kiírja a pályát
      */
-    private static void mapWriteOut() {
+    private void mapWriteOut() {
         frame.repaintBoard();
         if(map.isEmpty())
             System.out.println("Your Map is empty!");
@@ -122,7 +119,7 @@ public class Main {
      * @param pos
      * @param r 
      */
-    public static void addRailToMap(Koo pos, Rail r) {
+    public void addRailToMap(Koo pos, Rail r) {
         map.put(new Koo(pos.getX() - 1, pos.getY() - 1), r);
     }
 
@@ -130,12 +127,13 @@ public class Main {
      * A main függvény a kezdő inicializálás után egy köszöntő képernyővel fogadja a játékost
      * Ezután megvizsgálja hogy milyen típusú és hogy helyes e a parancs amit a felhasználó adott ki.
      * Végül a parancsosztályoknak megfelelő függvényeket hívja meg.
-     * @param args 
+     * @param maplocation 
+     * @return Win or lose
      */
-    public static void main(String[] args){
-        init();
+    public boolean controllGame(String maplocation){
         try {
-            Scanner input = new Scanner(System.in);
+            File file = new File(maplocation);
+            Scanner input = new Scanner(file);
             while (input.hasNext()) {
                 String commands_line = input.nextLine();
                 String regex1 = "(((newRail (r|sw|e|tp) \\([1-9][0-9]*,[0-9][1-9]*\\))|(newRail (st|gst) \\([1-9][0-9]*,[1-9][0-9]*\\) (r|g|b)))( |))*";
@@ -144,6 +142,7 @@ public class Main {
                 String regex4 = "loco \\([1-9][0-9]*,[1-9][0-9]*\\) [1-9][0-9]*( r| g| b| k)+";
                 String regex5 = "(act|switch) \\([1-9][0-9]*,[1-9][0-9]*\\)";
                 String regex6 = "move [1-9][0-9]*";
+                String regex7 = "end";
 
                 boolean CMDCLASS1 = Pattern.matches(regex1, commands_line);
                 boolean CMDCLASS2 = Pattern.matches(regex2, commands_line);
@@ -151,7 +150,8 @@ public class Main {
                 boolean CMDCLASS4 = Pattern.matches(regex4, commands_line);
                 boolean CMDCLASS5 = Pattern.matches(regex5, commands_line);
                 boolean CMDCLASS6 = Pattern.matches(regex6, commands_line);
-                if (!(CMDCLASS1 || CMDCLASS2 || CMDCLASS3 || CMDCLASS4 || CMDCLASS5 || CMDCLASS6))
+                boolean CMDCLASS7 = Pattern.matches(regex7, commands_line);
+                if (!(CMDCLASS1 || CMDCLASS2 || CMDCLASS3 || CMDCLASS4 || CMDCLASS5 || CMDCLASS6 || CMDCLASS7))
                 {
                     System.out.println("Bad command!");
                     continue;
@@ -203,6 +203,10 @@ public class Main {
                             System.out.println("WON!!!");
                         i += 2;
                     }
+                    if (CMDCLASS7) {
+                        autoMove();
+                        i += 1;
+                    }
 
                     if (i > (commands.length - 1)) {
                         break;
@@ -216,6 +220,31 @@ public class Main {
             }
         }catch (GameOverException oe){
             System.out.println("GAME OVER!: " + oe.getMessage());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException fnfe){
+            System.out.println("Map not Found! " + maplocation);
+        } finally{
+            frame.dispose();
+        }
+        return true;
+    }
+
+    private void autoMove() throws InterruptedException {
+
+        while(true) {
+            try {
+                move(1);
+            } catch (GameOverException e) {
+                System.out.println("LOST!!!");
+                return;
+            }
+            if(ev.getTeNum()==teNum){
+                System.out.println("WON!!!");
+                return;
+            }
+            mapWriteOut();
+            sleep(1000);
         }
 
     }
@@ -225,7 +254,7 @@ public class Main {
      * @param type
      * @param pos 
      */
-    private static void build(String type, Koo pos){
+    private void build(String type, Koo pos){
         Rail r = null;
         //Pályaelem létrehozása
         switch(type){
@@ -264,7 +293,7 @@ public class Main {
      * @param pos
      * @param color 
      */
-    private static void build(String type, Koo pos, String color){
+    private void build(String type, Koo pos, String color){
         Station s = null;
         switch(type){
             case "st":
@@ -290,7 +319,7 @@ public class Main {
      * @param koo3
      * @param koo4 
      */
-    private static void buildcross(Koo koo, Koo koo1, Koo koo2, Koo koo3, Koo koo4) {
+    private void buildcross(Koo koo, Koo koo1, Koo koo2, Koo koo3, Koo koo4) {
         //Létrehozzuk a kereszteződést
         Cross c = new Cross();
         addRailToMap(koo, c);
@@ -326,7 +355,7 @@ public class Main {
      * @param koo
      * @param koo1 
      */
-    private static void connectSwitch(Koo koo, Koo koo1) {
+    private void connectSwitch(Koo koo, Koo koo1) {
         if(switchlist.isEmpty()){
            throw new RuntimeException("There's no switch on the map!");
         }
@@ -350,7 +379,7 @@ public class Main {
      * @param carnum
      * @param colors 
      */
-    private static void placetrain(String command, Koo koo, int carnum, String[] colors) {
+    private void placetrain(String command, Koo koo, int carnum, String[] colors) {
 
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (entry.getKey().compareTo(koo) == 0) {
@@ -393,7 +422,7 @@ public class Main {
      * @param num
      * @throws GameOverException 
      */
-    private static void move(int num) throws GameOverException {
+    private void move(int num) throws GameOverException {
         for(int i = 0;i<num;i++)
             for(Locomotive l : locolist)
                 l.step();
@@ -404,7 +433,7 @@ public class Main {
      * @param command
      * @param koo 
      */
-    private static void turner(String command, Koo koo) {
+    private void turner(String command, Koo koo) {
         for(Map.Entry<Koo, Rail> entry : map.entrySet()) {
             if (command.equals("act"))
             {
