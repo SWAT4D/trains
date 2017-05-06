@@ -84,6 +84,7 @@ public class Tunnel extends Rail {
         	case 1:        		
         		start.addPrev(null);
 	    		activeNum--;
+                        first.setIsActive(false);   //itt lehet nem stimelnek a dolgok...
         		break;
         	case 2:       		
         		first.setIsActive(false);

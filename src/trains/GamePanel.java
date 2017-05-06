@@ -4,12 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
 
+import javax.swing.JPanel;
+
+
 public class GamePanel extends JPanel{
     Map<Koo, Rail> map;
-    int rectwidth = 30;
-    int rectheight = 30;
+    int rectwidth;
+    int rectheight;
 
-    GamePanel(Map<Koo, Rail> map, int w, int h){
+
+    GamePanel(Map<Koo, Rail> map, int width, int height){
         super();
         rectwidth = w;
         rectheight = h;
@@ -17,17 +21,16 @@ public class GamePanel extends JPanel{
     }
 
     GamePanel(Map<Koo, Rail> map){
+
         super();
         this.map = map;
+        rectwidth = width;
+        rectheight = height;
     }
 
     public void setMap(Map<Koo, Rail> map){
         this.map = map;
     }
-
-
-
-
 
     @Override
     public void paintComponent( Graphics g ) {
@@ -57,6 +60,8 @@ public class GamePanel extends JPanel{
                 Color c = Color.WHITE;
                 boolean isSwitch = false;
                 boolean fo = true;
+                boolean isTunnelPlace = false;
+                boolean isTpAct = false;
                 switch(sMap){
                     case "E":
                         c = new Color(153,76,0); break;
@@ -85,7 +90,15 @@ public class GamePanel extends JPanel{
                                 c = Color.MAGENTA; break;
                         }break;
                     case "T":
-                        c = new Color(128, 128, 128); break;
+                        c = new Color(128, 128, 128); 
+                        isTunnelPlace = true;
+                        isTpAct = true;
+                        break;
+                    case "V":
+                        c = new Color(128, 128, 128); 
+                        isTunnelPlace = true;
+                        isTpAct = false;
+                        break;
                     case "M":
                         c = new Color(153,76,0);
                         isSwitch = true;
@@ -118,23 +131,33 @@ public class GamePanel extends JPanel{
                             isTrain = false; break;
                     }
                 }
-
+                
                 g2.setColor(c);
                 g.fillRect(j*rectwidth, i*rectheight , rectwidth, rectheight);
                 if(isTrain){
                     g2.setColor(cTrain);
-
                     g.fillOval(j*rectwidth, i*rectheight , rectwidth, rectheight);
                 }
-
-                if(isSwitch){
-                    if(fo) {
-                        g2.setColor(Color.BLACK);
-                        g.fillRoundRect(j*rectwidth + rectwidth/4, i*rectheight + rectheight/4, rectwidth/2, rectheight/2, 2,2);
+                else{
+                    if(isSwitch){
+                        if(fo) {
+                            g2.setColor(Color.BLACK);
+                            g.fillRoundRect(j*rectwidth + rectwidth/4, i*rectheight + rectheight/4, rectwidth/2, rectheight/2, 2,2);
+                        }
+                        else{
+                            g2.setColor(Color.WHITE);
+                            g.fillRoundRect(j*rectwidth + rectwidth/4, i*rectheight + rectheight/4, rectwidth/2, rectheight/2, 2,2);
+                        }
                     }
-                    else{
-                        g2.setColor(Color.WHITE);
-                        g.fillRoundRect(j*rectwidth + rectwidth/4, i*rectheight + rectheight/4, rectwidth/2, rectheight/2, 2,2);
+                    if(isTunnelPlace){
+                        if(isTpAct) {
+                            g2.setColor(Color.GREEN);
+                            g.fillRoundRect(j*rectwidth + rectwidth/4, i*rectheight + rectheight/4, rectwidth/2, rectheight/2, 2,2);
+                        }
+                        else{
+                            g2.setColor(Color.RED);
+                            g.fillRoundRect(j*rectwidth + rectwidth/4, i*rectheight + rectheight/4, rectwidth/2, rectheight/2, 2,2);
+                        }
                     }
                 }
             }
