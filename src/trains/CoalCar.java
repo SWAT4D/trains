@@ -34,7 +34,12 @@ public class CoalCar extends Car{
      * @param endVoid
      */
     public CoalCar(EndVoid endVoid) {
-        super(endVoid, "c");
+        super(endVoid, "k");
+        isFull = false;
     }
 
+    @Override
+    public String toString() {
+        return "k";
+    }
 }

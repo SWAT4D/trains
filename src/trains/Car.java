@@ -21,6 +21,7 @@ public class Car implements TrainElement {
      */
     public Car(EndVoid endVoid, String color) {
         cur = endVoid;
+        endVoid.incTeNum();
         this.color = color;
 
     }

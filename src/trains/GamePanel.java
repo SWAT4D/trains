@@ -1,17 +1,20 @@
 package trains;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Map;
-
-
-import javax.swing.JPanel;
 
 public class GamePanel extends JPanel{
     Map<Koo, Rail> map;
     int rectwidth = 30;
     int rectheight = 30;
+
+    GamePanel(Map<Koo, Rail> map, int w, int h){
+        super();
+        rectwidth = w;
+        rectheight = h;
+        this.map = map;
+    }
 
     GamePanel(Map<Koo, Rail> map){
         super();
@@ -107,6 +110,8 @@ public class GamePanel extends JPanel{
                             cTrain = new Color(70,160,255); break;
                         case "g":
                             cTrain = new Color(70, 255, 70); break;
+                        case "k":
+                            cTrain = new Color(60, 60, 60); break;
                         case "e":
                             cTrain = Color.YELLOW; break;
                         default:
