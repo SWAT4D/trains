@@ -11,7 +11,6 @@ import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 /**
- * Program belépési pont,
  * Parancsok feldolgozása
  */
 public class GameBoard {
@@ -124,11 +123,11 @@ public class GameBoard {
     }
 
     /**
-     * A main függvény a kezdő inicializálás után egy köszöntő képernyővel fogadja a játékost
+     * A controllGame a kezdő inicializálás után egy köszöntő képernyővel fogadja a játékost
      * Ezután megvizsgálja hogy milyen típusú és hogy helyes e a parancs amit a felhasználó adott ki.
      * Végül a parancsosztályoknak megfelelő függvényeket hívja meg.
-     * @param maplocation 
-     * @return Win or lose
+     * @param maplocation A betöltendő pálya elérési útvonala
+     * @return Win (true) or lose (false)
      */
     public boolean controllGame(String maplocation){
         try {
@@ -215,7 +214,10 @@ public class GameBoard {
                 mapWriteOut();
             }
         }catch (GameOverException oe){
-            System.out.println("GAME OVER!: " + oe.getMessage());
+            System.out.println("GAME OVER, you've " + oe.getMessage());
+            frame.showGameMessage("GAME OVER, you've " + oe.getMessage());
+            if (oe.getMessage().equals("WON!"))
+                return true;
             return false;
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -224,21 +226,26 @@ public class GameBoard {
         } finally{
             frame.dispose();
         }
-        return true;
+        return false;
     }
 
+    /**
+     * Automatikussan mozgatja a pályán lévő dolgokat a meghívása után
+     * @throws InterruptedException
+     * @throws GameOverException Eldobja ezt, ha a játékot megnyerték vagy elvesztették
+     */
     private void autoMove() throws InterruptedException, GameOverException {
 
         while(true) {
             try {
                 move(1);
             } catch (GameOverException e) {
-                System.out.println("LOST!!!");
-                throw new GameOverException("Mwhahahha");
+                System.out.println("LOST!");
+                throw new GameOverException("LOST!");
             }
             if(ev.getTeNum()==teNum){
-                System.out.println("WON!!!");
-                return;
+                System.out.println("WON!");
+                throw new GameOverException("WON!");
             }
             mapWriteOut();
             sleep(1000);
