@@ -5,13 +5,21 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-
+/**
+ * A pálya kirajzolásáért felelős
+ */
 public class GamePanel extends JPanel{
     Map<Koo, Rail> map;
     int rectwidth;
     int rectheight;
 
 
+    /**
+     * Konstruktor, csak inicializálás
+     * @param map
+     * @param width
+     * @param height 
+     */
     GamePanel(Map<Koo, Rail> map, int width, int height){
         super();
         rectwidth = width;
@@ -19,10 +27,10 @@ public class GamePanel extends JPanel{
         this.map = map;
     }
 
-    public void setMap(Map<Koo, Rail> map){
-        this.map = map;
-    }
-
+    /**
+     * Kirajzolja a pályát
+     * @param g 
+     */
     @Override
     public void paintComponent( Graphics g ) {
         super.paintComponent(g);
