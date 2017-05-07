@@ -3,11 +3,12 @@ package trains;
 /**
  * Alagút megvalósítása, melyből egyszerre mindig csak egy lehet a pályán.
  */
-public class Tunnel extends Rail {
+public class Tunnel{
 	
 	private Rail r1,r2,r3;
 	private int activeNum = 0;
 	private TunnelPlace first, sec;
+        private boolean isOccupied = false;
 	private static Tunnel instance = null;
     
 	/**
@@ -58,15 +59,21 @@ public class Tunnel extends Rail {
 	    		break;
 	    	default:
         		break;
-	    		
     	}
     }
 
     /** Alagút foglaltságának lekérdezése
+     * akkor van benne vonat, ha bármelyik belső eleme foglalt
      * @return Foglalt-e az alagút.
      */
     public boolean isOccupied() {
-        return isOccupied;
+        boolean occupied = false;
+        try{
+            occupied = first.isOccupied || r1.isOccupied || r2.isOccupied || r3.isOccupied || sec.isOccupied;
+        }catch(NullPointerException npex){
+            //do nothing :), shit happens
+        }
+        return occupied;
     }
 
     /** Alagútszáj inaktiválása

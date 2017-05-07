@@ -16,6 +16,32 @@ public class TunnelPlace extends Rail {
     }
 
     /**
+     * Ha a következő elem egy TunnelPlace, akkor azt nem adja hozzá (többi mint a Rail)
+     * @param next következő elem
+     */
+    @Override
+    public void addNext(Rail next) {
+        if (next != null){
+            if (next.toString().equals("T") || next.toString().equals("V"))
+                return;
+        }
+        super.addNext(next); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+     /**
+     * Ha az előző elem egy TunnelPlace, akkor azt nem adja hozzá (többi mint a Rail)
+     * @param prev előző elem
+     */
+    @Override
+    public void addPrev(Rail prev) {
+        if (prev != null){
+            if (prev.toString().equals("T") || prev.toString().equals("V"))
+                return;
+        }
+        super.addPrev(prev); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    /**
      * Aktiválás
      */
     public void setActive() {
