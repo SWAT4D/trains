@@ -165,9 +165,9 @@ public class TrainFrame extends JFrame{
      */
     public static void main(String[] args){
         LinkedList<String> maplist = new LinkedList<>();
+        maplist.add("maps/map02.txt");
         maplist.add("maps/map03.txt");
         maplist.add("maps/map01.txt");
-        maplist.add("maps/map02.txt");
         
         for (String maploc : maplist){
             GameBoard controll = new GameBoard();
