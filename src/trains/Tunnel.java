@@ -108,30 +108,32 @@ public class Tunnel{
     	return activeNum;
     }
 
-	void generateTunnel(){
-		// check this
-		r1 = new Rail();
-		r2 = new Rail();
-		r3 = new Rail();
+   void generateTunnel(){
+            // check this
+            r1 = new Rail();
+            r2 = new Rail();
+            r3 = new Rail();
 
-		if (first.nextR == null)
-			first.addNext(r1);
-		else
-			first.addPrev(r1);
-
-		r1.addPrev(first);
-
-		r1.addNext(r2);
-		r2.addPrev(r1);
-
-		r2.addNext(r3);
-		r3.addPrev(r2);
-
-		if (sec.nextR == null)
-			sec.addNext(r3);
-		else
-			r3.addNext(sec);
-	}
+            if (first.nextR == null && sec.nextR == null){
+                first.addNext(r1);
+                sec.addNext(r3);
+                r3.addNext(r2);
+                r1.addNext(r2);
+                r2.addNext(r1);
+                r1.addPrev(first);
+                r2.addPrev(r3);
+            } else if (first.nextR == null && sec.nextR != null){
+                first.addNext(r1);
+                r1.addNext(r2);
+                r2.addNext(r3);
+                r3.addNext(sec);
+            } else if (first.nextR != null && sec.nextR == null){
+                sec.addNext(r3);
+                r3.addNext(r2);
+                r2.addNext(r1);
+                r1.addNext(first);
+            }
+    }
     
     void deGenerateTunnel(){
     	r1 = r2 = r3 = null;
