@@ -109,31 +109,31 @@ public class Tunnel{
     }
 
    void generateTunnel(){
-            // check this
-            r1 = new Rail();
-            r2 = new Rail();
-            r3 = new Rail();
+		// check this
+		r1 = new Rail();
+		r2 = new Rail();
+		r3 = new Rail();
 
-            if (first.nextR == null && sec.nextR == null){
-                first.addNext(r1);
-                sec.addNext(r3);
-                r3.addNext(r2);
-                r1.addNext(r2);
-                r2.addNext(r1);
-                r1.addPrev(first);
-                r2.addPrev(r3);
-            } else if (first.nextR == null && sec.nextR != null){
-                first.addNext(r1);
-                r1.addNext(r2);
-                r2.addNext(r3);
-                r3.addNext(sec);
-            } else if (first.nextR != null && sec.nextR == null){
-                sec.addNext(r3);
-                r3.addNext(r2);
-                r2.addNext(r1);
-                r1.addNext(first);
-            }
-    }
+		if (first.nextR == null && sec.nextR == null){
+			first.addNext(r1);
+			sec.addNext(r3);
+			r3.addNext(r2);
+			r1.addNext(r2);
+			r2.addNext(r1);
+			r1.addPrev(first);
+			r2.addPrev(r3);
+		} else if (first.nextR == null && sec.nextR != null){
+			first.addNext(r1);
+			r1.addNext(r2);
+			r2.addNext(r3);
+			r3.addNext(sec);
+		} else if (first.nextR != null && sec.nextR == null){
+			sec.addNext(r3);
+			r3.addNext(r2);
+			r2.addNext(r1);
+			r1.addNext(first);
+		}
+	}
     
     void deGenerateTunnel(){
     	r1 = r2 = r3 = null;
