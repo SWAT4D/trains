@@ -7,7 +7,7 @@ import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
 /**
@@ -48,9 +48,9 @@ public class GameBoard {
      * Csak inicializálja a tagváltozókat
      */
     public GameBoard() {
-        switchlist = new TreeMap<>();
+        switchlist = new ConcurrentHashMap<>();
         prev = null;
-        map = new TreeMap<>();
+        map = new ConcurrentHashMap<>();
         ev = new EndVoid();
         locolist = new ArrayList<>();
         frame = new TrainFrame(map);
