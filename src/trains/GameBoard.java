@@ -135,7 +135,7 @@ public class GameBoard {
             Scanner input = new Scanner(file);
             while (input.hasNext()) {
                 String commands_line = input.nextLine();
-                String regex1 = "(((newRail (r|sw|e|tp) \\([1-9][0-9]*,[0-9][1-9]*\\))|(newRail (st|gst) \\([1-9][0-9]*,[1-9][0-9]*\\) (r|g|b)))( |))*";
+                String regex1 = "(((newRail (r|sw|e|tp) \\([1-9][0-9]*,[1-9][0-9]*\\))|(newRail (st|gst) \\([1-9][0-9]*,[1-9][0-9]*\\) (r|g|b)))( |))*";
                 String regex2 = "newRail c (\\([1-9][0-9]*,[1-9][0-9]*\\)( )*){5}";
                 String regex3 = "sw (\\([1-9][0-9]*,[1-9][0-9]*\\)( )*){2}";
                 String regex4 = "loco \\([1-9][0-9]*,[1-9][0-9]*\\) [1-9][0-9]*( r| g| b| k)+";
@@ -241,7 +241,7 @@ public class GameBoard {
                 move(1);
             } catch (GameOverException e) {
                 System.out.println("LOST!");
-                throw new GameOverException("LOST!");
+                throw new GameOverException("LOST! " + e.getMessage());
             }
             if(ev.getTeNum()==teNum){
                 System.out.println("WON!");

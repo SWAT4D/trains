@@ -108,6 +108,9 @@ public class GamePanel extends JPanel{
                         isSwitch = true;
                         fo = true;
                         break;
+                    case "C":
+                        c = Color.MAGENTA;
+                        break;
                     default:
                         c = Color.WHITE; break;
                 }
