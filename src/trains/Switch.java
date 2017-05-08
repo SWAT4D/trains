@@ -32,7 +32,8 @@ public class Switch extends Rail {
      */
     public void switchIt()
     {
-        isMain = !isMain;
+        if (!isOccupied)
+            isMain = !isMain;
     }
 
     /**
