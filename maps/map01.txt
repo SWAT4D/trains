@@ -1,0 +1,5 @@
+newRail e (1,5) newRail r (2,5) newRail r (3,5) newRail r (4,5) newRail r (5,5) newRail r (6,5) newRail r (7,5) newRail r (8,5) newRail r (9,5) newRail sw (10,5) newRail st (10,4) b newRail st (10,3) g newRail st (10,2) r newRail e (10,1)
+newRail r (10,6) newRail st (10,7) r newRail st (10,8) g newRail st (10,9) b newRail e (10,10)
+sw (10,5) (10,6)
+loco (1,5) 3 r g b
+end

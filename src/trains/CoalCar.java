@@ -17,6 +17,19 @@ public class CoalCar extends Car{
             carBehind.markFirst(b);
     }
 
+    @Override
+    public void leave(EndVoid endVoid) throws GameOverException {
+        if(inside){
+            // FULL CHECK
+            if(isFull){
+                throw new GameOverException("Utasokat tartalmazó kocsi elhagyta a pályát");
+            }
+            if(carBehind == null){
+                carAhead.finish();
+            }
+        }
+    }
+
     /**
      *  Nem tud feltöltődni
      */

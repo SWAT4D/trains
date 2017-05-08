@@ -1,0 +1,11 @@
+newRail e (1,10) newRail r (2,10) newRail r (3,10) newRail r (4,10) newRail r (5,10) newRail r (6,10) newRail r (6,9) newRail st (6,8) g newRail r (6,7)
+newRail r (6,5) newRail r (6,4) newRail r (6,3)
+newRail e (6,1)
+newRail e (1,2) newRail r (2,2) newRail r (3,2) newRail r (4,2) newRail r (5,2)
+newRail r (7,2) newRail st (8,2) r newRail r (9,2) newRail r (10,2) newRail r (10,3) newRail r (10,4) newRail r (10,5) newRail r (10,6) newRail r (9,6) newRail r (8,6) newRail r (7,6) 
+newRail r (5,6) newRail r (4,6) newRail r (3,6) newRail r (2,6) newRail e (1,6)
+newRail c (6,2) (5,2) (7,2) (6,3) (6,1)
+newRail c (6,6) (7,6) (5,6) (6,7) (6,5)
+loco (1,2) 1 r
+loco (1,10) 1 g
+end
